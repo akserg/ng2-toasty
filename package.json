@@ -1,0 +1,54 @@
+{
+  "name": "ng2-toasty",
+  "description": "Angular2 Toasty component shows growl-style alerts and messages for your app.",
+  "scripts": {
+    "test": "tsc && karma start",
+    "test-watch": "tsc && karma start --no-single-run --auto-watch",
+    "prepublish": "typings install && tsc && node make.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/akserg/ng2-toasty.git"
+  },
+  "keywords": [
+    "angular",
+    "angular2",
+    "toasty",
+    "growl"
+  ],
+  "author": "Sergey Akopkokhyants",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/akserg/ng2-toasty/issues"
+  },
+  "main": "ng2-toasty.js",
+  "typings": "./ng2-toasty.d.ts",
+  "homepage": "https://github.com/akserg/ng2-toasty",
+  "peerDependencies": {
+    "angular2": "~2.0.0-beta.0",
+    "es6-promise": "~3.0.2",
+    "es6-shim": "~0.33.3",
+    "reflect-metadata": "0.1.2",
+    "rxjs": "5.0.0-beta.0",
+    "zone.js": "~0.5.10"
+  },
+  "devDependencies": {
+    "angular2": "2.0.0-beta.6",
+    "es6-promise": "~3.0.2",
+    "es6-shim": "~0.33.3",
+    "jasmine-core": "~2.3.4",
+    "karma": "~0.13.15",
+    "karma-chrome-launcher": "~0.2.2",
+    "karma-firefox-launcher": "~0.1.7",
+    "karma-jasmine": "~0.3.6",
+    "karma-typescript-preprocessor": "0.0.21",
+    "reflect-metadata": "0.1.2",
+    "rxjs": "5.0.0-beta.0",
+    "systemjs": "~0.19.6",
+    "systemjs-builder": "^0.15.6",
+    "tsd": "^0.6.5",
+    "typescript": "~1.7.3",
+    "typings": "^0.6.8",
+    "zone.js": "0.5.14"
+  }
+}
