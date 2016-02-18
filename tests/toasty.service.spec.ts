@@ -14,7 +14,7 @@ import {ToastyConfig} from '../src/toasty.config';
 import {ToastyService, Toast, ToastyOptions} from '../src/toasty.service';
 
 export function main() {
-    describe('Ng2ToastyService', () => {
+    describe('ToastyService', () => {
 
         beforeEachProviders(() => {
             return [
