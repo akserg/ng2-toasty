@@ -14,6 +14,7 @@ export interface ToastyOptions {
     onAdd?:Function;
     onRemove?:Function;
     onClick?:Function;
+    timeout?:number;
 }
 
 export interface Toast {
@@ -32,15 +33,15 @@ export interface Toast {
     onClick:Function;
 
     interact:boolean;
-    timeout?:NodeJS.Timer;
+    timeout?:number;
 }
 
 @Injectable()
 export class ToastyService {
     // Init the counter
     uniqueCounter: number = 0;
-    // Allowed themes
-    themes: Array<string> = ['default', 'material', 'bootstrap'];
+    // Allowed THEMES
+    static THEMES: Array<string> = ['default', 'material', 'bootstrap'];
 
     private toastsObservable:Observable<Toast>;
     private toastsSubscriber: Subscriber<Toast>;
@@ -48,7 +49,7 @@ export class ToastyService {
     constructor(private config:ToastyConfig) {
         this.toastsObservable = new Observable((subscriber:Subscriber<Toast>) => {
             this.toastsSubscriber = subscriber;
-        }).share();
+        });
     }
 
     getToasts():Observable<Toast> {
@@ -115,12 +116,12 @@ export class ToastyService {
             toastyOptions = <ToastyOptions>options;
         }
 
-		// if (!toastyOptions || !toastyOptions.title && !toastyOptions.msg) {
-		// 	console.error('angular-toasty: No toast title or message specified!');
-		// } else {
-		// 	toastyOptions.type = type || 'default';
-		// 	$rootScope.$broadcast('toasty-new', {config: config, options: options});
-		// }
+		if (!toastyOptions || !toastyOptions.title && !toastyOptions.msg) {
+			console.error('ng2-toasty: No toast title or message specified!');
+		} else {
+			toastyOptions.type = type || 'default';
+			// $rootScope.$broadcast('toasty-new', {config: config, options: options});
+		}
 
         // Set a unique counter for an id
         this.uniqueCounter++;
@@ -135,7 +136,7 @@ export class ToastyService {
         // If we have a theme set, make sure it's a valid one
         var theme:string;
         if (toastyOptions.theme) {
-            theme = this.themes.indexOf(toastyOptions.theme) > -1 ? toastyOptions.theme : this.config.theme;
+            theme = ToastyService.THEMES.indexOf(toastyOptions.theme) > -1 ? toastyOptions.theme : this.config.theme;
         } else {
             theme = this.config.theme;
         }
@@ -163,22 +164,21 @@ export class ToastyService {
         console.log('Toast', toast);
 
         // Push up a new toast item
-        //this.toasties.merge(Observable.create(toast));
         this.toastsSubscriber.next(toast);
 
         // If we have a onAdd function, call it here
-        if (toastyOptions.onAdd && isFunction(toastyOptions.onAdd))
-            toastyOptions.onAdd.call(toast);
+        if (toastyOptions.onAdd && isFunction(toastyOptions.onAdd)) {
+            toastyOptions.onAdd.call(this, toast);
+        }
 
         // Broadcast that the toasty was added
         //this.$broadcast('toasty-added', toast);
 
         // If there's a timeout individually or globally,
         // set the toast to timeout
-        // if (toastyOptions.timeout != false) {
-        //     if (toastyOptions.timeout || this.config.timeout)
-        //         setTimeout(this.toasties[this.toasties.count - 1], toastyOptions.timeout || this.config.timeout);
-        // }
+        if (toastyOptions.timeout) {
+            toast.timeout = toastyOptions.timeout || this.config.timeout; 
+        }
 
     }
 
@@ -197,8 +197,7 @@ export class ToastyService {
     trustAsHtml(input:string):string {
         return input;
     }
-
-
+    
     // On new rootScope toasty-new broadcast
     // scope.$on('toasty-new', function(event, data) {
     //     var config = data.config;
@@ -230,8 +229,8 @@ export class ToastyService {
 
 //     uniqueCounter:number = 0;
 
-//     // Allowed themes
-//     themes = ['default', 'material', 'bootstrap'];
+//     // Allowed THEMES
+//     THEMES = ['default', 'material', 'bootstrap'];
 
 //     // Init the toasty store
 //     toasty = [];
@@ -328,8 +327,8 @@ export class ToastyService {
 
 //     uniqueCounter:number = 0;
 
-//     // Allowed themes
-//     themes = ['default', 'material', 'bootstrap'];
+//     // Allowed THEMES
+//     THEMES = ['default', 'material', 'bootstrap'];
 
 //     // Init the toasty store
 //     toasty = [];
@@ -349,7 +348,7 @@ export class ToastyService {
 //         // If we have a theme set, make sure it's a valid one
 //         var theme;
 //         if (options.theme) {
-//             theme = this.themes.indexOf(options.theme) > -1 ? options.theme : config.theme;
+//             theme = this.THEMES.indexOf(options.theme) > -1 ? options.theme : config.theme;
 //         } else {
 //             theme = config.theme;
 //         }

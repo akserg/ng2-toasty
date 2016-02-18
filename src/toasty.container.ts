@@ -6,18 +6,18 @@ import {Observable} from 'rxjs/Observable';
 
 import {ToastyConfig} from './toasty.config';
 import {ToastyService, Toast} from './toasty.service';
-import {Ng2Toast} from './toasty.component';
+import {ToastyComponent} from './toasty.component';
 
 @Component({
     selector: 'ng2-toasty',
     encapsulation: ViewEncapsulation.None,
-    directives: [CORE_DIRECTIVES, Ng2Toast],
+    directives: [CORE_DIRECTIVES, ToastyComponent],
     template: `
     <div id="toasty" ng-class="[position]">
         <ng2-toast *ngFor="#toast of toasts" [toast]="toast"></ng2-toast>
     </div>`
 })
-export class Ng2Toasty implements OnInit {
+export class ToastyContainer implements OnInit {
 
     // Init the position
     @Input() position: string = '';
@@ -37,6 +37,12 @@ export class Ng2Toasty implements OnInit {
             }
             // Add toasty to array
             this.toasts.push(toast);
+            //
+            // If there's a timeout individually or globally,
+            // set the toast to timeout
+            if (toast.timeout) {
+                this.setTimeout(toast);
+            }
         });
     }
 
@@ -82,12 +88,9 @@ export class Ng2Toasty implements OnInit {
 
     // Custom setTimeout function for specific
     // setTimeouts on individual toasts
-    setTimeout(toast:Toast, time:number) {
-        toast.timeout = setTimeout(() => {
+    setTimeout(toast:Toast) {
+        window.setTimeout(() => {
             this.clear(toast.id);
-        }, time);
+        }, toast.timeout);
     }
-
-
-
 }

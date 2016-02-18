@@ -21,7 +21,7 @@ import {Toast} from './toasty.service';
             <span class="toast-msg" *ngIf="toast.html && toast.msg" [innerHtml]="toast.msg"></span>
         </div>`
 })
-export class Ng2Toast implements OnInit {
+export class ToastyComponent implements OnInit {
 
     @Input() toast:Toast;
 

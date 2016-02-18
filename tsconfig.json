@@ -13,9 +13,6 @@
     "files": [
         "typings/main.d.ts",
         "ng2-toasty.ts",
-        "./src/translate.service.ts",
-        "./src/translate.parser.ts",
-        "./src/translate.pipe.ts",
         "./src/toasty.component.ts",
         "./src/toasty.config.ts",
         "./src/toasty.container.ts",

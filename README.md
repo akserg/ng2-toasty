@@ -17,17 +17,17 @@ System.config({
 ```
 
 Finally, you can use ng2-toasty in your Angular 2 project:
-- Instantiate `ToastyService` in the bootstrap of your application;
+- Instantiate `Ng2ToastyService` in the bootstrap of your application;
 - Add `Ng2Toasty` to the "directives" property of your application component;
 - Add `ng2-toasty` tag in template of your application component.
 
 ```js
 import {Component} from 'angular2/core';
-import {ToastyService, Ng2Toasty} from 'ng2-toasty/ng2-toasty';
+import {Ng2ToastyService, Ng2Toasty} from 'ng2-toasty/ng2-toasty';
 import {bootstrap} from 'angular2/platform/browser';
 
 bootstrap(AppComponent, [
-    ToastyService // It is required to have 1 unique instance of your service
+    Ng2ToastyService // It is required to have 1 unique instance of your service
 ]);
 
 @Component({
