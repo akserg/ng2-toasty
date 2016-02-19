@@ -18,6 +18,7 @@
         "./src/toasty.container.ts",
         "./src/toasty.service.ts",
         "./tests/toasty.container.spec.ts",
+        "./tests/toasty.component.spec.ts",
         "./tests/toasty.service.spec.ts"
     ],
     "exclude": [

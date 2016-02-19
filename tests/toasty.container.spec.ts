@@ -18,7 +18,7 @@ from 'angular2/platform/testing/browser';
 import {Observable} from 'rxjs/Observable';
 
 import {ToastyConfig} from '../src/toasty.config';
-import {ToastyService, Toast, ToastyOptions} from '../src/toasty.service';
+import {ToastyService, Toast, ToastOptions} from '../src/toasty.service';
 import {ToastyContainer} from '../src/toasty.container';
 //import {ToastyComponent} from '../src/toasty.component';
 
@@ -38,6 +38,7 @@ export function main() {
             html:null,
             type: 'toasty-type-default',
             theme:'toasty-theme-default',
+            timeout: null,
             onAdd: null,
             onRemove:null,
             onClick:null
@@ -54,6 +55,7 @@ export function main() {
             html:null,
             type: 'toasty-type-default',
             theme:'toasty-theme-default',
+            timeout: null,
             onAdd: null,
             onRemove:null,
             onClick:null
@@ -75,12 +77,24 @@ export function main() {
             expect(element.querySelector('#toasty')).toBeDefined();
         });
 
-        it('should update class if position property was defined', () => {
+        it('should update class if position property was not defined', () => {
+            const element = componentFixture.nativeElement;
+            componentFixture.detectChanges();
+            expect(element.querySelector('#toasty').className).toBe('toasty-position-bottom-right');
+        });
+
+        it('should update class if position property was defined with wrong value', () => {
             const element = componentFixture.nativeElement;
             componentFixture.componentInstance.position = 'left';
             componentFixture.detectChanges();
-            // console.log(element.querySelector('#toasty'));
-            expect(element.querySelector('#toasty').className).toBe('left');
+            expect(element.querySelector('#toasty').className).toBe('toasty-position-bottom-right');
+        });
+
+        it('should update class if position property was defined with right value', () => {
+            const element = componentFixture.nativeElement;
+            componentFixture.componentInstance.position = 'bottom-center';
+            componentFixture.detectChanges();
+            expect(element.querySelector('#toasty').className).toBe('toasty-position-bottom-center');
         });
 
         it('should provide the child toast component if it was created via service', () => {
@@ -92,7 +106,6 @@ export function main() {
             componentFixture.detectChanges();
             expect(element.querySelector('#toasty').children.length).toBe(1);
             expect(element.querySelector('#toasty').children[0].tagName).toBe('NG2-TOAST');
-            // console.log(element.querySelector('#toasty').children[0].tagName);
         });
 
         it('should clear specific toast by id', () => {
@@ -173,7 +186,7 @@ export function main() {
         //         });
         //     }
 
-        //     it('logs the submitted value', inject([TestComponentBuilder],
+        //     it('should close toast after timeout', inject([TestComponentBuilder],
         //         fakeAsync((tcb:TestComponentBuilder) => {
         //             createComponent(tcb).then((fixture:ComponentFixture) => {
         //                 const element = fixture.nativeElement;

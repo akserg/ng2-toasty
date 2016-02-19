@@ -8,6 +8,9 @@ import {ToastyConfig} from './toasty.config';
 import {ToastyService, Toast} from './toasty.service';
 import {ToastyComponent} from './toasty.component';
 
+/**
+ * This container for toasts.
+ */
 @Component({
     selector: 'ng2-toasty',
     encapsulation: ViewEncapsulation.None,
@@ -19,11 +22,19 @@ import {ToastyComponent} from './toasty.component';
 })
 export class ToastyContainer implements OnInit {
 
-    // Init the position
-    @Input() position: string = '';
+    // The window position where the toast pops upk. Possible values:
+    // - bottom-right (default valie from ToastConfig)
+    // - bottom-left
+    // - top-right
+    // - top-left
+    // - top-center
+    // - bottom-center
+    @Input() position: string;
 
-    // Init the toasty store
+    // The storage for toasts.
     toasts: Array<Toast> = [];
+
+    static POSITIONS:Array<String> = ['bottom-right', 'bottom-left', 'top-right', 'top-left', 'top-center', 'bottom-center'];
 
     constructor(private config:ToastyConfig, private toastyService:ToastyService) {}
 
@@ -41,19 +52,40 @@ export class ToastyContainer implements OnInit {
             // If there's a timeout individually or globally,
             // set the toast to timeout
             if (toast.timeout) {
-                this.setTimeout(toast);
+                this._setTimeout(toast);
             }
         });
+        if (this.position) {
+            let notFound:boolean = true;
+            for (var i = 0; i < ToastyContainer.POSITIONS.length; i++) {
+                if (ToastyContainer.POSITIONS[i] === this.position) {
+                    notFound = false;
+                    break;
+                }
+            }
+            if (notFound) {
+                // Position was wrong - clear it here to use the one from config.
+                this.position = this.config.position;
+            }
+        } else {
+            this.position = this.config.position;
+        }
+        this.position = 'toasty-position-' + this.position;
     }
 
     /**
-     * On ng-click="close", remove the specific toast
+     * Event listener of 'closeToast' event comes from ToastyComponent.
+     * This method removes ToastComponent assosiated with this Toast.
      */
     closeToast(toast:Toast) {
         this.clear(toast.id);
     }
 
-    // On ng-click="close", remove the specific toast
+    /**
+     * Event listener of 'clickOnToast'event comes from ToastyComponent.
+     * This method invokes onClick method of Toast.
+     * It can removes ToastComponent assosiated with this Toast if clickToClose of Toast was set.
+     */
     clickOnToast(toast:Toast) {
         //scope.$broadcast('toasty-clicked', toast);
         if (toast.onClick && isFunction(toast.onClick))
@@ -89,7 +121,7 @@ export class ToastyContainer implements OnInit {
 
     // Custom setTimeout function for specific
     // setTimeouts on individual toasts
-    setTimeout(toast:Toast) {
+    private _setTimeout(toast:Toast) {
         window.setTimeout(() => {
             console.log('clear', toast.id);
             this.clear(toast.id);

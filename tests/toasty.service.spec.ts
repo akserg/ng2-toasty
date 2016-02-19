@@ -11,7 +11,7 @@ import {
 import {Observable} from 'rxjs/Observable';
 
 import {ToastyConfig} from '../src/toasty.config';
-import {ToastyService, Toast, ToastyOptions} from '../src/toasty.service';
+import {ToastyService, Toast, ToastOptions} from '../src/toasty.service';
 
 export function main() {
     describe('ToastyService', () => {
@@ -21,23 +21,23 @@ export function main() {
                 ToastyService, ToastyConfig
             ];
         });
-  
-        it('is defined', 
+
+        it('is defined',
             inject([ToastyService], (service:ToastyService) => {
                 expect(ToastyService).toBeDefined();
                 expect(service instanceof ToastyService).toBeTruthy();
             })
         );
 
-        it('should return Observable from getToasts method', 
+        it('should return Observable from getToasts method',
             inject([ToastyService], (service:ToastyService) => {
                 expect(service.getToasts instanceof Observable);
             })
         );
-        
+
         describe('create default toasty', () => {
-        
-            it('with string title', 
+
+            it('with string title',
                 inject([ToastyService], (service:ToastyService) => {
                     // We listen our service to recieve new toasts from it
                     service.getToasts().subscribe((toast:Toast) => {
@@ -59,8 +59,8 @@ export function main() {
                     service.default('Hi');
                 })
             );
-            
-            it('with number title', 
+
+            it('with number title',
                 inject([ToastyService], (service:ToastyService) => {
                     // We listen our service to recieve new toasts from it
                     service.getToasts().subscribe((toast:Toast) => {
@@ -82,16 +82,13 @@ export function main() {
                     service.default(1000);
                 })
             );
-            
-            it('with ToastyOptions', 
+
+            it('with ToastyOptions',
                 inject([ToastyService], (service:ToastyService) => {
                     // Create options
-                    var options:ToastyOptions = {
+                    var options:ToastOptions = {
                         title: 'Title',
                         msg: 'message',
-                        // onAdd?:Function;
-                        // onRemove?:Function;
-                        // onClick?:Function;
                     };
                     // We listen our service to recieve new toasts from it
                     service.getToasts().subscribe((toast:Toast) => {
@@ -113,11 +110,11 @@ export function main() {
                     service.default(options);
                 })
             );
-            
-            it('and call onAdd function', 
+
+            it('and call onAdd function',
                 inject([ToastyService], (service:ToastyService) => {
                     // Create options
-                    var options:ToastyOptions = {
+                    var options:ToastOptions = {
                         title: 'Title',
                         msg: 'message',
                         onAdd: (toast:Toast) => {
@@ -136,8 +133,6 @@ export function main() {
                             expect(toast.onRemove).toBeNull();
                             expect(toast.onClick).toBeNull();
                         }
-                        // onRemove?:Function;
-                        // onClick?:Function;
                     };
                     // We listen our service to recieve new toasts from it
                     service.getToasts().subscribe((toast:Toast) => {});
@@ -145,10 +140,10 @@ export function main() {
                 })
             );
         });
-        
-        
+
+
         describe('create toasty', () => {
-            it('of info type', 
+            it('of info type',
                 inject([ToastyService], (service:ToastyService) => {
                     // We listen our service to recieve new toasts from it
                     service.getToasts().subscribe((toast:Toast) => {
@@ -170,8 +165,8 @@ export function main() {
                     service.info('Hi');
                 })
             );
-            
-            it('of success type', 
+
+            it('of success type',
                 inject([ToastyService], (service:ToastyService) => {
                     // We listen our service to recieve new toasts from it
                     service.getToasts().subscribe((toast:Toast) => {
@@ -193,8 +188,8 @@ export function main() {
                     service.success('Hi');
                 })
             );
-            
-            it('of wait type', 
+
+            it('of wait type',
                 inject([ToastyService], (service:ToastyService) => {
                     // We listen our service to recieve new toasts from it
                     service.getToasts().subscribe((toast:Toast) => {
@@ -216,8 +211,8 @@ export function main() {
                     service.wait('Hi');
                 })
             );
-            
-            it('of error type', 
+
+            it('of error type',
                 inject([ToastyService], (service:ToastyService) => {
                     // We listen our service to recieve new toasts from it
                     service.getToasts().subscribe((toast:Toast) => {
@@ -239,8 +234,8 @@ export function main() {
                     service.error('Hi');
                 })
             );
-            
-            it('of warning type', 
+
+            it('of warning type',
                 inject([ToastyService], (service:ToastyService) => {
                     // We listen our service to recieve new toasts from it
                     service.getToasts().subscribe((toast:Toast) => {
@@ -265,9 +260,9 @@ export function main() {
         });
 
         describe('create toasty', () => {
-            it('of material theme', 
+            it('of material theme',
                 inject([ToastyService], (service:ToastyService) => {
-                    var options:ToastyOptions = {
+                    var options:ToastOptions = {
                         title: 'Title',
                         msg: 'message',
                         theme: 'material'
@@ -292,10 +287,10 @@ export function main() {
                     service.default(options);
                 })
             );
-            
-            it('of bootstrap theme', 
+
+            it('of bootstrap theme',
                 inject([ToastyService], (service:ToastyService) => {
-                    var options:ToastyOptions = {
+                    var options:ToastOptions = {
                         title: 'Title',
                         msg: 'message',
                         theme: 'bootstrap'

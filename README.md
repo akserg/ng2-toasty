@@ -40,3 +40,5 @@ bootstrap(AppComponent, [
 })
 export class AppComponent {}
 ```
+
+Inspired by [angular-toasty](https://github.com/teamfa/angular-toasty)
