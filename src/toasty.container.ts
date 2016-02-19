@@ -13,8 +13,8 @@ import {ToastyComponent} from './toasty.component';
     encapsulation: ViewEncapsulation.None,
     directives: [CORE_DIRECTIVES, ToastyComponent],
     template: `
-    <div id="toasty" ng-class="[position]">
-        <ng2-toast *ngFor="#toast of toasts" [toast]="toast"></ng2-toast>
+    <div id="toasty" [ngClass]="[position]">
+        <ng2-toast *ngFor="#toast of toasts" [toast]="toast" (closeToast)="closeToast(toast)" (clickOnToast)="clickOnToast(toast)"></ng2-toast>
     </div>`
 })
 export class ToastyContainer implements OnInit {
@@ -49,47 +49,49 @@ export class ToastyContainer implements OnInit {
     /**
      * On ng-click="close", remove the specific toast
      */
-    close($event:any, id:number) {
-        $event.preventDefaults();
-        this.clear(id);
+    closeToast(toast:Toast) {
+        this.clear(toast.id);
     }
 
     // On ng-click="close", remove the specific toast
-    clickToasty(toast:Toast) {
+    clickOnToast(toast:Toast) {
         //scope.$broadcast('toasty-clicked', toast);
         if (toast.onClick && isFunction(toast.onClick))
-            toast.onClick.call(toast);
+            toast.onClick.call(this, toast);
         if (toast.clickToClose)
             this.clear(toast.id);
     }
 
-    // Clear all, or indivudally toast
+    // Clear indivudally toast
     clear(id:number) {
-        if (!id) {
-            this.toasts.forEach((value: any, key: number) => {
-                if (value.onRemove && isFunction(value.onRemove))
-                    value.onRemove.call(this.toasts[key]);
-            });
-            this.toasts = [];
-            //scope.$broadcast('toasty-cleared');
-        } else {
+        if (id) {
             this.toasts.forEach((value: any, key: number) => {
                 if (value.id === id) {
                     //scope.$broadcast('toasty-cleared', scope.toasty[key]);
                     if (value.onRemove && isFunction(value.onRemove))
-                        value.onRemove.call(this.toasts[key]);
+                        value.onRemove.call(this, value);
                     this.toasts.splice(key, 1);
-                    // if(!scope.$$phase)
-                    //     scope.$digest();
                 }
             });
+        } else {
+            throw new Error('Please provide id of Toast to close');
         }
+    }
+
+    // Clear all toasts
+    clearAll(id:number) {
+        this.toasts.forEach((value: any, key: number) => {
+            if (value.onRemove && isFunction(value.onRemove))
+                value.onRemove.call(this, value);
+        });
+        this.toasts = [];
     }
 
     // Custom setTimeout function for specific
     // setTimeouts on individual toasts
     setTimeout(toast:Toast) {
         window.setTimeout(() => {
+            console.log('clear', toast.id);
             this.clear(toast.id);
         }, toast.timeout);
     }

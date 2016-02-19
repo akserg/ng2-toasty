@@ -4,7 +4,8 @@
   "scripts": {
     "test": "tsc && karma start",
     "test-watch": "tsc && karma start --no-single-run --auto-watch",
-    "prepublish": "typings install && tsc && node make.js"
+    "prepublish": "typings install && tsc && node make.js",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
     "type": "git",
@@ -46,6 +47,7 @@
     "rxjs": "5.0.0-beta.0",
     "systemjs": "~0.19.6",
     "systemjs-builder": "^0.15.6",
+    "semantic-release": "~4.3.5",
     "tsd": "^0.6.5",
     "typescript": "~1.7.3",
     "typings": "^0.6.8",

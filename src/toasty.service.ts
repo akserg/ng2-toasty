@@ -32,7 +32,7 @@ export interface Toast {
     onRemove:Function;
     onClick:Function;
 
-    interact:boolean;
+    interact?:boolean;
     timeout?:number;
 }
 
@@ -161,7 +161,7 @@ export class ToastyService {
             onClick: toastyOptions.onClick && isFunction(toastyOptions.onClick) ? toastyOptions.onClick : null
         };
 
-        console.log('Toast', toast);
+        //console.log('Toast', toast);
 
         // Push up a new toast item
         this.toastsSubscriber.next(toast);
@@ -177,7 +177,7 @@ export class ToastyService {
         // If there's a timeout individually or globally,
         // set the toast to timeout
         if (toastyOptions.timeout) {
-            toast.timeout = toastyOptions.timeout || this.config.timeout; 
+            toast.timeout = toastyOptions.timeout || this.config.timeout;
         }
 
     }
@@ -197,7 +197,7 @@ export class ToastyService {
     trustAsHtml(input:string):string {
         return input;
     }
-    
+
     // On new rootScope toasty-new broadcast
     // scope.$on('toasty-new', function(event, data) {
     //     var config = data.config;

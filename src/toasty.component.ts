@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from 'angular2/core';
+import {Component, Input, OnInit, Output, EventEmitter} from 'angular2/core';
 import {CORE_DIRECTIVES} from 'angular2/common';
 
 import {ToastyConfig} from './toasty.config';
@@ -24,11 +24,13 @@ import {Toast} from './toasty.service';
 export class ToastyComponent implements OnInit {
 
     @Input() toast:Toast;
+    @Output('closeToast') closeToastEvent = new EventEmitter();
+    @Output('clickOnToast') clickOnToastEvent = new EventEmitter();
 
     constructor() {}
 
     ngOnInit(): any {
-        console.log('toast', this.toast);
+        // console.log('toast', this.toast);
     }
 
     setClasses() {
@@ -44,13 +46,15 @@ export class ToastyComponent implements OnInit {
      * On ng-click="close", remove the specific toast
      */
     close($event:any) {
-
+        $event.preventDefaults();
+        this.closeToastEvent.emit('closeToastEvent');
     }
 
     /**
      * On ng-click="close", remove the specific toast
      */
     clickToasty($event:any) {
-
+        $event.preventDefaults();
+        this.clickOnToastEvent.emit('clickOnToastEvent');
     }
 }
