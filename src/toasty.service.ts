@@ -1,3 +1,7 @@
+// Copyright (C) 2016 Sergey Akopkokhyants
+// This project is licensed under the terms of the MIT license.
+// https://github.com/akserg/ng2-toasty
+
 import {Injectable} from 'angular2/core';
 import {isString, isNumber, isFunction} from 'angular2/src/facade/lang';
 
@@ -12,26 +16,21 @@ import {ToastyConfig} from './toasty.config';
 export interface ToastOptions {
     title: string;
     msg?:string;
-    type?:string;
+    showClose?:boolean;
     theme?:string;
+    timeout?:number;
     onAdd?:Function;
     onRemove?:Function;
-    onClick?:Function;
-    timeout?:number;
 }
 
 /**
  * Structrure of Toast
  */
-export interface Toast {
+export interface ToastData {
     id:number;
     title:string;
     msg:string;
     showClose:boolean;
-    clickToClose:boolean;
-    sound:boolean;
-    shake:string;
-    html:string;
     type: string;
     theme:string;
     timeout:number;
@@ -50,31 +49,41 @@ export class ToastyService {
     // Allowed THEMES
     static THEMES: Array<string> = ['default', 'material', 'bootstrap'];
 
-    private toastsObservable:Observable<Toast>;
-    private toastsSubscriber: Subscriber<Toast>;
+    private toastsObservable:Observable<ToastData>;
+    private toastsSubscriber: Subscriber<ToastData>;
+    
+    private clearObservable:Observable<void>;
+    private clearSubscriber: Subscriber<void>;
 
     constructor(private config:ToastyConfig) {
-        this.toastsObservable = new Observable((subscriber:Subscriber<Toast>) => {
+        this.toastsObservable = new Observable((subscriber:Subscriber<ToastData>) => {
             this.toastsSubscriber = subscriber;
+        });
+        this.clearObservable = new Observable<void>((subscriber:Subscriber<void>) => {
+            this.clearSubscriber = subscriber;
         });
     }
 
     /**
      * Get list of toats
      */
-    getToasts():Observable<Toast> {
+    getToasts():Observable<ToastData> {
         return this.toastsObservable;
+    }
+    
+    getClear():Observable<void> {
+        return this.clearObservable;
     }
 
     /**
-     * Create Toasty of a default type
+     * Create Toast of a default type
      */
     default(options:ToastOptions|string|number):void {
         this.add(options, 'default');
     }
 
     /**
-     * Create Toasty of default type
+     * Create Toast of default type
      * @param  {object} options Individual toasty config overrides
      */
     info(options:ToastOptions|string|number):void {
@@ -82,7 +91,7 @@ export class ToastyService {
     }
 
     /**
-     * Create Toasty of success type
+     * Create Toast of success type
      * @param  {object} options Individual toasty config overrides
      */
     success(options:ToastOptions|string|number):void {
@@ -90,7 +99,7 @@ export class ToastyService {
     }
 
     /**
-     * Create Toasty of wait type
+     * Create Toast of wait type
      * @param  {object} options Individual toasty config overrides
      */
     wait(options:ToastOptions|string|number):void {
@@ -98,7 +107,7 @@ export class ToastyService {
     }
 
     /**
-     * Create Toasty of error type
+     * Create Toast of error type
      * @param  {object} options Individual toasty config overrides
      */
     error(options:ToastOptions|string|number):void {
@@ -106,7 +115,7 @@ export class ToastyService {
     }
 
     /**
-     * Create Toasty of warning type
+     * Create Toast of warning type
      * @param  {object} options Individual toasty config overrides
      */
     warning(options:ToastOptions|string|number):void {
@@ -127,20 +136,19 @@ export class ToastyService {
         }
 
 		if (!toastyOptions || !toastyOptions.title && !toastyOptions.msg) {
-			console.error('ng2-toasty: No toast title or message specified!');
-		} else {
-			toastyOptions.type = type || 'default';
+			throw new Error('ng2-toasty: No toast title or message specified!');
 		}
+        
+        type = type || 'default';
 
         // Set a unique counter for an id
         this.uniqueCounter++;
 
         // Set the local vs global config items
-        var sound = this.checkConfigItem(this.config, toastyOptions, 'sound');
-        var showClose = this.checkConfigItem(this.config, toastyOptions, 'showClose');
-        var clickToClose = this.checkConfigItem(this.config, toastyOptions, 'clickToClose');
-        var html = this.checkConfigItem(this.config, toastyOptions, 'html');
-        var shake = this.checkConfigItem(this.config, toastyOptions, 'shake');
+        var showClose = this._checkConfigItem(this.config, toastyOptions, 'showClose');
+        var clickToClose = this._checkConfigItem(this.config, toastyOptions, 'clickToClose');
+        var html = this._checkConfigItem(this.config, toastyOptions, 'html');
+        var shake = this._checkConfigItem(this.config, toastyOptions, 'shake');
 
         // If we have a theme set, make sure it's a valid one
         var theme:string;
@@ -150,20 +158,15 @@ export class ToastyService {
             theme = this.config.theme;
         }
 
-        var toast:Toast = <Toast>{
+        var toast:ToastData = <ToastData>{
             id: this.uniqueCounter,
-            title: html ? this.trustAsHtml(toastyOptions.title) : toastyOptions.title,
-            msg: html ? this.trustAsHtml(toastyOptions.msg) : toastyOptions.msg,
+            title: html ? this._trustAsHtml(toastyOptions.title) : toastyOptions.title,
+            msg: html ? this._trustAsHtml(toastyOptions.msg) : toastyOptions.msg,
             showClose: showClose,
-            clickToClose: clickToClose,
-            sound: sound,
-            shake: shake ? 'toasty-shake' : '',
-            html: html,
-            type: 'toasty-type-' + toastyOptions.type,
+            type: 'toasty-type-' + type,
             theme: 'toasty-theme-' + theme,
             onAdd: toastyOptions.onAdd && isFunction(toastyOptions.onAdd) ? toastyOptions.onAdd : null,
-            onRemove: toastyOptions.onRemove && isFunction(toastyOptions.onRemove) ? toastyOptions.onRemove : null,
-            onClick: toastyOptions.onClick && isFunction(toastyOptions.onClick) ? toastyOptions.onClick : null
+            onRemove: toastyOptions.onRemove && isFunction(toastyOptions.onRemove) ? toastyOptions.onRemove : null
         };
 
         // If there's a timeout individually or globally,
@@ -176,17 +179,25 @@ export class ToastyService {
 
 
         // Push up a new toast item
-        this.toastsSubscriber.next(toast);
-
-        // If we have a onAdd function, call it here
-        if (toastyOptions.onAdd && isFunction(toastyOptions.onAdd)) {
-            toastyOptions.onAdd.call(this, toast);
-        }
+        try {
+            this.toastsSubscriber.next(toast);
+            // If we have a onAdd function, call it here
+            if (toastyOptions.onAdd && isFunction(toastyOptions.onAdd)) {
+                toastyOptions.onAdd.call(this, toast);
+            }
+        } catch (e) {
+            console.log('May be you forget add <ng2-toasty/> to your html?');
+        } 
+    }
+    
+    // Clear all toasts
+    clearAll() {
+        this.clearSubscriber.next();
     }
 
     // Checks whether the local option is set, if not,
     // checks the global config
-    checkConfigItem(config:any, options:any, property:string) {
+    private _checkConfigItem(config:any, options:any, property:string) {
         if (options[property] === false) {
             return false;
         } else if (!options[property]) {
@@ -196,7 +207,7 @@ export class ToastyService {
         }
     }
 
-    trustAsHtml(input:string):string {
+    private _trustAsHtml(input:string):string {
         return input;
     }
 }

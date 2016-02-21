@@ -16,29 +16,59 @@ System.config({
 });
 ```
 
-Finally, you can use ng2-toasty in your Angular 2 project:
-- Instantiate `Ng2ToastyService` in the bootstrap of your application;
-- Add `Ng2Toasty` to the "directives" property of your application component;
-- Add `ng2-toasty` tag in template of your application component.
+Finally, you can use *ng2-toasty* in your Angular 2 project:
+- Import `ToastyService, ToastyConfig, Toasty, ToastOptions` from `ng2-toasty/ng2-toasty`
+- Instantiate `ToastyService, ToastyConfig` in the bootstrap of your application;
+- Add `Toasty` to the "directives" property of your application component;
+- Add `<ng2-toasty></ng2-toasty>` tag in template of your application component.
 
 ```js
 import {Component} from 'angular2/core';
-import {Ng2ToastyService, Ng2Toasty} from 'ng2-toasty/ng2-toasty';
+import {ToastyService, ToastyConfig, Toasty, ToastOptions, ToastData} from 'ng2-toasty/ng2-toasty';
 import {bootstrap} from 'angular2/platform/browser';
 
 bootstrap(AppComponent, [
-    Ng2ToastyService // It is required to have 1 unique instance of your service
+    ToastyService, ToastyConfig // It is required to have 1 unique instance of your service
 ]);
 
 @Component({
     selector: 'app',
-    directives: [Ng2Toasty],
+    directives: [Toasty],
     template: `
         <div>Hello world</div>
+        <button (click)="addToast()">Add Toast</button>
         <ng2-toasty></ng2-toasty>
     `
 })
-export class AppComponent {}
+export class AppComponent {
+    
+    constructor(private toastyService:ToastyService) { }
+    
+    addToast() {
+        // Just add default Toast with title only
+        this.toastyService.default('Hi there');
+        // Or create the instance of ToastOptions
+        var toastOptions:ToastOptions = {
+            title: "My title",
+            msg: "The message",
+            showClose: true,
+            timeout: 5000,
+            theme: 'default'
+            onAdd: (toast:ToastData) => {
+                console.log('Toast ' + toast.id + ' has been added!');
+            },
+            onRemove: function(toast:ToastData) {
+                console.log('Toast ' + toast.id + ' has been removed!');
+            }
+        };
+        // Add see all possible types in one shot
+        this.toastyService.info(toastOptions);
+        this.toastyService.success(toastOptions);
+        this.toastyService.wait(toastOptions);
+        this.toastyService.error(toastOptions);
+        this.toastyService.warning(toastOptions);
+    }
+}
 ```
 
 Inspired by [angular-toasty](https://github.com/teamfa/angular-toasty)

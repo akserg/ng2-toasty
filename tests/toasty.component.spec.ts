@@ -17,23 +17,19 @@ from 'angular2/platform/testing/browser';
 
 import {Observable} from 'rxjs/Observable';
 
-import {Toast} from '../src/toasty.service';
-import {ToastyComponent} from '../src/toasty.component';
+import {ToastData} from '../src/toasty.service';
+import {Toast} from '../src/toasty.component';
 
 export function main() {
     describe('ToastyComponent', () => {
 
         let componentFixture:ComponentFixture;
 
-        const toast:Toast = {
+        const toast:ToastData = {
             id:1,
             title:null,
             msg:null,
             showClose:false,
-            clickToClose:false,
-            sound:false,
-            shake:'toasty-shake',
-            html:null,
             type: 'toasty-type-default',
             theme:'toasty-theme-default',
             timeout: null,
@@ -48,7 +44,7 @@ export function main() {
 
 
          beforeEach(injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
-            return tcb.createAsync(ToastyComponent).then((cf:ComponentFixture) => {
+            return tcb.createAsync(Toast).then((cf:ComponentFixture) => {
                 componentFixture = cf;
                 componentFixture.componentInstance.toast = toast;
                 componentFixture.detectChanges();
@@ -66,7 +62,6 @@ export function main() {
             expect(className.indexOf('toast')).toBeGreaterThan(-1);
             expect(className.indexOf('toasty-type-default')).toBeGreaterThan(-1);
             expect(className.indexOf('toasty-theme-default')).toBeGreaterThan(-1);
-            expect(className.indexOf('toasty-shake')).toBeGreaterThan(-1);
         });
 
         it('should show close button', () => {

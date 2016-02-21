@@ -11,7 +11,7 @@ import {
 import {Observable} from 'rxjs/Observable';
 
 import {ToastyConfig} from '../src/toasty.config';
-import {ToastyService, Toast, ToastOptions} from '../src/toasty.service';
+import {ToastyService, ToastData, ToastOptions} from '../src/toasty.service';
 
 export function main() {
     describe('ToastyService', () => {
@@ -40,21 +40,16 @@ export function main() {
             it('with string title',
                 inject([ToastyService], (service:ToastyService) => {
                     // We listen our service to recieve new toasts from it
-                    service.getToasts().subscribe((toast:Toast) => {
+                    service.getToasts().subscribe((toast:ToastData) => {
                         expect(toast).not.toBeNull();
                         expect(toast.id).not.toBeNull();
                         expect(toast.title).toBe('Hi');
                         expect(toast.msg).not.toBeDefined();
                         expect(toast.showClose).toBe(true);
-                        expect(toast.clickToClose).toBe(false);
-                        expect(toast.sound).toBe(true);
-                        expect(toast.shake).toBe('');
-                        expect(toast.html).toBe(false);
                         expect(toast.type).toBe('toasty-type-default');
                         expect(toast.theme).toBe('toasty-theme-default');
                         expect(toast.onAdd).toBeNull();
                         expect(toast.onRemove).toBeNull();
-                        expect(toast.onClick).toBeNull();
                     });
                     service.default('Hi');
                 })
@@ -63,21 +58,16 @@ export function main() {
             it('with number title',
                 inject([ToastyService], (service:ToastyService) => {
                     // We listen our service to recieve new toasts from it
-                    service.getToasts().subscribe((toast:Toast) => {
+                    service.getToasts().subscribe((toast:ToastData) => {
                         expect(toast).not.toBeNull();
                         expect(toast.id).not.toBeNull();
                         expect(toast.title).toBe('1000');
                         expect(toast.msg).not.toBeDefined();
                         expect(toast.showClose).toBe(true);
-                        expect(toast.clickToClose).toBe(false);
-                        expect(toast.sound).toBe(true);
-                        expect(toast.shake).toBe('');
-                        expect(toast.html).toBe(false);
                         expect(toast.type).toBe('toasty-type-default');
                         expect(toast.theme).toBe('toasty-theme-default');
                         expect(toast.onAdd).toBeNull();
                         expect(toast.onRemove).toBeNull();
-                        expect(toast.onClick).toBeNull();
                     });
                     service.default(1000);
                 })
@@ -91,21 +81,16 @@ export function main() {
                         msg: 'message',
                     };
                     // We listen our service to recieve new toasts from it
-                    service.getToasts().subscribe((toast:Toast) => {
+                    service.getToasts().subscribe((toast:ToastData) => {
                         expect(toast).not.toBeNull();
                         expect(toast.id).not.toBeNull();
                         expect(toast.title).toBe(options.title);
                         expect(toast.msg).toBe(options.msg);
                         expect(toast.showClose).toBe(true);
-                        expect(toast.clickToClose).toBe(false);
-                        expect(toast.sound).toBe(true);
-                        expect(toast.shake).toBe('');
-                        expect(toast.html).toBe(false);
                         expect(toast.type).toBe('toasty-type-default');
                         expect(toast.theme).toBe('toasty-theme-default');
                         expect(toast.onAdd).toBeNull();
                         expect(toast.onRemove).toBeNull();
-                        expect(toast.onClick).toBeNull();
                     });
                     service.default(options);
                 })
@@ -117,25 +102,20 @@ export function main() {
                     var options:ToastOptions = {
                         title: 'Title',
                         msg: 'message',
-                        onAdd: (toast:Toast) => {
+                        onAdd: (toast:ToastData) => {
                             expect(toast).toBeDefined();
                             expect(toast.id).not.toBeNull();
                             expect(toast.title).toBe(options.title);
                             expect(toast.msg).toBe(options.msg);
                             expect(toast.showClose).toBe(true);
-                            expect(toast.clickToClose).toBe(false);
-                            expect(toast.sound).toBe(true);
-                            expect(toast.shake).toBe('');
-                            expect(toast.html).toBe(false);
                             expect(toast.type).toBe('toasty-type-default');
                             expect(toast.theme).toBe('toasty-theme-default');
                             expect(toast.onAdd).not.toBeNull();
                             expect(toast.onRemove).toBeNull();
-                            expect(toast.onClick).toBeNull();
                         }
                     };
                     // We listen our service to recieve new toasts from it
-                    service.getToasts().subscribe((toast:Toast) => {});
+                    service.getToasts().subscribe((toast:ToastData) => {});
                     service.default(options);
                 })
             );
@@ -146,21 +126,16 @@ export function main() {
             it('of info type',
                 inject([ToastyService], (service:ToastyService) => {
                     // We listen our service to recieve new toasts from it
-                    service.getToasts().subscribe((toast:Toast) => {
+                    service.getToasts().subscribe((toast:ToastData) => {
                         expect(toast).not.toBeNull();
                         expect(toast.id).not.toBeNull();
                         expect(toast.title).toBe('Hi');
                         expect(toast.msg).not.toBeDefined();
                         expect(toast.showClose).toBe(true);
-                        expect(toast.clickToClose).toBe(false);
-                        expect(toast.sound).toBe(true);
-                        expect(toast.shake).toBe('');
-                        expect(toast.html).toBe(false);
                         expect(toast.type).toBe('toasty-type-info');
                         expect(toast.theme).toBe('toasty-theme-default');
                         expect(toast.onAdd).toBeNull();
                         expect(toast.onRemove).toBeNull();
-                        expect(toast.onClick).toBeNull();
                     });
                     service.info('Hi');
                 })
@@ -169,21 +144,16 @@ export function main() {
             it('of success type',
                 inject([ToastyService], (service:ToastyService) => {
                     // We listen our service to recieve new toasts from it
-                    service.getToasts().subscribe((toast:Toast) => {
+                    service.getToasts().subscribe((toast:ToastData) => {
                         expect(toast).not.toBeNull();
                         expect(toast.id).not.toBeNull();
                         expect(toast.title).toBe('Hi');
                         expect(toast.msg).not.toBeDefined();
                         expect(toast.showClose).toBe(true);
-                        expect(toast.clickToClose).toBe(false);
-                        expect(toast.sound).toBe(true);
-                        expect(toast.shake).toBe('');
-                        expect(toast.html).toBe(false);
                         expect(toast.type).toBe('toasty-type-success');
                         expect(toast.theme).toBe('toasty-theme-default');
                         expect(toast.onAdd).toBeNull();
                         expect(toast.onRemove).toBeNull();
-                        expect(toast.onClick).toBeNull();
                     });
                     service.success('Hi');
                 })
@@ -192,21 +162,16 @@ export function main() {
             it('of wait type',
                 inject([ToastyService], (service:ToastyService) => {
                     // We listen our service to recieve new toasts from it
-                    service.getToasts().subscribe((toast:Toast) => {
+                    service.getToasts().subscribe((toast:ToastData) => {
                         expect(toast).not.toBeNull();
                         expect(toast.id).not.toBeNull();
                         expect(toast.title).toBe('Hi');
                         expect(toast.msg).not.toBeDefined();
                         expect(toast.showClose).toBe(true);
-                        expect(toast.clickToClose).toBe(false);
-                        expect(toast.sound).toBe(true);
-                        expect(toast.shake).toBe('');
-                        expect(toast.html).toBe(false);
                         expect(toast.type).toBe('toasty-type-wait');
                         expect(toast.theme).toBe('toasty-theme-default');
                         expect(toast.onAdd).toBeNull();
                         expect(toast.onRemove).toBeNull();
-                        expect(toast.onClick).toBeNull();
                     });
                     service.wait('Hi');
                 })
@@ -215,21 +180,16 @@ export function main() {
             it('of error type',
                 inject([ToastyService], (service:ToastyService) => {
                     // We listen our service to recieve new toasts from it
-                    service.getToasts().subscribe((toast:Toast) => {
+                    service.getToasts().subscribe((toast:ToastData) => {
                         expect(toast).not.toBeNull();
                         expect(toast.id).not.toBeNull();
                         expect(toast.title).toBe('Hi');
                         expect(toast.msg).not.toBeDefined();
                         expect(toast.showClose).toBe(true);
-                        expect(toast.clickToClose).toBe(false);
-                        expect(toast.sound).toBe(true);
-                        expect(toast.shake).toBe('');
-                        expect(toast.html).toBe(false);
                         expect(toast.type).toBe('toasty-type-error');
                         expect(toast.theme).toBe('toasty-theme-default');
                         expect(toast.onAdd).toBeNull();
                         expect(toast.onRemove).toBeNull();
-                        expect(toast.onClick).toBeNull();
                     });
                     service.error('Hi');
                 })
@@ -238,21 +198,16 @@ export function main() {
             it('of warning type',
                 inject([ToastyService], (service:ToastyService) => {
                     // We listen our service to recieve new toasts from it
-                    service.getToasts().subscribe((toast:Toast) => {
+                    service.getToasts().subscribe((toast:ToastData) => {
                         expect(toast).not.toBeNull();
                         expect(toast.id).not.toBeNull();
                         expect(toast.title).toBe('Hi');
                         expect(toast.msg).not.toBeDefined();
                         expect(toast.showClose).toBe(true);
-                        expect(toast.clickToClose).toBe(false);
-                        expect(toast.sound).toBe(true);
-                        expect(toast.shake).toBe('');
-                        expect(toast.html).toBe(false);
                         expect(toast.type).toBe('toasty-type-warning');
                         expect(toast.theme).toBe('toasty-theme-default');
                         expect(toast.onAdd).toBeNull();
                         expect(toast.onRemove).toBeNull();
-                        expect(toast.onClick).toBeNull();
                     });
                     service.warning('Hi');
                 })
@@ -268,21 +223,16 @@ export function main() {
                         theme: 'material'
                     }
                     // We listen our service to recieve new toasts from it
-                    service.getToasts().subscribe((toast:Toast) => {
+                    service.getToasts().subscribe((toast:ToastData) => {
                         expect(toast).not.toBeNull();
                         expect(toast.id).not.toBeNull();
                         expect(toast.title).toBe(options.title);
                         expect(toast.msg).toBe(options.msg);
                         expect(toast.showClose).toBe(true);
-                        expect(toast.clickToClose).toBe(false);
-                        expect(toast.sound).toBe(true);
-                        expect(toast.shake).toBe('');
-                        expect(toast.html).toBe(false);
                         expect(toast.type).toBe('toasty-type-default');
                         expect(toast.theme).toBe('toasty-theme-material');
                         expect(toast.onAdd).toBeNull();
                         expect(toast.onRemove).toBeNull();
-                        expect(toast.onClick).toBeNull();
                     });
                     service.default(options);
                 })
@@ -296,21 +246,16 @@ export function main() {
                         theme: 'bootstrap'
                     }
                     // We listen our service to recieve new toasts from it
-                    service.getToasts().subscribe((toast:Toast) => {
+                    service.getToasts().subscribe((toast:ToastData) => {
                         expect(toast).not.toBeNull();
                         expect(toast.id).not.toBeNull();
                         expect(toast.title).toBe(options.title);
                         expect(toast.msg).toBe(options.msg);
                         expect(toast.showClose).toBe(true);
-                        expect(toast.clickToClose).toBe(false);
-                        expect(toast.sound).toBe(true);
-                        expect(toast.shake).toBe('');
-                        expect(toast.html).toBe(false);
                         expect(toast.type).toBe('toasty-type-default');
                         expect(toast.theme).toBe('toasty-theme-bootstrap');
                         expect(toast.onAdd).toBeNull();
                         expect(toast.onRemove).toBeNull();
-                        expect(toast.onClick).toBeNull();
                     });
                     service.default(options);
                 })

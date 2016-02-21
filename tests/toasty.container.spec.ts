@@ -18,8 +18,8 @@ from 'angular2/platform/testing/browser';
 import {Observable} from 'rxjs/Observable';
 
 import {ToastyConfig} from '../src/toasty.config';
-import {ToastyService, Toast, ToastOptions} from '../src/toasty.service';
-import {ToastyContainer} from '../src/toasty.container';
+import {ToastyService, ToastData, ToastOptions} from '../src/toasty.service';
+import {Toasty} from '../src/toasty.container';
 //import {ToastyComponent} from '../src/toasty.component';
 
 export function main() {
@@ -27,15 +27,11 @@ export function main() {
 
         let componentFixture:ComponentFixture;
 
-        const toast1:Toast = {
+        const toast1:ToastData = {
             id:1,
             title:'title1',
             msg:'message1',
             showClose:false,
-            clickToClose:true,
-            sound:false,
-            shake:'',
-            html:null,
             type: 'toasty-type-default',
             theme:'toasty-theme-default',
             timeout: null,
@@ -44,15 +40,11 @@ export function main() {
             onClick:null
         };
 
-        const toast2:Toast = {
+        const toast2:ToastData = {
             id:2,
             title:'title2',
             msg:'message2',
             showClose:false,
-            clickToClose:false,
-            sound:false,
-            shake:'',
-            html:null,
             type: 'toasty-type-default',
             theme:'toasty-theme-default',
             timeout: null,
@@ -67,7 +59,7 @@ export function main() {
         });
 
         beforeEach(injectAsync([TestComponentBuilder, ToastyService, ToastyConfig], (tcb:TestComponentBuilder) => {
-            return tcb.createAsync(ToastyContainer).then((cf:ComponentFixture) => {
+            return tcb.createAsync(Toasty).then((cf:ComponentFixture) => {
                 componentFixture = cf;
             });
         }));
@@ -134,7 +126,7 @@ export function main() {
 
         it('should call onRemove when clear specific toast by id', () => {
             const element = componentFixture.nativeElement;
-            toast1.onRemove = (toast:Toast) => {
+            toast1.onRemove = (toast:ToastData) => {
                 expect(toast).toBe(toast1);
             };
             componentFixture.componentInstance.toasts.push(toast1);
@@ -149,7 +141,7 @@ export function main() {
 
         it('should clear toast by closeToast method', () => {
             const element = componentFixture.nativeElement;
-            toast1.onRemove = (toast:Toast) => {
+            toast1.onRemove = (toast:ToastData) => {
                 expect(toast).toBe(toast1);
             };
             componentFixture.componentInstance.toasts.push(toast1);
@@ -158,21 +150,6 @@ export function main() {
             expect(element.querySelector('#toasty').children.length).toBe(2);
 
             componentFixture.componentInstance.closeToast(toast1);
-            componentFixture.detectChanges();
-            expect(element.querySelector('#toasty').children.length).toBe(1);
-        });
-
-        it('should call onClick and clear toast by clickOnToast method', () => {
-            const element = componentFixture.nativeElement;
-            toast1.onClick = (toast:Toast) => {
-                expect(toast).toBe(toast1);
-            };
-            componentFixture.componentInstance.toasts.push(toast1);
-            componentFixture.componentInstance.toasts.push(toast2);
-            componentFixture.detectChanges();
-            expect(element.querySelector('#toasty').children.length).toBe(2);
-
-            componentFixture.componentInstance.clickOnToast(toast1);
             componentFixture.detectChanges();
             expect(element.querySelector('#toasty').children.length).toBe(1);
         });

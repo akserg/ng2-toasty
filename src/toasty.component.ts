@@ -1,17 +1,21 @@
+// Copyright (C) 2016 Sergey Akopkokhyants
+// This project is licensed under the terms of the MIT license.
+// https://github.com/akserg/ng2-toasty
+
 import {Component, Input, Output, EventEmitter} from 'angular2/core';
 import {CORE_DIRECTIVES} from 'angular2/common';
 
 import {ToastyConfig} from './toasty.config';
-import {Toast} from './toasty.service';
+import {ToastData} from './toasty.service';
 
 /**
- * This a toast component shows message with title and close button.
+ * A Toast component shows message with title and close button.
  */
 @Component({
     selector: 'ng2-toast',
     directives: [CORE_DIRECTIVES],
     template: `
-        <div class="toast" [ngClass]="[toast.type, toast.theme, toast.shake]" (click)="clickToasty($event)">
+        <div class="toast" [ngClass]="[toast.type, toast.theme]">
             <div *ngIf="toast.showClose" class="close-button" (click)="close($event)"></div>
             <div *ngIf="toast.title || toast.msg" class="toast-text">
                 <span *ngIf="toast.title" class="toast-title">{{toast.title}}</span>
@@ -20,27 +24,17 @@ import {Toast} from './toasty.service';
             </div>
         </div>`
 })
-export class ToastyComponent {
+export class Toast {
 
-    @Input() toast:Toast;
+    @Input() toast:ToastData;
     @Output('closeToast') closeToastEvent = new EventEmitter();
-    @Output('clickOnToast') clickOnToastEvent = new EventEmitter();
 
     /**
      * Event handler invokes when user clicks on close button.
-     * This method emit new event to ToastyContainer to close it.
+     * This method emit new event into ToastyContainer to close it.
      */
     close($event:any) {
-        $event.preventDefaults();
-        this.closeToastEvent.emit('closeToast');
-    }
-
-    /**
-     * Event handler invokes when user clicks on body of ToastyComponent.
-     * This method emit new event to ToastyContainer call method onClick and close it if flag clickToClose set true.
-     */
-    clickToasty($event:any) {
-        $event.preventDefaults();
-        this.clickOnToastEvent.emit('clickOnToast');
+        $event.preventDefault();
+        this.closeToastEvent.next(this.toast);
     }
 }

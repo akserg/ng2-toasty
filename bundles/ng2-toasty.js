@@ -25,13 +25,13 @@ System.registerDynamic("src/toasty.container", ["angular2/core", "angular2/commo
   var toasty_config_1 = $__require('./toasty.config');
   var toasty_service_1 = $__require('./toasty.service');
   var toasty_component_1 = $__require('./toasty.component');
-  var ToastyContainer = (function() {
-    function ToastyContainer(config, toastyService) {
+  var Toasty = (function() {
+    function Toasty(config, toastyService) {
       this.config = config;
       this.toastyService = toastyService;
       this.toasts = [];
     }
-    ToastyContainer.prototype.ngOnInit = function() {
+    Toasty.prototype.ngOnInit = function() {
       var _this = this;
       this.toastyService.getToasts().subscribe(function(toast) {
         if (_this.toasts.length >= _this.config.limit) {
@@ -42,10 +42,13 @@ System.registerDynamic("src/toasty.container", ["angular2/core", "angular2/commo
           _this._setTimeout(toast);
         }
       });
+      this.toastyService.getClear().subscribe(function() {
+        _this.clearAll();
+      });
       if (this.position) {
         var notFound = true;
-        for (var i = 0; i < ToastyContainer.POSITIONS.length; i++) {
-          if (ToastyContainer.POSITIONS[i] === this.position) {
+        for (var i = 0; i < Toasty.POSITIONS.length; i++) {
+          if (Toasty.POSITIONS[i] === this.position) {
             notFound = false;
             break;
           }
@@ -58,16 +61,10 @@ System.registerDynamic("src/toasty.container", ["angular2/core", "angular2/commo
       }
       this.position = 'toasty-position-' + this.position;
     };
-    ToastyContainer.prototype.closeToast = function(toast) {
+    Toasty.prototype.closeToast = function(toast) {
       this.clear(toast.id);
     };
-    ToastyContainer.prototype.clickOnToast = function(toast) {
-      if (toast.onClick && lang_1.isFunction(toast.onClick))
-        toast.onClick.call(this, toast);
-      if (toast.clickToClose)
-        this.clear(toast.id);
-    };
-    ToastyContainer.prototype.clear = function(id) {
+    Toasty.prototype.clear = function(id) {
       var _this = this;
       if (id) {
         this.toasts.forEach(function(value, key) {
@@ -81,7 +78,7 @@ System.registerDynamic("src/toasty.container", ["angular2/core", "angular2/commo
         throw new Error('Please provide id of Toast to close');
       }
     };
-    ToastyContainer.prototype.clearAll = function(id) {
+    Toasty.prototype.clearAll = function() {
       var _this = this;
       this.toasts.forEach(function(value, key) {
         if (value.onRemove && lang_1.isFunction(value.onRemove))
@@ -89,24 +86,24 @@ System.registerDynamic("src/toasty.container", ["angular2/core", "angular2/commo
       });
       this.toasts = [];
     };
-    ToastyContainer.prototype._setTimeout = function(toast) {
+    Toasty.prototype._setTimeout = function(toast) {
       var _this = this;
       window.setTimeout(function() {
         console.log('clear', toast.id);
         _this.clear(toast.id);
       }, toast.timeout);
     };
-    ToastyContainer.POSITIONS = ['bottom-right', 'bottom-left', 'top-right', 'top-left', 'top-center', 'bottom-center'];
-    __decorate([core_1.Input(), __metadata('design:type', String)], ToastyContainer.prototype, "position", void 0);
-    ToastyContainer = __decorate([core_1.Component({
+    Toasty.POSITIONS = ['bottom-right', 'bottom-left', 'top-right', 'top-left', 'top-center', 'bottom-center'];
+    __decorate([core_1.Input(), __metadata('design:type', String)], Toasty.prototype, "position", void 0);
+    Toasty = __decorate([core_1.Component({
       selector: 'ng2-toasty',
       encapsulation: core_1.ViewEncapsulation.None,
-      directives: [common_1.CORE_DIRECTIVES, toasty_component_1.ToastyComponent],
-      template: "\n    <div id=\"toasty\" [ngClass]=\"[position]\">\n        <ng2-toast *ngFor=\"#toast of toasts\" [toast]=\"toast\" (closeToast)=\"closeToast(toast)\" (clickOnToast)=\"clickOnToast(toast)\"></ng2-toast>\n    </div>"
-    }), __metadata('design:paramtypes', [toasty_config_1.ToastyConfig, toasty_service_1.ToastyService])], ToastyContainer);
-    return ToastyContainer;
+      directives: [common_1.CORE_DIRECTIVES, toasty_component_1.Toast],
+      template: "\n    <div id=\"toasty\" [ngClass]=\"[position]\">\n        <ng2-toast *ngFor=\"#toast of toasts\" [toast]=\"toast\" (closeToast)=\"closeToast(toast)\"></ng2-toast>\n    </div>"
+    }), __metadata('design:paramtypes', [toasty_config_1.ToastyConfig, toasty_service_1.ToastyService])], Toasty);
+    return Toasty;
   })();
-  exports.ToastyContainer = ToastyContainer;
+  exports.Toasty = Toasty;
   global.define = __define;
   return module.exports;
 });
@@ -134,30 +131,24 @@ System.registerDynamic("src/toasty.component", ["angular2/core", "angular2/commo
   };
   var core_1 = $__require('angular2/core');
   var common_1 = $__require('angular2/common');
-  var ToastyComponent = (function() {
-    function ToastyComponent() {
+  var Toast = (function() {
+    function Toast() {
       this.closeToastEvent = new core_1.EventEmitter();
-      this.clickOnToastEvent = new core_1.EventEmitter();
     }
-    ToastyComponent.prototype.close = function($event) {
-      $event.preventDefaults();
-      this.closeToastEvent.emit('closeToast');
+    Toast.prototype.close = function($event) {
+      $event.preventDefault();
+      this.closeToastEvent.next(this.toast);
     };
-    ToastyComponent.prototype.clickToasty = function($event) {
-      $event.preventDefaults();
-      this.clickOnToastEvent.emit('clickOnToast');
-    };
-    __decorate([core_1.Input(), __metadata('design:type', Object)], ToastyComponent.prototype, "toast", void 0);
-    __decorate([core_1.Output('closeToast'), __metadata('design:type', Object)], ToastyComponent.prototype, "closeToastEvent", void 0);
-    __decorate([core_1.Output('clickOnToast'), __metadata('design:type', Object)], ToastyComponent.prototype, "clickOnToastEvent", void 0);
-    ToastyComponent = __decorate([core_1.Component({
+    __decorate([core_1.Input(), __metadata('design:type', Object)], Toast.prototype, "toast", void 0);
+    __decorate([core_1.Output('closeToast'), __metadata('design:type', Object)], Toast.prototype, "closeToastEvent", void 0);
+    Toast = __decorate([core_1.Component({
       selector: 'ng2-toast',
       directives: [common_1.CORE_DIRECTIVES],
-      template: "\n        <div class=\"toast\" [ngClass]=\"[toast.type, toast.theme, toast.shake]\" (click)=\"clickToasty($event)\">\n            <div *ngIf=\"toast.showClose\" class=\"close-button\" (click)=\"close($event)\"></div>\n            <div *ngIf=\"toast.title || toast.msg\" class=\"toast-text\">\n                <span *ngIf=\"toast.title\" class=\"toast-title\">{{toast.title}}</span>\n                <br *ngIf=\"toast.title && toast.msg\" />\n                <span *ngIf=\"toast.msg\" class=\"toast-msg\">{{toast.msg}}</span>\n            </div>\n        </div>"
-    }), __metadata('design:paramtypes', [])], ToastyComponent);
-    return ToastyComponent;
+      template: "\n        <div class=\"toast\" [ngClass]=\"[toast.type, toast.theme]\">\n            <div *ngIf=\"toast.showClose\" class=\"close-button\" (click)=\"close($event)\"></div>\n            <div *ngIf=\"toast.title || toast.msg\" class=\"toast-text\">\n                <span *ngIf=\"toast.title\" class=\"toast-title\">{{toast.title}}</span>\n                <br *ngIf=\"toast.title && toast.msg\" />\n                <span *ngIf=\"toast.msg\" class=\"toast-msg\">{{toast.msg}}</span>\n            </div>\n        </div>"
+    }), __metadata('design:paramtypes', [])], Toast);
+    return Toast;
   })();
-  exports.ToastyComponent = ToastyComponent;
+  exports.Toast = Toast;
   global.define = __define;
   return module.exports;
 });
@@ -188,12 +179,8 @@ System.registerDynamic("src/toasty.config", ["angular2/core"], true, function($_
     function ToastyConfig() {
       this.limit = 5;
       this.showClose = true;
-      this.clickToClose = false;
       this.position = 'bottom-right';
       this.timeout = 5000;
-      this.sound = true;
-      this.html = false;
-      this.shake = false;
       this.theme = 'default';
     }
     ToastyConfig = __decorate([core_1.Injectable(), __metadata('design:paramtypes', [])], ToastyConfig);
@@ -237,9 +224,15 @@ System.registerDynamic("src/toasty.service", ["angular2/core", "angular2/src/fac
       this.toastsObservable = new Observable_1.Observable(function(subscriber) {
         _this.toastsSubscriber = subscriber;
       });
+      this.clearObservable = new Observable_1.Observable(function(subscriber) {
+        _this.clearSubscriber = subscriber;
+      });
     }
     ToastyService.prototype.getToasts = function() {
       return this.toastsObservable;
+    };
+    ToastyService.prototype.getClear = function() {
+      return this.clearObservable;
     };
     ToastyService.prototype.default = function(options) {
       this.add(options, 'default');
@@ -267,16 +260,14 @@ System.registerDynamic("src/toasty.service", ["angular2/core", "angular2/src/fac
         toastyOptions = options;
       }
       if (!toastyOptions || !toastyOptions.title && !toastyOptions.msg) {
-        console.error('ng2-toasty: No toast title or message specified!');
-      } else {
-        toastyOptions.type = type || 'default';
+        throw new Error('ng2-toasty: No toast title or message specified!');
       }
+      type = type || 'default';
       this.uniqueCounter++;
-      var sound = this.checkConfigItem(this.config, toastyOptions, 'sound');
-      var showClose = this.checkConfigItem(this.config, toastyOptions, 'showClose');
-      var clickToClose = this.checkConfigItem(this.config, toastyOptions, 'clickToClose');
-      var html = this.checkConfigItem(this.config, toastyOptions, 'html');
-      var shake = this.checkConfigItem(this.config, toastyOptions, 'shake');
+      var showClose = this._checkConfigItem(this.config, toastyOptions, 'showClose');
+      var clickToClose = this._checkConfigItem(this.config, toastyOptions, 'clickToClose');
+      var html = this._checkConfigItem(this.config, toastyOptions, 'html');
+      var shake = this._checkConfigItem(this.config, toastyOptions, 'shake');
       var theme;
       if (toastyOptions.theme) {
         theme = ToastyService.THEMES.indexOf(toastyOptions.theme) > -1 ? toastyOptions.theme : this.config.theme;
@@ -285,14 +276,10 @@ System.registerDynamic("src/toasty.service", ["angular2/core", "angular2/src/fac
       }
       var toast = {
         id: this.uniqueCounter,
-        title: html ? this.trustAsHtml(toastyOptions.title) : toastyOptions.title,
-        msg: html ? this.trustAsHtml(toastyOptions.msg) : toastyOptions.msg,
+        title: html ? this._trustAsHtml(toastyOptions.title) : toastyOptions.title,
+        msg: html ? this._trustAsHtml(toastyOptions.msg) : toastyOptions.msg,
         showClose: showClose,
-        clickToClose: clickToClose,
-        sound: sound,
-        shake: shake ? 'toasty-shake' : '',
-        html: html,
-        type: 'toasty-type-' + toastyOptions.type,
+        type: 'toasty-type-' + type,
         theme: 'toasty-theme-' + theme,
         onAdd: toastyOptions.onAdd && lang_1.isFunction(toastyOptions.onAdd) ? toastyOptions.onAdd : null,
         onRemove: toastyOptions.onRemove && lang_1.isFunction(toastyOptions.onRemove) ? toastyOptions.onRemove : null,
@@ -303,12 +290,19 @@ System.registerDynamic("src/toasty.service", ["angular2/core", "angular2/src/fac
       } else {
         toast.timeout = null;
       }
-      this.toastsSubscriber.next(toast);
-      if (toastyOptions.onAdd && lang_1.isFunction(toastyOptions.onAdd)) {
-        toastyOptions.onAdd.call(this, toast);
+      try {
+        this.toastsSubscriber.next(toast);
+        if (toastyOptions.onAdd && lang_1.isFunction(toastyOptions.onAdd)) {
+          toastyOptions.onAdd.call(this, toast);
+        }
+      } catch (e) {
+        console.log('May be you forget add <ng2-toasty/> to your html?');
       }
     };
-    ToastyService.prototype.checkConfigItem = function(config, options, property) {
+    ToastyService.prototype.clearAll = function() {
+      this.clearSubscriber.next();
+    };
+    ToastyService.prototype._checkConfigItem = function(config, options, property) {
       if (options[property] === false) {
         return false;
       } else if (!options[property]) {
@@ -317,7 +311,7 @@ System.registerDynamic("src/toasty.service", ["angular2/core", "angular2/src/fac
         return true;
       }
     };
-    ToastyService.prototype.trustAsHtml = function(input) {
+    ToastyService.prototype._trustAsHtml = function(input) {
       return input;
     };
     ToastyService.THEMES = ['default', 'material', 'bootstrap'];
@@ -330,6 +324,7 @@ System.registerDynamic("src/toasty.service", ["angular2/core", "angular2/src/fac
 });
 
 System.registerDynamic("ng2-toasty", ["./src/toasty.container", "./src/toasty.component", "./src/toasty.config", "./src/toasty.service"], true, function($__require, exports, module) {
+  "use strict";
   ;
   var global = this,
       __define = global.define;
@@ -350,7 +345,7 @@ System.registerDynamic("ng2-toasty", ["./src/toasty.container", "./src/toasty.co
   Object.defineProperty(exports, "__esModule", {value: true});
   exports.default = {
     providers: [toasty_config_1.ToastyConfig, toasty_service_1.ToastyService],
-    directives: [toasty_container_1.ToastyContainer, toasty_component_1.ToastyComponent]
+    directives: [toasty_container_1.Toasty, toasty_component_1.Toast]
   };
   global.define = __define;
   return module.exports;

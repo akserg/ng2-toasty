@@ -1,3 +1,7 @@
+// Copyright (C) 2016 Sergey Akopkokhyants
+// This project is licensed under the terms of the MIT license.
+// https://github.com/akserg/ng2-toasty
+
 import {Component, ViewEncapsulation, Input, OnInit} from 'angular2/core';
 import {CORE_DIRECTIVES} from 'angular2/common';
 import {isFunction} from 'angular2/src/facade/lang';
@@ -5,22 +9,22 @@ import {isFunction} from 'angular2/src/facade/lang';
 import {Observable} from 'rxjs/Observable';
 
 import {ToastyConfig} from './toasty.config';
-import {ToastyService, Toast} from './toasty.service';
-import {ToastyComponent} from './toasty.component';
+import {ToastyService, ToastData} from './toasty.service';
+import {Toast} from './toasty.component';
 
 /**
- * This container for toasts.
+ * Container for Toast components
  */
 @Component({
     selector: 'ng2-toasty',
     encapsulation: ViewEncapsulation.None,
-    directives: [CORE_DIRECTIVES, ToastyComponent],
+    directives: [CORE_DIRECTIVES, Toast],
     template: `
     <div id="toasty" [ngClass]="[position]">
-        <ng2-toast *ngFor="#toast of toasts" [toast]="toast" (closeToast)="closeToast(toast)" (clickOnToast)="clickOnToast(toast)"></ng2-toast>
+        <ng2-toast *ngFor="#toast of toasts" [toast]="toast" (closeToast)="closeToast(toast)"></ng2-toast>
     </div>`
 })
-export class ToastyContainer implements OnInit {
+export class Toasty implements OnInit {
 
     // The window position where the toast pops upk. Possible values:
     // - bottom-right (default valie from ToastConfig)
@@ -32,7 +36,7 @@ export class ToastyContainer implements OnInit {
     @Input() position: string;
 
     // The storage for toasts.
-    toasts: Array<Toast> = [];
+    toasts: Array<ToastData> = [];
 
     static POSITIONS:Array<String> = ['bottom-right', 'bottom-left', 'top-right', 'top-left', 'top-center', 'bottom-center'];
 
@@ -40,7 +44,7 @@ export class ToastyContainer implements OnInit {
 
     ngOnInit(): any {
         // We listen our service to recieve new toasts from it
-        this.toastyService.getToasts().subscribe((toast:Toast) => {
+        this.toastyService.getToasts().subscribe((toast:ToastData) => {
             // If we've gone over our limit, remove the earliest
             // one from the array
             if (this.toasts.length >= this.config.limit) {
@@ -55,10 +59,15 @@ export class ToastyContainer implements OnInit {
                 this._setTimeout(toast);
             }
         });
+        // We listen clear all comes from service here.
+        this.toastyService.getClear().subscribe(() => {
+            // Lets clear all toasts
+            this.clearAll();
+        });
         if (this.position) {
             let notFound:boolean = true;
-            for (var i = 0; i < ToastyContainer.POSITIONS.length; i++) {
-                if (ToastyContainer.POSITIONS[i] === this.position) {
+            for (var i = 0; i < Toasty.POSITIONS.length; i++) {
+                if (Toasty.POSITIONS[i] === this.position) {
                     notFound = false;
                     break;
                 }
@@ -77,21 +86,8 @@ export class ToastyContainer implements OnInit {
      * Event listener of 'closeToast' event comes from ToastyComponent.
      * This method removes ToastComponent assosiated with this Toast.
      */
-    closeToast(toast:Toast) {
+    closeToast(toast:ToastData) {
         this.clear(toast.id);
-    }
-
-    /**
-     * Event listener of 'clickOnToast'event comes from ToastyComponent.
-     * This method invokes onClick method of Toast.
-     * It can removes ToastComponent assosiated with this Toast if clickToClose of Toast was set.
-     */
-    clickOnToast(toast:Toast) {
-        //scope.$broadcast('toasty-clicked', toast);
-        if (toast.onClick && isFunction(toast.onClick))
-            toast.onClick.call(this, toast);
-        if (toast.clickToClose)
-            this.clear(toast.id);
     }
 
     // Clear indivudally toast
@@ -111,7 +107,7 @@ export class ToastyContainer implements OnInit {
     }
 
     // Clear all toasts
-    clearAll(id:number) {
+    clearAll() {
         this.toasts.forEach((value: any, key: number) => {
             if (value.onRemove && isFunction(value.onRemove))
                 value.onRemove.call(this, value);
@@ -121,7 +117,7 @@ export class ToastyContainer implements OnInit {
 
     // Custom setTimeout function for specific
     // setTimeouts on individual toasts
-    private _setTimeout(toast:Toast) {
+    private _setTimeout(toast:ToastData) {
         window.setTimeout(() => {
             console.log('clear', toast.id);
             this.clear(toast.id);
