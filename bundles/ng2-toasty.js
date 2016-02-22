@@ -282,8 +282,7 @@ System.registerDynamic("src/toasty.service", ["angular2/core", "angular2/src/fac
         type: 'toasty-type-' + type,
         theme: 'toasty-theme-' + theme,
         onAdd: toastyOptions.onAdd && lang_1.isFunction(toastyOptions.onAdd) ? toastyOptions.onAdd : null,
-        onRemove: toastyOptions.onRemove && lang_1.isFunction(toastyOptions.onRemove) ? toastyOptions.onRemove : null,
-        onClick: toastyOptions.onClick && lang_1.isFunction(toastyOptions.onClick) ? toastyOptions.onClick : null
+        onRemove: toastyOptions.onRemove && lang_1.isFunction(toastyOptions.onRemove) ? toastyOptions.onRemove : null
       };
       if (toastyOptions.timeout) {
         toast.timeout = toastyOptions.timeout || this.config.timeout;

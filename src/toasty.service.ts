@@ -146,9 +146,6 @@ export class ToastyService {
 
         // Set the local vs global config items
         var showClose = this._checkConfigItem(this.config, toastyOptions, 'showClose');
-        var clickToClose = this._checkConfigItem(this.config, toastyOptions, 'clickToClose');
-        var html = this._checkConfigItem(this.config, toastyOptions, 'html');
-        var shake = this._checkConfigItem(this.config, toastyOptions, 'shake');
 
         // If we have a theme set, make sure it's a valid one
         var theme:string;
@@ -160,8 +157,8 @@ export class ToastyService {
 
         var toast:ToastData = <ToastData>{
             id: this.uniqueCounter,
-            title: html ? this._trustAsHtml(toastyOptions.title) : toastyOptions.title,
-            msg: html ? this._trustAsHtml(toastyOptions.msg) : toastyOptions.msg,
+            title: toastyOptions.title,
+            msg: toastyOptions.msg,
             showClose: showClose,
             type: 'toasty-type-' + type,
             theme: 'toasty-theme-' + theme,
@@ -186,7 +183,8 @@ export class ToastyService {
                 toastyOptions.onAdd.call(this, toast);
             }
         } catch (e) {
-            console.log('May be you forget add <ng2-toasty/> to your html?');
+        	console.log(e);
+            console.log('!!! Suggestion: Seems you forget add <ng2-toasty></ng2-toasty> into your html?');
         } 
     }
     
@@ -205,10 +203,6 @@ export class ToastyService {
         } else {
             return true;
         }
-    }
-
-    private _trustAsHtml(input:string):string {
-        return input;
     }
 }
 

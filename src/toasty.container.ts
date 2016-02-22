@@ -13,7 +13,7 @@ import {ToastyService, ToastData} from './toasty.service';
 import {Toast} from './toasty.component';
 
 /**
- * Container for Toast components
+ * Toasty is container for Toast components
  */
 @Component({
     selector: 'ng2-toasty',
@@ -26,8 +26,8 @@ import {Toast} from './toasty.component';
 })
 export class Toasty implements OnInit {
 
-    // The window position where the toast pops upk. Possible values:
-    // - bottom-right (default valie from ToastConfig)
+    // The window position where the toast pops up. Possible values:
+    // - bottom-right (default value from ToastConfig)
     // - bottom-left
     // - top-right
     // - top-left
@@ -38,10 +38,18 @@ export class Toasty implements OnInit {
     // The storage for toasts.
     toasts: Array<ToastData> = [];
 
+    /**
+     * Set of constants defins position of Toasty on the page.
+     */
     static POSITIONS:Array<String> = ['bottom-right', 'bottom-left', 'top-right', 'top-left', 'top-center', 'bottom-center'];
 
     constructor(private config:ToastyConfig, private toastyService:ToastyService) {}
 
+    /**
+     * `ngOnInit` is called right after the directive's data-bound properties have been checked for the
+     * first time, and before any of its children have been checked. It is invoked only once when the
+     * directive is instantiated.
+     */
     ngOnInit(): any {
         // We listen our service to recieve new toasts from it
         this.toastyService.getToasts().subscribe((toast:ToastData) => {
@@ -90,7 +98,10 @@ export class Toasty implements OnInit {
         this.clear(toast.id);
     }
 
-    // Clear indivudally toast
+    /**
+     * Clear individual toast by id
+     * @param id is unique identifier of Toast
+     */
     clear(id:number) {
         if (id) {
             this.toasts.forEach((value: any, key: number) => {
@@ -106,7 +117,9 @@ export class Toasty implements OnInit {
         }
     }
 
-    // Clear all toasts
+    /**
+     * Clear all toasts
+     */
     clearAll() {
         this.toasts.forEach((value: any, key: number) => {
             if (value.onRemove && isFunction(value.onRemove))
@@ -115,8 +128,9 @@ export class Toasty implements OnInit {
         this.toasts = [];
     }
 
-    // Custom setTimeout function for specific
-    // setTimeouts on individual toasts
+    /**
+     * Custom setTimeout function for specific setTimeouts on individual toasts.
+     */
     private _setTimeout(toast:ToastData) {
         window.setTimeout(() => {
             console.log('clear', toast.id);
