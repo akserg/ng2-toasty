@@ -1,7 +1,6 @@
 {
   "name": "ng2-toasty",
   "description": "Angular2 Toasty component shows growl-style alerts and messages for your app.",
-  "version": "0.2.0",
   "scripts": {
     "test": "tsc && karma start",
     "test-watch": "tsc && karma start --no-single-run --auto-watch",
@@ -48,7 +47,7 @@
     "rxjs": "5.0.0-beta.0",
     "systemjs": "~0.19.6",
     "systemjs-builder": "^0.15.6",
-    "semantic-release": "~4.3.5",
+    "semantic-release": "^4.3.5",
     "tsd": "^0.6.5",
     "typescript": "~1.7.3",
     "typings": "^0.6.8",

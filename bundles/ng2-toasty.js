@@ -265,9 +265,6 @@ System.registerDynamic("src/toasty.service", ["angular2/core", "angular2/src/fac
       type = type || 'default';
       this.uniqueCounter++;
       var showClose = this._checkConfigItem(this.config, toastyOptions, 'showClose');
-      var clickToClose = this._checkConfigItem(this.config, toastyOptions, 'clickToClose');
-      var html = this._checkConfigItem(this.config, toastyOptions, 'html');
-      var shake = this._checkConfigItem(this.config, toastyOptions, 'shake');
       var theme;
       if (toastyOptions.theme) {
         theme = ToastyService.THEMES.indexOf(toastyOptions.theme) > -1 ? toastyOptions.theme : this.config.theme;
@@ -276,8 +273,8 @@ System.registerDynamic("src/toasty.service", ["angular2/core", "angular2/src/fac
       }
       var toast = {
         id: this.uniqueCounter,
-        title: html ? this._trustAsHtml(toastyOptions.title) : toastyOptions.title,
-        msg: html ? this._trustAsHtml(toastyOptions.msg) : toastyOptions.msg,
+        title: toastyOptions.title,
+        msg: toastyOptions.msg,
         showClose: showClose,
         type: 'toasty-type-' + type,
         theme: 'toasty-theme-' + theme,
@@ -295,7 +292,8 @@ System.registerDynamic("src/toasty.service", ["angular2/core", "angular2/src/fac
           toastyOptions.onAdd.call(this, toast);
         }
       } catch (e) {
-        console.log('May be you forget add <ng2-toasty/> to your html?');
+        console.log(e);
+        console.log('!!! Suggestion: Seems you forget add <ng2-toasty></ng2-toasty> into your html?');
       }
     };
     ToastyService.prototype.clearAll = function() {
@@ -309,9 +307,6 @@ System.registerDynamic("src/toasty.service", ["angular2/core", "angular2/src/fac
       } else {
         return true;
       }
-    };
-    ToastyService.prototype._trustAsHtml = function(input) {
-      return input;
     };
     ToastyService.THEMES = ['default', 'material', 'bootstrap'];
     ToastyService = __decorate([core_1.Injectable(), __metadata('design:paramtypes', [toasty_config_1.ToastyConfig])], ToastyService);
