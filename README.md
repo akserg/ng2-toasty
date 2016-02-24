@@ -1,5 +1,9 @@
-# ng2-toasty [![Build Status](https://travis-ci.org/akserg/ng2-toasty.svg?branch=master)](https://travis-ci.org/akserg/ng2-toasty) [![npm version](https://img.shields.io/npm/v/ng2-toasty.svg)](https://www.npmjs.com/package/ng2-toasty) [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+# ng2-toasty 
+[![Build Status](https://travis-ci.org/akserg/ng2-toasty.svg?branch=master)](https://travis-ci.org/akserg/ng2-toasty) [![npm version](https://img.shields.io/npm/v/ng2-toasty.svg)](https://www.npmjs.com/package/ng2-toasty) [![npm monthly downloads](https://img.shields.io/npm/dm/ng2-toasty.svg?style=flat-square)](https://www.npmjs.com/package/ng2-toasty)[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 Angular2 Toasty component shows growl-style alerts and messages for your application.
+
+Simple examples using ng2-toasty:
+- with SystemJS in [ng2-systemjs-demo](https://github.com/akserg/ng2-systemjs-demo)
 
 ## Installation
 First you need to install the npm module:
@@ -15,6 +19,7 @@ System.config({
     }
 });
 ```
+
 
 Finally, you can use *ng2-toasty* in your Angular 2 project:
 - Import `ToastyService, ToastyConfig, Toasty, ToastOptions` from `ng2-toasty/ng2-toasty`

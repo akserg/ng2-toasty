@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "angular2": "2.0.0-beta.6",
+    "cz-conventional-changelog": "^1.1.5",
     "es6-promise": "~3.0.2",
     "es6-shim": "~0.33.3",
     "jasmine-core": "~2.3.4",
@@ -45,12 +46,17 @@
     "karma-typescript-preprocessor": "0.0.21",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.0",
+    "semantic-release": "^4.3.5",
     "systemjs": "~0.19.6",
     "systemjs-builder": "^0.15.6",
-    "semantic-release": "^4.3.5",
     "tsd": "^0.6.5",
     "typescript": "~1.7.3",
     "typings": "^0.6.8",
     "zone.js": "0.5.14"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
