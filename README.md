@@ -114,15 +114,15 @@ export class AppComponent {
     
     addToast() {
         let interval = 1000;
-        let seconds = this.options.timeout / 1000;
+        let timeout = 5000;
+        let seconds = timeout / 1000;
         let subscription: Subscription;
         
         let toastOptions: ToastOptions = {
-            title: this.getTitle(seconds || 0),
-            msg: this.getMessage(seconds || 0),
-            showClose: this.options.showClose,
-            timeout: this.options.timeout,
-            theme: this.options.theme,
+            title: this.getTitle(seconds),
+            msg: this.getMessage(seconds),
+            showClose: true,
+            timeout: timeout,
             onAdd: (toast: ToastData) => {
                 console.log('Toast ' + toast.id + ' has been added!');
                 // Run the timer with 1 second iterval
@@ -130,9 +130,9 @@ export class AppComponent {
                 // Start listen seconds beat
                 subscription = observable.subscribe((count: number) => {
                     // Update title of toast
-                    toast.title = this.getTitle(seconds - count - 1 || 0);
+                    toast.title = this.getTitle(seconds - count - 1);
                     // Update message of toast
-                    toast.msg = this.getMessage(seconds - count - 1 || 0);
+                    toast.msg = this.getMessage(seconds - count - 1);
                 });
 
             },
