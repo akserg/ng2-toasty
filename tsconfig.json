@@ -5,10 +5,9 @@
         "target": "ES5",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "inlineSourceMap": true,
-        "inlineSources": true,
         "declaration": true,
-        "moduleResolution": "node"
+        "moduleResolution": "node",
+        "sourceMap": true
     },
     "files": [
         "typings/main.d.ts",
