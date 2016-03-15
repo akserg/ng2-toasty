@@ -4,7 +4,7 @@
   "scripts": {
     "test": "tsc && karma start",
     "test-watch": "tsc && karma start --no-single-run --auto-watch",
-    "minify": "node node_modules/uglify-js/bin/uglifyjs bundles/ng2-toasty.js -o bundles/ng2-toasty.min.js --source-map bundles/ng2-toasty.min.js.map -c -m --stats",
+    "minify": "node node_modules/uglify-js/bin/uglifyjs bundles/ng2-toasty.js -o bundles/ng2-toasty.min.js --source-map bundles/ng2-toasty.min.js.map -c -m",
     "prepublish": "typings install && tsc && node make.js && npm run minify",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
@@ -27,7 +27,7 @@
   "typings": "./ng2-toasty.d.ts",
   "homepage": "https://github.com/akserg/ng2-toasty",
   "peerDependencies": {
-    "angular2": "~2.0.0-beta.8",
+    "angular2": "~2.0.0-beta.9",
     "es6-promise": "~3.1.2",
     "es6-shim": "~0.33.3",
     "reflect-metadata": "0.1.2",
@@ -35,26 +35,20 @@
     "zone.js": "~0.5.15"
   },
   "devDependencies": {
-    "angular2": "2.0.0-beta.9",
     "cz-conventional-changelog": "^1.1.5",
-    "es6-promise": "~3.1.2",
-    "es6-shim": "~0.33.3",
     "jasmine-core": "~2.3.4",
     "karma": "~0.13.15",
     "karma-chrome-launcher": "~0.2.2",
     "karma-firefox-launcher": "~0.1.7",
     "karma-jasmine": "~0.3.6",
     "karma-typescript-preprocessor": "0.0.21",
-    "reflect-metadata": "0.1.2",
-    "rxjs": "5.0.0-beta.2",
     "semantic-release": "^4.3.5",
     "systemjs": "~0.19.6",
     "systemjs-builder": "^0.15.6",
     "tsd": "^0.6.5",
     "typescript": "~1.7.3",
     "typings": "^0.6.8",
-    "uglify-js": "^2.6.2",
-    "zone.js": "0.5.15"
+    "uglify-js": "^2.6.2"
   },
   "config": {
     "commitizen": {
