@@ -51,12 +51,12 @@ export class ToastyService {
 
     private toastsObservable:Observable<ToastData>;
     private toastsSubscriber: Subscriber<ToastData>;
-    
+
     private clearObservable:Observable<void>;
     private clearSubscriber: Subscriber<void>;
 
     constructor(private config:ToastyConfig) {
-        this.toastsObservable = new Observable((subscriber:Subscriber<ToastData>) => {
+        this.toastsObservable = new Observable<ToastData>((subscriber:Subscriber<ToastData>) => {
             this.toastsSubscriber = subscriber;
         });
         this.clearObservable = new Observable<void>((subscriber:Subscriber<void>) => {
@@ -70,7 +70,7 @@ export class ToastyService {
     getToasts():Observable<ToastData> {
         return this.toastsObservable;
     }
-    
+
     getClear():Observable<void> {
         return this.clearObservable;
     }
@@ -138,7 +138,7 @@ export class ToastyService {
 		if (!toastyOptions || !toastyOptions.title && !toastyOptions.msg) {
 			throw new Error('ng2-toasty: No toast title or message specified!');
 		}
-        
+
         type = type || 'default';
 
         // Set a unique counter for an id
@@ -185,9 +185,9 @@ export class ToastyService {
         } catch (e) {
         	console.log(e);
             console.log('!!! Suggestion: Seems you forget add <ng2-toasty></ng2-toasty> into your html?');
-        } 
+        }
     }
-    
+
     // Clear all toasts
     clearAll() {
         this.clearSubscriber.next();
