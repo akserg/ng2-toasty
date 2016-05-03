@@ -4,7 +4,7 @@ import {
   beforeEach,
   it,
   inject,
-  injectAsync,
+  //injectAsync,
   beforeEachProviders,
   TestComponentBuilder,
   ComponentFixture,
@@ -58,14 +58,15 @@ export function main() {
             return [TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS, TestComponentBuilder, ToastyService, ToastyConfig];
         });
 
-        beforeEach(injectAsync([TestComponentBuilder, ToastyService, ToastyConfig], (tcb:TestComponentBuilder) => {
+        // beforeEach(injectAsync([TestComponentBuilder, ToastyService, ToastyConfig], (tcb:TestComponentBuilder) => {
+        beforeEach(inject([TestComponentBuilder, ToastyService, ToastyConfig], (tcb:TestComponentBuilder) => {
             return tcb.createAsync(Toasty).then((cf:ComponentFixture) => {
                 componentFixture = cf;
             });
         }));
 
         it('should be defined', () => {
-            const element = componentFixture.nativeElement;
+            const element = componentFixture.elementRef.nativeElement;
             expect(element.querySelector('#toasty')).toBeDefined();
         });
 

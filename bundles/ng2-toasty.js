@@ -99,7 +99,7 @@ System.registerDynamic("src/toasty.container", ["angular2/core", "angular2/commo
       selector: 'ng2-toasty',
       encapsulation: core_1.ViewEncapsulation.None,
       directives: [common_1.CORE_DIRECTIVES, toasty_component_1.Toast],
-      template: "\n    <div id=\"toasty\" [ngClass]=\"[position]\">\n        <ng2-toast *ngFor=\"#toast of toasts\" [toast]=\"toast\" (closeToast)=\"closeToast(toast)\"></ng2-toast>\n    </div>"
+      template: "\n    <div id=\"toasty\" [ngClass]=\"[position]\">\n        <ng2-toast *ngFor=\"let toast of toasts\" [toast]=\"toast\" (closeToast)=\"closeToast(toast)\"></ng2-toast>\n    </div>"
     }), __metadata('design:paramtypes', [toasty_config_1.ToastyConfig, toasty_service_1.ToastyService])], Toasty);
     return Toasty;
   })();

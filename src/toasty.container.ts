@@ -21,7 +21,7 @@ import {Toast} from './toasty.component';
     directives: [CORE_DIRECTIVES, Toast],
     template: `
     <div id="toasty" [ngClass]="[position]">
-        <ng2-toast *ngFor="#toast of toasts" [toast]="toast" (closeToast)="closeToast(toast)"></ng2-toast>
+        <ng2-toast *ngFor="let toast of toasts" [toast]="toast" (closeToast)="closeToast(toast)"></ng2-toast>
     </div>`
 })
 export class Toasty implements OnInit {
