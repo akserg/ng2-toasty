@@ -2,8 +2,8 @@
 // This project is licensed under the terms of the MIT license.
 // https://github.com/akserg/ng2-toasty
 
-import {Component, Input, Output, EventEmitter} from 'angular2/core';
-import {CORE_DIRECTIVES} from 'angular2/common';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {CORE_DIRECTIVES} from '@angular/common';
 
 import {ToastyConfig} from './toasty.config';
 import {ToastData} from './toasty.service';

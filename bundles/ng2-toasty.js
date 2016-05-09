@@ -1,8 +1,8 @@
-System.registerDynamic("src/toasty.container", ["angular2/core", "angular2/common", "angular2/src/facade/lang", "./toasty.config", "./toasty.service", "./toasty.component"], true, function($__require, exports, module) {
+System.registerDynamic("src/toasty.container", ["@angular/core", "@angular/common", "lodash", "./toasty.config", "./toasty.service", "./toasty.component"], true, function($__require, exports, module) {
   ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
+  var define,
+      global = this,
+      GLOBAL = this;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
     var c = arguments.length,
         r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
@@ -19,9 +19,9 @@ System.registerDynamic("src/toasty.container", ["angular2/core", "angular2/commo
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
       return Reflect.metadata(k, v);
   };
-  var core_1 = $__require('angular2/core');
-  var common_1 = $__require('angular2/common');
-  var lang_1 = $__require('angular2/src/facade/lang');
+  var core_1 = $__require('@angular/core');
+  var common_1 = $__require('@angular/common');
+  var lodash_1 = $__require('lodash');
   var toasty_config_1 = $__require('./toasty.config');
   var toasty_service_1 = $__require('./toasty.service');
   var toasty_component_1 = $__require('./toasty.component');
@@ -69,7 +69,7 @@ System.registerDynamic("src/toasty.container", ["angular2/core", "angular2/commo
       if (id) {
         this.toasts.forEach(function(value, key) {
           if (value.id === id) {
-            if (value.onRemove && lang_1.isFunction(value.onRemove))
+            if (value.onRemove && lodash_1.isFunction(value.onRemove))
               value.onRemove.call(_this, value);
             _this.toasts.splice(key, 1);
           }
@@ -81,7 +81,7 @@ System.registerDynamic("src/toasty.container", ["angular2/core", "angular2/commo
     Toasty.prototype.clearAll = function() {
       var _this = this;
       this.toasts.forEach(function(value, key) {
-        if (value.onRemove && lang_1.isFunction(value.onRemove))
+        if (value.onRemove && lodash_1.isFunction(value.onRemove))
           value.onRemove.call(_this, value);
       });
       this.toasts = [];
@@ -104,15 +104,14 @@ System.registerDynamic("src/toasty.container", ["angular2/core", "angular2/commo
     return Toasty;
   })();
   exports.Toasty = Toasty;
-  global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("src/toasty.component", ["angular2/core", "angular2/common"], true, function($__require, exports, module) {
+System.registerDynamic("src/toasty.component", ["@angular/core", "@angular/common"], true, function($__require, exports, module) {
   ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
+  var define,
+      global = this,
+      GLOBAL = this;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
     var c = arguments.length,
         r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
@@ -129,8 +128,8 @@ System.registerDynamic("src/toasty.component", ["angular2/core", "angular2/commo
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
       return Reflect.metadata(k, v);
   };
-  var core_1 = $__require('angular2/core');
-  var common_1 = $__require('angular2/common');
+  var core_1 = $__require('@angular/core');
+  var common_1 = $__require('@angular/common');
   var Toast = (function() {
     function Toast() {
       this.closeToastEvent = new core_1.EventEmitter();
@@ -149,15 +148,14 @@ System.registerDynamic("src/toasty.component", ["angular2/core", "angular2/commo
     return Toast;
   })();
   exports.Toast = Toast;
-  global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("src/toasty.config", ["angular2/core"], true, function($__require, exports, module) {
+System.registerDynamic("src/toasty.config", ["@angular/core"], true, function($__require, exports, module) {
   ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
+  var define,
+      global = this,
+      GLOBAL = this;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
     var c = arguments.length,
         r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
@@ -174,7 +172,7 @@ System.registerDynamic("src/toasty.config", ["angular2/core"], true, function($_
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
       return Reflect.metadata(k, v);
   };
-  var core_1 = $__require('angular2/core');
+  var core_1 = $__require('@angular/core');
   var ToastyConfig = (function() {
     function ToastyConfig() {
       this.limit = 5;
@@ -187,15 +185,14 @@ System.registerDynamic("src/toasty.config", ["angular2/core"], true, function($_
     return ToastyConfig;
   })();
   exports.ToastyConfig = ToastyConfig;
-  global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("src/toasty.service", ["angular2/core", "angular2/src/facade/lang", "rxjs/Observable", "./toasty.config"], true, function($__require, exports, module) {
+System.registerDynamic("src/toasty.service", ["@angular/core", "lodash", "rxjs/Observable", "./toasty.config"], true, function($__require, exports, module) {
   ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
+  var define,
+      global = this,
+      GLOBAL = this;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
     var c = arguments.length,
         r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
@@ -212,8 +209,8 @@ System.registerDynamic("src/toasty.service", ["angular2/core", "angular2/src/fac
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
       return Reflect.metadata(k, v);
   };
-  var core_1 = $__require('angular2/core');
-  var lang_1 = $__require('angular2/src/facade/lang');
+  var core_1 = $__require('@angular/core');
+  var lodash_1 = $__require('lodash');
   var Observable_1 = $__require('rxjs/Observable');
   var toasty_config_1 = $__require('./toasty.config');
   var ToastyService = (function() {
@@ -254,7 +251,7 @@ System.registerDynamic("src/toasty.service", ["angular2/core", "angular2/src/fac
     };
     ToastyService.prototype.add = function(options, type) {
       var toastyOptions;
-      if (lang_1.isString(options) && options !== '' || lang_1.isNumber(options)) {
+      if (lodash_1.isString(options) && options !== '' || lodash_1.isNumber(options)) {
         toastyOptions = {title: options.toString()};
       } else {
         toastyOptions = options;
@@ -278,8 +275,8 @@ System.registerDynamic("src/toasty.service", ["angular2/core", "angular2/src/fac
         showClose: showClose,
         type: 'toasty-type-' + type,
         theme: 'toasty-theme-' + theme,
-        onAdd: toastyOptions.onAdd && lang_1.isFunction(toastyOptions.onAdd) ? toastyOptions.onAdd : null,
-        onRemove: toastyOptions.onRemove && lang_1.isFunction(toastyOptions.onRemove) ? toastyOptions.onRemove : null
+        onAdd: toastyOptions.onAdd && lodash_1.isFunction(toastyOptions.onAdd) ? toastyOptions.onAdd : null,
+        onRemove: toastyOptions.onRemove && lodash_1.isFunction(toastyOptions.onRemove) ? toastyOptions.onRemove : null
       };
       if (toastyOptions.timeout) {
         toast.timeout = toastyOptions.timeout || this.config.timeout;
@@ -288,7 +285,7 @@ System.registerDynamic("src/toasty.service", ["angular2/core", "angular2/src/fac
       }
       try {
         this.toastsSubscriber.next(toast);
-        if (toastyOptions.onAdd && lang_1.isFunction(toastyOptions.onAdd)) {
+        if (toastyOptions.onAdd && lodash_1.isFunction(toastyOptions.onAdd)) {
           toastyOptions.onAdd.call(this, toast);
         }
       } catch (e) {
@@ -313,16 +310,15 @@ System.registerDynamic("src/toasty.service", ["angular2/core", "angular2/src/fac
     return ToastyService;
   })();
   exports.ToastyService = ToastyService;
-  global.define = __define;
   return module.exports;
 });
 
 System.registerDynamic("ng2-toasty", ["./src/toasty.container", "./src/toasty.component", "./src/toasty.config", "./src/toasty.service"], true, function($__require, exports, module) {
   "use strict";
   ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
+  var define,
+      global = this,
+      GLOBAL = this;
   function __export(m) {
     for (var p in m)
       if (!exports.hasOwnProperty(p))
@@ -341,6 +337,5 @@ System.registerDynamic("ng2-toasty", ["./src/toasty.container", "./src/toasty.co
     providers: [toasty_config_1.ToastyConfig, toasty_service_1.ToastyService],
     directives: [toasty_container_1.Toasty, toasty_component_1.Toast]
   };
-  global.define = __define;
   return module.exports;
 });

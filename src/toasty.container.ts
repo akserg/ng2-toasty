@@ -2,9 +2,9 @@
 // This project is licensed under the terms of the MIT license.
 // https://github.com/akserg/ng2-toasty
 
-import {Component, ViewEncapsulation, Input, OnInit} from 'angular2/core';
-import {CORE_DIRECTIVES} from 'angular2/common';
-import {isFunction} from 'angular2/src/facade/lang';
+import {Component, ViewEncapsulation, Input, OnInit} from '@angular/core';
+import {CORE_DIRECTIVES} from '@angular/common';
+import { isFunction } from 'lodash';
 
 import {Observable} from 'rxjs/Observable';
 

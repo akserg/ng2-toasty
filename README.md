@@ -30,9 +30,9 @@ Finally, you can use *ng2-toasty* in your Angular 2 project:
 - Add `<ng2-toasty></ng2-toasty>` tag in template of your application component.
 
 ```js
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 import {ToastyService, ToastyConfig, Toasty, ToastOptions, ToastData} from 'ng2-toasty/ng2-toasty';
-import {bootstrap} from 'angular2/platform/browser';
+import {bootstrap} from '@angular/platform-browser-dynamic';
 
 bootstrap(AppComponent, [
     ToastyService, ToastyConfig // It is required to have 1 unique instance of your service
@@ -82,9 +82,9 @@ export class AppComponent {
 Here is an example of how to dynamically update message and title of individual toast:
 
 ```js
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 import {ToastyService, ToastyConfig, Toasty, ToastOptions, ToastData} from 'ng2-toasty/ng2-toasty';
-import {bootstrap} from 'angular2/platform/browser';
+import {bootstrap} from '@angular/platform-browser-dynamic';
 import {Subject, Observable, Subscription} from 'rxjs/Rx';
 
 bootstrap(AppComponent, [
