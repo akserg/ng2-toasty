@@ -48,7 +48,7 @@
     "systemjs-builder": "^0.15.6",
     "tsd": "^0.6.5",
     "typescript": "~1.7.3",
-    "typings": "^0.6.8",
+    "typings": "^0.7",
     "uglify-js": "^2.6.2",
     "zone.js": "~0.6.12"
   },
