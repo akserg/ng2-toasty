@@ -1,6 +1,6 @@
 {
   "name": "ng2-toasty",
-  "description": "Angular2 Toasty component shows growl-style alerts and messages for your web application",
+  "description": "Angular2 Toasty component shows growl-style alerts and messages for your web app",
   "scripts": {
     "test": "tsc && karma start",
     "test-watch": "tsc && karma start --no-single-run --auto-watch",
