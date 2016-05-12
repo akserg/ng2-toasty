@@ -6,14 +6,17 @@ import {
   inject,
   //injectAsync,
   beforeEachProviders,
-  TestComponentBuilder,
-  ComponentFixture,
   fakeAsync,
   tick
-} from 'angular2/testing';
+} from '@angular/core/testing';
 
-import {TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS}
-from 'angular2/platform/testing/browser';
+import {
+  TestComponentBuilder,
+  ComponentFixture
+} from '@angular/compiler/testing';
+
+import {TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS, TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS}
+from '@angular/platform-browser-dynamic/testing';
 
 import {Observable} from 'rxjs/Observable';
 
@@ -25,7 +28,7 @@ import {Toasty} from '../src/toasty.container';
 export function main() {
     describe('ToastyContainer', () => {
 
-        let componentFixture:ComponentFixture;
+        let componentFixture:ComponentFixture<Toasty>;
 
         const toast1:ToastData = {
             id:1,
@@ -55,12 +58,12 @@ export function main() {
 
 
         beforeEachProviders(() => {
-            return [TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS, TestComponentBuilder, ToastyService, ToastyConfig];
+            return [TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS, TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS, TestComponentBuilder, ToastyService, ToastyConfig];
         });
 
         // beforeEach(injectAsync([TestComponentBuilder, ToastyService, ToastyConfig], (tcb:TestComponentBuilder) => {
         beforeEach(inject([TestComponentBuilder, ToastyService, ToastyConfig], (tcb:TestComponentBuilder) => {
-            return tcb.createAsync(Toasty).then((cf:ComponentFixture) => {
+            return tcb.createAsync(Toasty).then((cf:ComponentFixture<Toasty>) => {
                 componentFixture = cf;
             });
         }));

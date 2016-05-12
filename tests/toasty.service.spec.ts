@@ -6,7 +6,7 @@ import {
   inject,
   injectAsync,
   beforeEachProviders
-} from 'angular2/testing';
+} from '@angular/core/testing';
 
 import {Observable} from 'rxjs/Observable';
 

@@ -2,7 +2,7 @@
 // This project is licensed under the terms of the MIT license.
 // https://github.com/akserg/ng2-toasty
 
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 
 /**
  * Default configuration foa all toats and toasty container

@@ -2,8 +2,8 @@
 // This project is licensed under the terms of the MIT license.
 // https://github.com/akserg/ng2-toasty
 
-import {Injectable} from 'angular2/core';
-import {isString, isNumber, isFunction} from 'angular2/src/facade/lang';
+import {Injectable} from '@angular/core';
+import {isString, isNumber, isFunction} from 'lodash';
 
 import {Observable} from 'rxjs/Observable';
 import {Subscriber} from 'rxjs/Subscriber';
