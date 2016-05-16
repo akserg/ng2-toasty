@@ -3,7 +3,7 @@
 // https://github.com/akserg/ng2-toasty
 
 import {Injectable} from '@angular/core';
-import {isString, isNumber, isFunction} from 'lodash';
+import {isString, isNumber, isFunction} from '@angular/common/src/facade/lang';
 
 import {Observable} from 'rxjs/Observable';
 import {Subscriber} from 'rxjs/Subscriber';

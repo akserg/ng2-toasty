@@ -4,7 +4,7 @@
 
 import {Component, ViewEncapsulation, Input, OnInit} from '@angular/core';
 import {CORE_DIRECTIVES} from '@angular/common';
-import { isFunction } from 'lodash';
+import { isFunction } from '@angular/common/src/facade/lang';
 
 import {Observable} from 'rxjs/Observable';
 

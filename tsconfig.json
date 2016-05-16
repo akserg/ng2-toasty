@@ -9,18 +9,9 @@
         "moduleResolution": "node",
         "sourceMap": true
     },
-    "files": [
-        "typings/main.d.ts",
-        "ng2-toasty.ts",
-        "./src/toasty.component.ts",
-        "./src/toasty.config.ts",
-        "./src/toasty.container.ts",
-        "./src/toasty.service.ts",
-        "./tests/toasty.container.spec.ts",
-        "./tests/toasty.component.spec.ts",
-        "./tests/toasty.service.spec.ts"
-    ],
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "typings/main.d.ts",
+        "typings/main"
     ]
 }

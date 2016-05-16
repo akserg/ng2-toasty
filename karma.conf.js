@@ -24,7 +24,6 @@ module.exports = function(config) {
 
             { pattern: 'node_modules/@angular/**/*.js', included: false, watched: false, served: true },
             { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false, served: true },
-            { pattern: 'node_modules/lodash/**/*.js', included: false, watched: false, served: true },
             { pattern: 'node_modules/systemjs/dist/system-polyfills.js', included: false, watched: false, served: true }, // PhantomJS2 (and possibly others) might require it
 
             { pattern: 'src/**/*.ts', included: false, watched: true }, // source files

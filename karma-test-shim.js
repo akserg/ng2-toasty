@@ -17,13 +17,13 @@ System.config({
         '@angular/compiler': 'node_modules/@angular/compiler/index.js',
         '@angular/common/testing': 'node_modules/@angular/common/testing.js',
         '@angular/common': 'node_modules/@angular/common/index.js',
+        '@angular/common/src/facade/lang': 'node_modules/@angular/common/src/facade/lang.js',
         '@angular/platform-browser-dynamic/testing': 'node_modules/@angular/platform-browser-dynamic/testing.js',
         '@angular/platform-browser/testing': 'node_modules/@angular/platform-browser/testing.js',
         '@angular/platform-browser': 'node_modules/@angular/platform-browser/index.js',
         '@angular': 'node_modules/@angular',
         'browser_adapter': 'node_modules/@angular/platform-browser/src/browser/browser_adapter',
-        'rxjs': 'node_modules/rxjs',
-        'lodash': 'node_modules/lodash/lodash.js'
+        'rxjs': 'node_modules/rxjs'
     }
 });
 
