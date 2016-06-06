@@ -133,7 +133,6 @@ export class Toasty implements OnInit {
      */
     private _setTimeout(toast:ToastData) {
         window.setTimeout(() => {
-            console.log('clear', toast.id);
             this.clear(toast.id);
         }, toast.timeout);
     }
