@@ -166,13 +166,9 @@ export class ToastyService {
             onRemove: toastyOptions.onRemove && isFunction(toastyOptions.onRemove) ? toastyOptions.onRemove : null
         };
 
-        // If there's a timeout individually or globally,
-        // set the toast to timeout
-        if (toastyOptions.timeout) {
-            toast.timeout = toastyOptions.timeout || this.config.timeout;
-        } else {
-            toast.timeout = null;
-        }
+        // If there's a timeout individually or globally, set the toast to timeout
+        // Allows a caller to pass null/0 and override the default. Can also set the default to null/0 to turn off.
+        toast.timeout = toastyOptions.hasOwnProperty('timeout') ? toastyOptions.timeout : this.config.timeout;
 
 
         // Push up a new toast item

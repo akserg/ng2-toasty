@@ -90,7 +90,6 @@ System.registerDynamic("src/toasty.container", ["@angular/core", "@angular/commo
     Toasty.prototype._setTimeout = function(toast) {
       var _this = this;
       window.setTimeout(function() {
-        console.log('clear', toast.id);
         _this.clear(toast.id);
       }, toast.timeout);
     };
@@ -282,11 +281,7 @@ System.registerDynamic("src/toasty.service", ["@angular/core", "@angular/common/
         onAdd: toastyOptions.onAdd && lang_1.isFunction(toastyOptions.onAdd) ? toastyOptions.onAdd : null,
         onRemove: toastyOptions.onRemove && lang_1.isFunction(toastyOptions.onRemove) ? toastyOptions.onRemove : null
       };
-      if (toastyOptions.timeout) {
-        toast.timeout = toastyOptions.timeout || this.config.timeout;
-      } else {
-        toast.timeout = null;
-      }
+      toast.timeout = toastyOptions.hasOwnProperty('timeout') ? toastyOptions.timeout : this.config.timeout;
       try {
         this.toastsSubscriber.next(toast);
         if (toastyOptions.onAdd && lang_1.isFunction(toastyOptions.onAdd)) {
