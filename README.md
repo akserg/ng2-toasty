@@ -9,18 +9,19 @@ Follow me [![twitter](https://img.shields.io/twitter/follow/akopkokhyants.svg?st
 [![Dependency Status](https://david-dm.org/akserg/ng2-toasty.svg)](https://david-dm.org/akserg/ng2-toasty)
 [![devDependency Status](https://david-dm.org/akserg/ng2-toasty/dev-status.svg)](https://david-dm.org/akserg/ng2-toasty#info=devDependencies)
 
-Simple examples using ng2-toasty:
+## Installation
+```sh
+npm install ng2-toasty --save
+```
+
+## Demo
+Simple examples using ng2-dnd:
 - with SystemJS in [ng2-systemjs-demo](https://github.com/akserg/ng2-systemjs-demo)
 - with Webpack in [ng2-webpack-demo](https://github.com/akserg/ng2-webpack-demo)
 
 Online demo available [here](http://akserg.github.io/ng2-webpack-demo)
 
-## Installation
-First you need to install the npm module:
-```sh
-npm install ng2-toasty --save
-```
-
+## Usage
 If you use SystemJS to load your files, you might have to update your config with this if you don't use `defaultJSExtensions: true`:
 ```js
 System.config({
