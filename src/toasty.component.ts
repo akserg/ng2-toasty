@@ -4,17 +4,15 @@
 
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {CORE_DIRECTIVES} from '@angular/common';
-
-import {ToastyConfig} from './toasty.config';
 import {ToastData} from './toasty.service';
 
 /**
  * A Toast component shows message with title and close button.
  */
 @Component({
-    selector: 'ng2-toast',
-    directives: [CORE_DIRECTIVES],
-    template: `
+  selector: 'ng2-toast',
+  directives: [CORE_DIRECTIVES],
+  template: `
         <div class="toast" [ngClass]="[toast.type, toast.theme]">
             <div *ngIf="toast.showClose" class="close-button" (click)="close($event)"></div>
             <div *ngIf="toast.title || toast.msg" class="toast-text">
@@ -26,15 +24,15 @@ import {ToastData} from './toasty.service';
 })
 export class Toast {
 
-    @Input() toast:ToastData;
-    @Output('closeToast') closeToastEvent = new EventEmitter();
+  @Input() toast: ToastData;
+  @Output('closeToast') closeToastEvent = new EventEmitter();
 
-    /**
-     * Event handler invokes when user clicks on close button.
-     * This method emit new event into ToastyContainer to close it.
-     */
-    close($event:any) {
-        $event.preventDefault();
-        this.closeToastEvent.next(this.toast);
-    }
+  /**
+   * Event handler invokes when user clicks on close button.
+   * This method emit new event into ToastyContainer to close it.
+   */
+  close($event: any) {
+    $event.preventDefault();
+    this.closeToastEvent.next(this.toast);
+  }
 }
