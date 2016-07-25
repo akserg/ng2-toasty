@@ -13,6 +13,7 @@ export * from './src/toasty.container';
 export * from './src/toasty.component';
 export * from './src/toasty.config';
 export * from './src/toasty.service';
+export * from './src/toasty.utils';
 
 export default {
   providers: [ToastyConfig, ToastyService],

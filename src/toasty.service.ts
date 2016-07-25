@@ -3,7 +3,7 @@
 // https://github.com/akserg/ng2-toasty
 
 import {Injectable} from '@angular/core';
-import {isString, isNumber, isFunction} from '@angular/common/src/facade/lang';
+import {isString, isNumber, isFunction} from './toasty.utils';
 
 import {Observable} from 'rxjs/Observable';
 import {Subscriber} from 'rxjs/Subscriber';
@@ -51,14 +51,14 @@ export class ToastyService {
   private toastsObservable: Observable<ToastData>;
   private toastsSubscriber: Subscriber<ToastData>;
 
-  private clearObservable: Observable<void>;
-  private clearSubscriber: Subscriber<void>;
+  private clearObservable: Observable<number>;
+  private clearSubscriber: Subscriber<number>;
 
   constructor(private config: ToastyConfig) {
     this.toastsObservable = new Observable<ToastData>((subscriber: Subscriber<ToastData>) => {
       this.toastsSubscriber = subscriber;
     });
-    this.clearObservable = new Observable<void>((subscriber: Subscriber<void>) => {
+    this.clearObservable = new Observable<number>((subscriber: Subscriber<number>) => {
       this.clearSubscriber = subscriber;
     });
   }
@@ -70,7 +70,7 @@ export class ToastyService {
     return this.toastsObservable;
   }
 
-  getClear(): Observable<void> {
+  getClear(): Observable<number> {
     return this.clearObservable;
   }
 
@@ -185,7 +185,12 @@ export class ToastyService {
 
   // Clear all toasts
   clearAll() {
-    this.clearSubscriber.next();
+    this.clearSubscriber.next(null);
+  }
+
+  // Clear the specific one
+  clear(id: number) {
+    this.clearSubscriber.next(id);
   }
 
   // Checks whether the local option is set, if not,

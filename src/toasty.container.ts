@@ -4,7 +4,7 @@
 
 import {Component, ViewEncapsulation, Input, OnInit} from '@angular/core';
 import {CORE_DIRECTIVES} from '@angular/common';
-import { isFunction } from '@angular/common/src/facade/lang';
+import {isFunction} from './toasty.utils';
 import {ToastyConfig} from './toasty.config';
 import {ToastyService, ToastData} from './toasty.service';
 import {Toast} from './toasty.component';
@@ -63,7 +63,10 @@ export class Toasty implements OnInit {
       }
     });
     // We listen clear all comes from service here.
-    this.toastyService.getClear().subscribe(() => {
+    this.toastyService.getClear().subscribe((id: number) => {
+      if (id) {
+        this.clear(id);
+      }
       // Lets clear all toasts
       this.clearAll();
     });
