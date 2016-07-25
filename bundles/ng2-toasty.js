@@ -70,8 +70,9 @@ System.registerDynamic("src/toasty.container", ["@angular/core", "@angular/commo
       if (id) {
         this.toasts.forEach(function(value, key) {
           if (value.id === id) {
-            if (value.onRemove && lang_1.isFunction(value.onRemove))
+            if (value.onRemove && lang_1.isFunction(value.onRemove)) {
               value.onRemove.call(_this, value);
+            }
             _this.toasts.splice(key, 1);
           }
         });
@@ -82,8 +83,9 @@ System.registerDynamic("src/toasty.container", ["@angular/core", "@angular/commo
     Toasty.prototype.clearAll = function() {
       var _this = this;
       this.toasts.forEach(function(value, key) {
-        if (value.onRemove && lang_1.isFunction(value.onRemove))
+        if (value.onRemove && lang_1.isFunction(value.onRemove)) {
           value.onRemove.call(_this, value);
+        }
       });
       this.toasts = [];
     };

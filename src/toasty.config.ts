@@ -9,21 +9,21 @@ import {Injectable} from '@angular/core';
  */
 @Injectable()
 export class ToastyConfig {
-    
-    // Maximum number of toasties to show at once
-    limit:number = 5;
 
-    // Whether to show the 'X' icon to close the toast
-    showClose:boolean = true;
-    
-    // The window position where the toast pops up. Possible values
-    // bottom-right, bottom-left, top-right, top-left, top-center, bottom-center
-    position:string = 'bottom-right';
-    
-    // How long (in miliseconds) the toasty shows before it's removed. Set to false to disable.
-    timeout:number = 5000;
-    
-    // What theme to use. Possible values:
-    // default, material or bootstrap
-    theme:string = 'default';
+  // Maximum number of toasties to show at once
+  limit: number = 5;
+
+  // Whether to show the 'X' icon to close the toast
+  showClose: boolean = true;
+
+  // The window position where the toast pops up. Possible values
+  // bottom-right, bottom-left, top-right, top-left, top-center, bottom-center
+  position: string = 'bottom-right';
+
+  // How long (in miliseconds) the toasty shows before it's removed. Set to false to disable.
+  timeout: number = 5000;
+
+  // What theme to use. Possible values:
+  // default, material or bootstrap
+  theme: string = 'default';
 }
