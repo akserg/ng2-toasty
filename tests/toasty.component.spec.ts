@@ -4,7 +4,6 @@ import {
   beforeEach,
   it,
   inject,
-  //injectAsync,
   async,
   beforeEachProviders,
   fakeAsync,
@@ -47,13 +46,13 @@ export function main() {
         });
 
 
-        beforeEach(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
+        beforeEach(async(inject([TestComponentBuilder], (tcb:TestComponentBuilder) => {
             return tcb.createAsync(Toast).then((cf:ComponentFixture<Toast>) => {
                 componentFixture = cf;
                 componentFixture.componentInstance.toast = toast;
                 componentFixture.detectChanges();
             });
-        }));
+        })));
 
         it('should be defined', () => {
             const element = componentFixture.elementRef.nativeElement;

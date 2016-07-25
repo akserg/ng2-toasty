@@ -4,9 +4,9 @@ import {
   beforeEach,
   it,
   inject,
-  //injectAsync,
   beforeEachProviders,
   fakeAsync,
+  async,
   tick
 } from '@angular/core/testing';
 
@@ -62,11 +62,11 @@ export function main() {
         });
 
         // beforeEach(injectAsync([TestComponentBuilder, ToastyService, ToastyConfig], (tcb:TestComponentBuilder) => {
-        beforeEach(inject([TestComponentBuilder, ToastyService, ToastyConfig], (tcb:TestComponentBuilder) => {
+        beforeEach(async(inject([TestComponentBuilder, ToastyService, ToastyConfig], (tcb:TestComponentBuilder) => {
             return tcb.createAsync(Toasty).then((cf:ComponentFixture<Toasty>) => {
                 componentFixture = cf;
             });
-        }));
+        })));
 
         it('should be defined', () => {
             const element = componentFixture.elementRef.nativeElement;
