@@ -1,4 +1,5 @@
 System.registerDynamic("src/toasty.container", ["@angular/core", "@angular/common", "./toasty.utils", "./toasty.config", "./toasty.service", "./toasty.component"], true, function($__require, exports, module) {
+  "use strict";
   ;
   var define,
       global = this,
@@ -106,12 +107,13 @@ System.registerDynamic("src/toasty.container", ["@angular/core", "@angular/commo
       template: "\n    <div id=\"toasty\" [ngClass]=\"[position]\">\n        <ng2-toast *ngFor=\"let toast of toasts\" [toast]=\"toast\" (closeToast)=\"closeToast(toast)\"></ng2-toast>\n    </div>"
     }), __metadata('design:paramtypes', [toasty_config_1.ToastyConfig, toasty_service_1.ToastyService])], Toasty);
     return Toasty;
-  })();
+  }());
   exports.Toasty = Toasty;
   return module.exports;
 });
 
 System.registerDynamic("src/toasty.component", ["@angular/core", "@angular/common"], true, function($__require, exports, module) {
+  "use strict";
   ;
   var define,
       global = this,
@@ -150,12 +152,13 @@ System.registerDynamic("src/toasty.component", ["@angular/core", "@angular/commo
       template: "\n        <div class=\"toast\" [ngClass]=\"[toast.type, toast.theme]\">\n            <div *ngIf=\"toast.showClose\" class=\"close-button\" (click)=\"close($event)\"></div>\n            <div *ngIf=\"toast.title || toast.msg\" class=\"toast-text\">\n                <span *ngIf=\"toast.title\" class=\"toast-title\">{{toast.title}}</span>\n                <br *ngIf=\"toast.title && toast.msg\" />\n                <span *ngIf=\"toast.msg\" class=\"toast-msg\">{{toast.msg}}</span>\n            </div>\n        </div>"
     }), __metadata('design:paramtypes', [])], Toast);
     return Toast;
-  })();
+  }());
   exports.Toast = Toast;
   return module.exports;
 });
 
 System.registerDynamic("src/toasty.config", ["@angular/core"], true, function($__require, exports, module) {
+  "use strict";
   ;
   var define,
       global = this,
@@ -187,12 +190,13 @@ System.registerDynamic("src/toasty.config", ["@angular/core"], true, function($_
     }
     ToastyConfig = __decorate([core_1.Injectable(), __metadata('design:paramtypes', [])], ToastyConfig);
     return ToastyConfig;
-  })();
+  }());
   exports.ToastyConfig = ToastyConfig;
   return module.exports;
 });
 
 System.registerDynamic("src/toasty.service", ["@angular/core", "./toasty.utils", "rxjs/Observable", "./toasty.config"], true, function($__require, exports, module) {
+  "use strict";
   ;
   var define,
       global = this,
@@ -311,12 +315,13 @@ System.registerDynamic("src/toasty.service", ["@angular/core", "./toasty.utils",
     ToastyService.THEMES = ['default', 'material', 'bootstrap'];
     ToastyService = __decorate([core_1.Injectable(), __metadata('design:paramtypes', [toasty_config_1.ToastyConfig])], ToastyService);
     return ToastyService;
-  })();
+  }());
   exports.ToastyService = ToastyService;
   return module.exports;
 });
 
 System.registerDynamic("src/toasty.utils", [], true, function($__require, exports, module) {
+  "use strict";
   ;
   var define,
       global = this,
