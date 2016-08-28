@@ -4,18 +4,16 @@
 
 'use strict';
 
-import {Toasty} from './src/toasty.container';
-import {Toast} from './src/toasty.component';
-import {ToastyConfig} from './src/toasty.config';
-import {ToastyService} from './src/toasty.service';
+import {ToastyComponent} from './src/toasty.component';
+import {ToastComponent} from './src/toast.component';
+import {ToastyService, ToastyConfig} from './src/toasty.service';
 
-export * from './src/toasty.container';
 export * from './src/toasty.component';
-export * from './src/toasty.config';
+export * from './src/toast.component';
 export * from './src/toasty.service';
 export * from './src/toasty.utils';
 
 export default {
   providers: [ToastyConfig, ToastyService],
-  directives: [Toasty, Toast]
+  directives: [ToastyComponent, ToastComponent]
 }

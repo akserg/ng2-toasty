@@ -9,6 +9,8 @@ Angular2 Toasty component shows growl-style alerts and messages for your applica
 
 Follow me [![twitter](https://img.shields.io/twitter/follow/akopkokhyants.svg?style=social&label=%20akopkokhyants)](https://twitter.com/akopkokhyants) to be notified about new releases.
 
+_Some of these APIs and Components are not final and are subject to change!_
+
 ## Installation
 ```sh
 npm install ng2-toasty --save
@@ -22,33 +24,34 @@ Simple examples using ng2-dnd:
 Online demo available [here](http://akserg.github.io/ng2-webpack-demo)
 
 ## Usage
-If you use SystemJS to load your files, you might have to update your config with this if you don't use `defaultJSExtensions: true`:
+If you use SystemJS to load your files, you might have to update your config:
+
 ```js
 System.config({
+    map: {
+        'ng2-toasty': 'node_modules/ng2-toasty'
+    },
     packages: {
-        "/ng2-toasty": {"defaultExtension": "js"}
+        'ng2-toasty':  { main: 'index.js',  defaultExtension: 'js' },
     }
 });
 ```
 
 Finally, you can use *ng2-toasty* in your Angular 2 project:
-- Import `ToastyService, ToastyConfig, Toasty, ToastOptions` from `ng2-toasty/ng2-toasty`
+- Import `ToastyService, ToastyConfig, ToastyComponent, ToastOptions` from `ng2-toasty`
 - Instantiate `ToastyService, ToastyConfig` in the bootstrap of your application;
-- Add `Toasty` to the "directives" property of your application component;
+- Add `ToastyComponent` to the "directives" property of your application component;
 - Add `<ng2-toasty></ng2-toasty>` tag in template of your application component.
 
 ```js
 import {Component} from '@angular/core';
-import {ToastyService, ToastyConfig, Toasty, ToastOptions, ToastData} from 'ng2-toasty/ng2-toasty';
-import {bootstrap} from '@angular/platform-browser-dynamic';
-
-bootstrap(AppComponent, [
-    ToastyService, ToastyConfig // It is required to have 1 unique instance of your service
-]);
+import {ToastyService, ToastyConfig, ToastyComponent, ToastOptions, ToastData} from 'ng2-toasty';
+import {bootstrap} from '@angular/platform/browser';
 
 @Component({
     selector: 'app',
-    directives: [Toasty],
+    directives: [ToastyComponent],
+    providers: [ToastyService, ToastyConfig],
     template: `
         <div>Hello world</div>
         <button (click)="addToast()">Add Toast</button>
@@ -84,24 +87,23 @@ export class AppComponent {
         this.toastyService.warning(toastOptions);
     }
 }
+
+bootstrap(AppComponent);
 ```
 
-## How dynamically update title and message of toast
+## How dynamically update title and message of a toast
 Here is an example of how to dynamically update message and title of individual toast:
 
 ```js
 import {Component} from '@angular/core';
-import {ToastyService, ToastyConfig, Toasty, ToastOptions, ToastData} from 'ng2-toasty/ng2-toasty';
-import {bootstrap} from '@angular/platform-browser-dynamic';
+import {ToastyService, ToastyConfig, ToastyComponent, ToastOptions, ToastData} from 'ng2-toasty';
+import {bootstrap} from '@angular/platform/browser';
 import {Subject, Observable, Subscription} from 'rxjs/Rx';
-
-bootstrap(AppComponent, [
-    ToastyService, ToastyConfig // It is required to have 1 unique instance of your service
-]);
 
 @Component({
     selector: 'app',
-    directives: [Toasty],
+    directives: [ToastyComponent],
+    providers: [ToastyService, ToastyConfig],
     template: `
         <div>Hello world</div>
         <button (click)="addToast()">Add Toast</button>
@@ -161,6 +163,8 @@ export class AppComponent {
         }
     }
 }
+
+bootstrap(AppComponent);
 ```
 
 ## How to close specific toast
@@ -168,17 +172,14 @@ Here is an example of how to close an individual toast:
 
 ```js
 import {Component} from '@angular/core';
-import {ToastyService, ToastyConfig, Toasty, ToastOptions, ToastData} from 'ng2-toasty/ng2-toasty';
-import {bootstrap} from '@angular/platform-browser-dynamic';
+import {ToastyService, ToastyConfig, ToastyComponent, ToastOptions, ToastData} from 'ng2-toasty';
+import {bootstrap} from '@angular/platform/browser';
 import {Subject, Observable, Subscription} from 'rxjs/Rx';
-
-bootstrap(AppComponent, [
-    ToastyService, ToastyConfig // It is required to have 1 unique instance of your service
-]);
 
 @Component({
     selector: 'app',
-    directives: [Toasty],
+    directives: [ToastyComponent],
+    providers: [ToastyService, ToastyConfig],
     template: `
         <div>Hello world</div>
         <button (click)="addToast()">Add Toast</button>
@@ -240,6 +241,8 @@ export class AppComponent {
         }
     }
 }
+
+bootstrap(AppComponent);
 ```
 
 # License

@@ -1,24 +1,24 @@
-import {
-  describe,
-  expect,
-  beforeEach,
-  it,
-  inject,
-  beforeEachProviders
-} from '@angular/core/testing';
+import { inject, fakeAsync, tick, TestBed }
+    from '@angular/core/testing';
+
+import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } 
+    from '@angular/platform-browser-dynamic/testing';
 
 import {Observable} from 'rxjs/Observable';
 
-import {ToastyConfig} from '../src/toasty.config';
-import {ToastyService, ToastData, ToastOptions} from '../src/toasty.service';
+import {ToastyService, ToastData, ToastOptions, ToastyConfig} from '../src/toasty.service';
+
+TestBed.resetTestEnvironment();
+TestBed.initTestEnvironment(
+    BrowserDynamicTestingModule, platformBrowserDynamicTesting());
 
 export function main() {
     describe('ToastyService', () => {
 
-        beforeEachProviders(() => {
-            return [
-                ToastyService, ToastyConfig
-            ];
+        beforeEach(() => {
+            TestBed.configureTestingModule({
+                providers: [ToastyService, ToastyConfig]
+            });
         });
 
         it('is defined',
