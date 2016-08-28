@@ -42,11 +42,15 @@ Finally, you can use *ng2-toasty* in your Angular 2 project:
 - Instantiate `ToastyService, ToastyConfig` in the bootstrap of your application;
 - Add `ToastyComponent` to the "directives" property of your application component;
 - Add `<ng2-toasty></ng2-toasty>` tag in template of your application component.
+- Inject style into your web page. Choose one of the following files;
+  - `style-default.css` - Contains DEFAULT theme
+  - `style-bootstrap.css` - Contains Bootstrap 3 theme
+  - `style-material.css` - Contains Material Design theme
+- Assign the selected theme name to the `theme` property of the instance of ToastyConfig.
 
 ```js
 import {Component} from '@angular/core';
 import {ToastyService, ToastyConfig, ToastyComponent, ToastOptions, ToastData} from 'ng2-toasty';
-import {bootstrap} from '@angular/platform/browser';
 
 @Component({
     selector: 'app',
@@ -60,7 +64,11 @@ import {bootstrap} from '@angular/platform/browser';
 })
 export class AppComponent {
     
-    constructor(private toastyService:ToastyService) { }
+    constructor(private toastyService:ToastyService, private toastyConfig: ToastyConfig) {
+        // Assign the selected theme name to the `theme` property of the instance of ToastyConfig. 
+        // Possible values: default, bootstrap, material
+        this.toastyConfig.theme = 'material';
+     }
     
     addToast() {
         // Just add default Toast with title only
@@ -87,8 +95,6 @@ export class AppComponent {
         this.toastyService.warning(toastOptions);
     }
 }
-
-bootstrap(AppComponent);
 ```
 
 ## How dynamically update title and message of a toast
@@ -97,7 +103,6 @@ Here is an example of how to dynamically update message and title of individual 
 ```js
 import {Component} from '@angular/core';
 import {ToastyService, ToastyConfig, ToastyComponent, ToastOptions, ToastData} from 'ng2-toasty';
-import {bootstrap} from '@angular/platform/browser';
 import {Subject, Observable, Subscription} from 'rxjs/Rx';
 
 @Component({
@@ -163,8 +168,6 @@ export class AppComponent {
         }
     }
 }
-
-bootstrap(AppComponent);
 ```
 
 ## How to close specific toast
@@ -173,7 +176,6 @@ Here is an example of how to close an individual toast:
 ```js
 import {Component} from '@angular/core';
 import {ToastyService, ToastyConfig, ToastyComponent, ToastOptions, ToastData} from 'ng2-toasty';
-import {bootstrap} from '@angular/platform/browser';
 import {Subject, Observable, Subscription} from 'rxjs/Rx';
 
 @Component({
@@ -241,12 +243,10 @@ export class AppComponent {
         }
     }
 }
-
-bootstrap(AppComponent);
 ```
-
-# License
- [MIT](/LICENSE)
 
 # Credits 
 Inspired by [angular-toasty](https://github.com/teamfa/angular-toasty)
+
+# License
+ [MIT](/LICENSE)
