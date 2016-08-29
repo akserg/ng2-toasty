@@ -79,7 +79,7 @@ export class AppComponent {
             msg: "The message",
             showClose: true,
             timeout: 5000,
-            theme: 'default'
+            theme: 'default',
             onAdd: (toast:ToastData) => {
                 console.log('Toast ' + toast.id + ' has been added!');
             },
