@@ -13,6 +13,7 @@ import {ToastComponent} from './toast.component';
  * Toasty is container for Toast components
  */
 @Component({
+  moduleId: module.id,
   selector: 'ng2-toasty',
   directives: [CORE_DIRECTIVES, ToastComponent],
   template: `

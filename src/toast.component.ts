@@ -10,6 +10,7 @@ import {ToastData} from './toasty.service';
  * A Toast component shows message with title and close button.
  */
 @Component({
+  moduleId: module.id,
   selector: 'ng2-toast',
   directives: [CORE_DIRECTIVES],
   template: `
