@@ -12,10 +12,14 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            // for Travis
-            'node_modules/core-js/client/core.js',
+            // System.js for module loading
+            'node_modules/systemjs/dist/system.src.js',
 
-            // zone-microtask must be included first as it contains a Promise monkey patch
+            // Polyfills
+            'node_modules/core-js/client/shim.js',
+
+            // Reflect and Zone.js
+            'node_modules/reflect-metadata/Reflect.js',
             'node_modules/zone.js/dist/zone.js',
             'node_modules/zone.js/dist/long-stack-trace-zone.js',
             'node_modules/zone.js/dist/proxy.js',
@@ -23,15 +27,19 @@ module.exports = function(config) {
             'node_modules/zone.js/dist/jasmine-patch.js',
             'node_modules/zone.js/dist/async-test.js',
             'node_modules/zone.js/dist/fake-async-test.js',
-            'node_modules/systemjs/dist/system.src.js',
-            'node_modules/reflect-metadata/Reflect.js',
 
-            { pattern: 'node_modules/@angular/**/*.js', included: false, watched: false, served: true },
-            { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false, served: true },
+            // RxJs.
+            { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
+            { pattern: 'node_modules/rxjs/**/*.js.map', included: false, watched: false },
+
+            // Angular 2 itself and the testing library
+            { pattern: 'node_modules/@angular/**/*.js', included: false, watched: false },
+            { pattern: 'node_modules/@angular/**/*.js.map', included: false, watched: false },
+
             { pattern: 'node_modules/systemjs/dist/system-polyfills.js', included: false, watched: false, served: true }, // PhantomJS2 (and possibly others) might require it
 
             { pattern: 'src/**/*.ts', included: false, watched: true }, // source files
-            { pattern: 'tests/**/*.ts', included: false, watched: true }, // test files
+            { pattern: 'tests/**/*.spec.ts', included: false, watched: true }, // test files
             'karma-test-shim.js'
         ],
 
@@ -47,7 +55,7 @@ module.exports = function(config) {
         typescriptPreprocessor: {
             options: require('./tsconfig.json').compilerOptions,
             typings: [
-                "typings/main.d.ts"
+                "typings/index.d.ts"
             ]
         },
 

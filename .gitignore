@@ -17,7 +17,6 @@ src/*.js.map
 tests/*.js
 tests/*.d.ts
 tests/*.js.map
-typings
 index.js
 index.d.ts
 index.js.map

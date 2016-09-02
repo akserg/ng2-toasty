@@ -2,19 +2,16 @@
 // This project is licensed under the terms of the MIT license.
 // https://github.com/akserg/ng2-toasty
 
-import {Component, Input, OnInit} from '@angular/core';
-import {CORE_DIRECTIVES} from '@angular/common';
+import { Component, Input, OnInit } from '@angular/core';
 
-import {isFunction} from './toasty.utils';
-import {ToastyService, ToastData, ToastyConfig} from './toasty.service';
-import {ToastComponent} from './toast.component';
+import { isFunction } from './toasty.utils';
+import { ToastyService, ToastData, ToastyConfig } from './toasty.service';
 
 /**
  * Toasty is container for Toast components
  */
 @Component({
   selector: 'ng2-toasty',
-  directives: [CORE_DIRECTIVES, ToastComponent],
   template: `
     <div id="toasty" [ngClass]="[position]">
         <ng2-toast *ngFor="let toast of toasts" [toast]="toast" (closeToast)="closeToast(toast)"></ng2-toast>
@@ -60,7 +57,7 @@ export class ToastyComponent implements OnInit {
   // The storage for toasts.
   toasts: Array<ToastData> = [];
 
-  constructor(private config: ToastyConfig, private toastyService: ToastyService) { 
+  constructor(private config: ToastyConfig, private toastyService: ToastyService) {
     // Initialise position
     this.position = '';
   }

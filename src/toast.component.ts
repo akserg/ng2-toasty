@@ -2,16 +2,15 @@
 // This project is licensed under the terms of the MIT license.
 // https://github.com/akserg/ng2-toasty
 
-import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {CORE_DIRECTIVES} from '@angular/common';
-import {ToastData} from './toasty.service';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+
+import { ToastData } from './toasty.service';
 
 /**
  * A Toast component shows message with title and close button.
  */
 @Component({
   selector: 'ng2-toast',
-  directives: [CORE_DIRECTIVES],
   template: `
         <div class="toast" [ngClass]="[toast.type, toast.theme]">
             <div *ngIf="toast.showClose" class="close-button" (click)="close($event)"></div>
