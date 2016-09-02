@@ -10,10 +10,11 @@ npm-debug.log
 coverage
 typings
 typings.json
-*.ts
+**/*.ts
 **/*.js.map
 !*.d.ts
-tests
+!src/*.d.ts
+!tests/*.d.ts
 .travis.yml
 karma*
 make.js

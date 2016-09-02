@@ -38,9 +38,25 @@ System.config({
 ```
 
 Finally, you can use *ng2-toasty* in your Angular 2 project:
-- Import `ToastyService, ToastyConfig, ToastyComponent, ToastOptions` from `ng2-toasty`
-- Instantiate `ToastyService, ToastyConfig` in the bootstrap of your application;
-- Add `ToastyComponent` to the "directives" property of your application component;
+- Import and Export `ToastyModule` from `ng2-toasty` in your main application module
+
+```js
+import {NgModule} from '@angular/core';
+import {ToastyModule} from 'ng2-translate/ng2-translate';
+
+@NgModule({
+    imports: [
+        ToastyModule
+    ],
+    bootstrap: [AppComponent],
+    export: [
+      ToastyModule
+    ]
+})
+export class AppModule {
+}
+```
+
 - Add `<ng2-toasty></ng2-toasty>` tag in template of your application component.
 - Inject style into your web page. Choose one of the following files;
   - `style-default.css` - Contains DEFAULT theme
@@ -54,8 +70,6 @@ import {ToastyService, ToastyConfig, ToastyComponent, ToastOptions, ToastData} f
 
 @Component({
     selector: 'app',
-    directives: [ToastyComponent],
-    providers: [ToastyService, ToastyConfig],
     template: `
         <div>Hello world</div>
         <button (click)="addToast()">Add Toast</button>
@@ -107,8 +121,6 @@ import {Subject, Observable, Subscription} from 'rxjs/Rx';
 
 @Component({
     selector: 'app',
-    directives: [ToastyComponent],
-    providers: [ToastyService, ToastyConfig],
     template: `
         <div>Hello world</div>
         <button (click)="addToast()">Add Toast</button>
@@ -180,8 +192,6 @@ import {Subject, Observable, Subscription} from 'rxjs/Rx';
 
 @Component({
     selector: 'app',
-    directives: [ToastyComponent],
-    providers: [ToastyService, ToastyConfig],
     template: `
         <div>Hello world</div>
         <button (click)="addToast()">Add Toast</button>

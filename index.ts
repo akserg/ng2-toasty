@@ -7,11 +7,17 @@
 import { NgModule, ModuleWithProviders } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
-export { ToastData, ToastOptions } from './src/toasty.service';
+export * from './src/toasty.service';
+export * from './src/toasty.component';
 
 import { ToastyComponent } from './src/toasty.component';
 import { ToastComponent } from './src/toast.component';
 import { ToastyConfig, ToastyService } from './src/toasty.service';
+
+export default {
+  providers : [ToastyConfig, ToastyService],
+  directives: [ToastyComponent, ToastComponent]
+};
 
 @NgModule({
   imports     : [CommonModule],
@@ -19,21 +25,13 @@ import { ToastyConfig, ToastyService } from './src/toasty.service';
     ToastComponent,
     ToastyComponent
   ],
-  exports     : [
-    ToastyComponent,
+  providers   : [
     ToastyConfig,
     ToastyService
+  ],
+  exports     : [
+    ToastyComponent
   ]
 })
 export class ToastyModule {
-
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule : ToastyModule,
-      providers: [
-        ToastyConfig,
-        ToastyService
-      ]
-    };
-  };
 }
