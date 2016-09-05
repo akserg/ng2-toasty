@@ -2,11 +2,11 @@
 // This project is licensed under the terms of the MIT license.
 // https://github.com/akserg/ng2-toasty
 
-import {Injectable} from '@angular/core';
-import {isString, isNumber, isFunction} from './toasty.utils';
+import { Injectable } from '@angular/core';
+import { isString, isNumber, isFunction } from './toasty.utils';
 
-import {Observable} from 'rxjs/Observable';
-import {Subscriber} from 'rxjs/Subscriber';
+import { Observable } from 'rxjs/Observable';
+import { Subscriber } from 'rxjs/Subscriber';
 
 /**
  * Options to configure specific Toast
@@ -81,7 +81,7 @@ export class ToastyService {
     this.toastsObservable = new Observable<ToastData>((subscriber: Subscriber<ToastData>) => {
       this.toastsSubscriber = subscriber;
     });
-    this.clearObservable = new Observable<number>((subscriber: Subscriber<number>) => {
+    this.clearObservable  = new Observable<number>((subscriber: Subscriber<number>) => {
       this.clearSubscriber = subscriber;
     });
   }
@@ -178,14 +178,14 @@ export class ToastyService {
     }
 
     let toast: ToastData = <ToastData>{
-      id: this.uniqueCounter,
-      title: toastyOptions.title,
-      msg: toastyOptions.msg,
+      id       : this.uniqueCounter,
+      title    : toastyOptions.title,
+      msg      : toastyOptions.msg,
       showClose: showClose,
-      type: 'toasty-type-' + type,
-      theme: 'toasty-theme-' + theme,
-      onAdd: toastyOptions.onAdd && isFunction(toastyOptions.onAdd) ? toastyOptions.onAdd : null,
-      onRemove: toastyOptions.onRemove && isFunction(toastyOptions.onRemove) ? toastyOptions.onRemove : null
+      type     : 'toasty-type-' + type,
+      theme    : 'toasty-theme-' + theme,
+      onAdd    : toastyOptions.onAdd && isFunction(toastyOptions.onAdd) ? toastyOptions.onAdd : null,
+      onRemove : toastyOptions.onRemove && isFunction(toastyOptions.onRemove) ? toastyOptions.onRemove : null
     };
 
     // If there's a timeout individually or globally, set the toast to timeout
