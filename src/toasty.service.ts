@@ -105,7 +105,7 @@ export class ToastyService {
   }
 
   /**
-   * Create Toast of default type
+   * Create Toast of info type
    * @param  {object} options Individual toasty config overrides
    */
   info(options: ToastOptions|string|number): void {
