@@ -18,6 +18,7 @@ System.config({
         '@angular/common/testing': 'node_modules/@angular/common/testing.js',
         '@angular/common': 'node_modules/@angular/common/bundles/common-testing.umd.js',
         '@angular/common/src/facade/lang': 'node_modules/@angular/common/src/facade/lang.js',
+        '@angular/platform-browser-dynamic': 'node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
         '@angular/platform-browser-dynamic/testing': 'node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic-testing.umd.js',
         '@angular/platform-browser/testing': 'node_modules/@angular/platform-browser/bundles/platform-browser-testing.umd.js',
         '@angular/platform-browser': 'node_modules/@angular/platform-browser/index.js',
