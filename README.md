@@ -85,7 +85,7 @@ export class SharedModule {
 
 ```js
 import {Component} from '@angular/core';
-import {ToastyService} from 'ng2-toasty';
+import {ToastyService, ToastyConfig, ToastOptions, ToastData} from 'ng2-toasty';
 
 @Component({
     selector: 'app',
