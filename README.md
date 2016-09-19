@@ -42,7 +42,7 @@ Finally, you can use *ng2-toasty* in your Angular 2 project:
 
 ```js
 import {NgModule} from '@angular/core';
-import {ToastyModule} from 'ng2-translate/ng2-translate';
+import {ToastyModule} from 'ng2-toasty/ng2-toasty';
 
 @NgModule({
     imports: [

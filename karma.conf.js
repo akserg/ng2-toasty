@@ -28,6 +28,8 @@ module.exports = function(config) {
             'node_modules/zone.js/dist/async-test.js',
             'node_modules/zone.js/dist/fake-async-test.js',
 
+            'node_modules/traceur/bin/traceur.js',
+
             // RxJs.
             { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/rxjs/**/*.js.map', included: false, watched: false },
@@ -39,7 +41,7 @@ module.exports = function(config) {
             { pattern: 'node_modules/systemjs/dist/system-polyfills.js', included: false, watched: false, served: true }, // PhantomJS2 (and possibly others) might require it
 
             { pattern: 'src/**/*.ts', included: false, watched: true }, // source files
-            { pattern: 'tests/**/*.spec.ts', included: false, watched: true }, // test files
+            { pattern: 'tests/toast.component.spec.ts', included: false, watched: true }, // test files
             'karma-test-shim.js'
         ],
 
