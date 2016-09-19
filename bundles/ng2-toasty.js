@@ -1,3 +1,215 @@
+System.registerDynamic("src/toasty.component", ["@angular/core", "./toasty.utils", "./toasty.service"], true, function ($__require, exports, module) {
+    // Copyright (C) 2016 Sergey Akopkokhyants
+    // This project is licensed under the terms of the MIT license.
+    // https://github.com/akserg/ng2-toasty
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __decorate = this && this.__decorate || function (decorators, target, key, desc) {
+        var c = arguments.length,
+            r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+            d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+    var __metadata = this && this.__metadata || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+    };
+    var core_1 = $__require("@angular/core");
+    var toasty_utils_1 = $__require("./toasty.utils");
+    var toasty_service_1 = $__require("./toasty.service");
+    /**
+     * Toasty is container for Toast components
+     */
+    var ToastyComponent = function () {
+        function ToastyComponent(config, toastyService) {
+            this.config = config;
+            this.toastyService = toastyService;
+            this._position = '';
+            // The storage for toasts.
+            this.toasts = [];
+            // Initialise position
+            this.position = '';
+        }
+        Object.defineProperty(ToastyComponent.prototype, "position", {
+            get: function () {
+                return this._position;
+            },
+            // The window position where the toast pops up. Possible values:
+            // - bottom-right (default value from ToastConfig)
+            // - bottom-left
+            // - top-right
+            // - top-left
+            // - top-center
+            // - bottom-center
+            set: function (value) {
+                if (value) {
+                    var notFound = true;
+                    for (var i = 0; i < ToastyComponent.POSITIONS.length; i++) {
+                        if (ToastyComponent.POSITIONS[i] === value) {
+                            notFound = false;
+                            break;
+                        }
+                    }
+                    if (notFound) {
+                        // Position was wrong - clear it here to use the one from config.
+                        value = this.config.position;
+                    }
+                } else {
+                    value = this.config.position;
+                }
+                this._position = 'toasty-position-' + value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        /**
+         * `ngOnInit` is called right after the directive's data-bound properties have been checked for the
+         * first time, and before any of its children have been checked. It is invoked only once when the
+         * directive is instantiated.
+         */
+        ToastyComponent.prototype.ngOnInit = function () {
+            var _this = this;
+            // We listen our service to recieve new toasts from it
+            this.toastyService.getToasts().subscribe(function (toast) {
+                // If we've gone over our limit, remove the earliest
+                // one from the array
+                if (_this.toasts.length >= _this.config.limit) {
+                    _this.toasts.shift();
+                }
+                // Add toasty to array
+                _this.toasts.push(toast);
+                //
+                // If there's a timeout individually or globally,
+                // set the toast to timeout
+                if (toast.timeout) {
+                    _this._setTimeout(toast);
+                }
+            });
+            // We listen clear all comes from service here.
+            this.toastyService.getClear().subscribe(function (id) {
+                if (id) {
+                    _this.clear(id);
+                }
+                // Lets clear all toasts
+                _this.clearAll();
+            });
+        };
+        /**
+         * Event listener of 'closeToast' event comes from ToastyComponent.
+         * This method removes ToastComponent assosiated with this Toast.
+         */
+        ToastyComponent.prototype.closeToast = function (toast) {
+            this.clear(toast.id);
+        };
+        /**
+         * Clear individual toast by id
+         * @param id is unique identifier of Toast
+         */
+        ToastyComponent.prototype.clear = function (id) {
+            var _this = this;
+            if (id) {
+                this.toasts.forEach(function (value, key) {
+                    if (value.id === id) {
+                        if (value.onRemove && toasty_utils_1.isFunction(value.onRemove)) {
+                            value.onRemove.call(_this, value);
+                        }
+                        _this.toasts.splice(key, 1);
+                    }
+                });
+            } else {
+                throw new Error('Please provide id of Toast to close');
+            }
+        };
+        /**
+         * Clear all toasts
+         */
+        ToastyComponent.prototype.clearAll = function () {
+            var _this = this;
+            this.toasts.forEach(function (value, key) {
+                if (value.onRemove && toasty_utils_1.isFunction(value.onRemove)) {
+                    value.onRemove.call(_this, value);
+                }
+            });
+            this.toasts = [];
+        };
+        /**
+         * Custom setTimeout function for specific setTimeouts on individual toasts.
+         */
+        ToastyComponent.prototype._setTimeout = function (toast) {
+            var _this = this;
+            window.setTimeout(function () {
+                _this.clear(toast.id);
+            }, toast.timeout);
+        };
+        /**
+         * Set of constants defins position of Toasty on the page.
+         */
+        ToastyComponent.POSITIONS = ['bottom-right', 'bottom-left', 'top-right', 'top-left', 'top-center', 'bottom-center'];
+        __decorate([core_1.Input(), __metadata('design:type', String), __metadata('design:paramtypes', [String])], ToastyComponent.prototype, "position", null);
+        ToastyComponent = __decorate([core_1.Component({
+            moduleId: module.id,
+            selector: 'ng2-toasty',
+            template: "\n    <div id=\"toasty\" [ngClass]=\"[position]\">\n        <ng2-toast *ngFor=\"let toast of toasts\" [toast]=\"toast\" (closeToast)=\"closeToast(toast)\"></ng2-toast>\n    </div>"
+        }), __metadata('design:paramtypes', [toasty_service_1.ToastyConfig, toasty_service_1.ToastyService])], ToastyComponent);
+        return ToastyComponent;
+    }();
+    exports.ToastyComponent = ToastyComponent;
+    
+
+    return module.exports;
+});
+System.registerDynamic("src/toast.component", ["@angular/core"], true, function ($__require, exports, module) {
+    // Copyright (C) 2016 Sergey Akopkokhyants
+    // This project is licensed under the terms of the MIT license.
+    // https://github.com/akserg/ng2-toasty
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __decorate = this && this.__decorate || function (decorators, target, key, desc) {
+        var c = arguments.length,
+            r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+            d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+    var __metadata = this && this.__metadata || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+    };
+    var core_1 = $__require("@angular/core");
+    /**
+     * A Toast component shows message with title and close button.
+     */
+    var ToastComponent = function () {
+        function ToastComponent() {
+            this.closeToastEvent = new core_1.EventEmitter();
+        }
+        /**
+         * Event handler invokes when user clicks on close button.
+         * This method emit new event into ToastyContainer to close it.
+         */
+        ToastComponent.prototype.close = function ($event) {
+            $event.preventDefault();
+            this.closeToastEvent.next(this.toast);
+        };
+        __decorate([core_1.Input(), __metadata('design:type', Object)], ToastComponent.prototype, "toast", void 0);
+        __decorate([core_1.Output('closeToast'), __metadata('design:type', Object)], ToastComponent.prototype, "closeToastEvent", void 0);
+        ToastComponent = __decorate([core_1.Component({
+            moduleId: module.id,
+            selector: 'ng2-toast',
+            template: "\n        <div class=\"toast\" [ngClass]=\"[toast.type, toast.theme]\">\n            <div *ngIf=\"toast.showClose\" class=\"close-button\" (click)=\"close($event)\"></div>\n            <div *ngIf=\"toast.title || toast.msg\" class=\"toast-text\">\n                <span *ngIf=\"toast.title\" class=\"toast-title\">{{toast.title}}</span>\n                <br *ngIf=\"toast.title && toast.msg\" />\n                <span *ngIf=\"toast.msg\" class=\"toast-msg\">{{toast.msg}}</span>\n            </div>\n        </div>"
+        }), __metadata('design:paramtypes', [])], ToastComponent);
+        return ToastComponent;
+    }();
+    exports.ToastComponent = ToastComponent;
+    
+
+    return module.exports;
+});
 System.registerDynamic("src/toasty.utils", [], true, function ($__require, exports, module) {
   "use strict";
   /**
@@ -218,7 +430,7 @@ System.registerDynamic("src/toasty.service", ["@angular/core", "./toasty.utils",
 
     return module.exports;
 });
-System.registerDynamic("src/toasty.component", ["@angular/core", "./toasty.utils", "./toasty.service"], true, function ($__require, exports, module) {
+System.registerDynamic("src/toasty.module", ["@angular/core", "@angular/common", "./toasty.component", "./toast.component", "./toasty.service"], true, function ($__require, exports, module) {
     // Copyright (C) 2016 Sergey Akopkokhyants
     // This project is licensed under the terms of the MIT license.
     // https://github.com/akserg/ng2-toasty
@@ -237,242 +449,43 @@ System.registerDynamic("src/toasty.component", ["@angular/core", "./toasty.utils
     var __metadata = this && this.__metadata || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1 = $__require("@angular/core");
-    var toasty_utils_1 = $__require("./toasty.utils");
-    var toasty_service_1 = $__require("./toasty.service");
-    /**
-     * Toasty is container for Toast components
-     */
-    var ToastyComponent = function () {
-        function ToastyComponent(config, toastyService) {
-            this.config = config;
-            this.toastyService = toastyService;
-            this._position = '';
-            // The storage for toasts.
-            this.toasts = [];
-            // Initialise position
-            this.position = '';
-        }
-        Object.defineProperty(ToastyComponent.prototype, "position", {
-            get: function () {
-                return this._position;
-            },
-            // The window position where the toast pops up. Possible values:
-            // - bottom-right (default value from ToastConfig)
-            // - bottom-left
-            // - top-right
-            // - top-left
-            // - top-center
-            // - bottom-center
-            set: function (value) {
-                if (value) {
-                    var notFound = true;
-                    for (var i = 0; i < ToastyComponent.POSITIONS.length; i++) {
-                        if (ToastyComponent.POSITIONS[i] === value) {
-                            notFound = false;
-                            break;
-                        }
-                    }
-                    if (notFound) {
-                        // Position was wrong - clear it here to use the one from config.
-                        value = this.config.position;
-                    }
-                } else {
-                    value = this.config.position;
-                }
-                this._position = 'toasty-position-' + value;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        /**
-         * `ngOnInit` is called right after the directive's data-bound properties have been checked for the
-         * first time, and before any of its children have been checked. It is invoked only once when the
-         * directive is instantiated.
-         */
-        ToastyComponent.prototype.ngOnInit = function () {
-            var _this = this;
-            // We listen our service to recieve new toasts from it
-            this.toastyService.getToasts().subscribe(function (toast) {
-                // If we've gone over our limit, remove the earliest
-                // one from the array
-                if (_this.toasts.length >= _this.config.limit) {
-                    _this.toasts.shift();
-                }
-                // Add toasty to array
-                _this.toasts.push(toast);
-                //
-                // If there's a timeout individually or globally,
-                // set the toast to timeout
-                if (toast.timeout) {
-                    _this._setTimeout(toast);
-                }
-            });
-            // We listen clear all comes from service here.
-            this.toastyService.getClear().subscribe(function (id) {
-                if (id) {
-                    _this.clear(id);
-                }
-                // Lets clear all toasts
-                _this.clearAll();
-            });
-        };
-        /**
-         * Event listener of 'closeToast' event comes from ToastyComponent.
-         * This method removes ToastComponent assosiated with this Toast.
-         */
-        ToastyComponent.prototype.closeToast = function (toast) {
-            this.clear(toast.id);
-        };
-        /**
-         * Clear individual toast by id
-         * @param id is unique identifier of Toast
-         */
-        ToastyComponent.prototype.clear = function (id) {
-            var _this = this;
-            if (id) {
-                this.toasts.forEach(function (value, key) {
-                    if (value.id === id) {
-                        if (value.onRemove && toasty_utils_1.isFunction(value.onRemove)) {
-                            value.onRemove.call(_this, value);
-                        }
-                        _this.toasts.splice(key, 1);
-                    }
-                });
-            } else {
-                throw new Error('Please provide id of Toast to close');
-            }
-        };
-        /**
-         * Clear all toasts
-         */
-        ToastyComponent.prototype.clearAll = function () {
-            var _this = this;
-            this.toasts.forEach(function (value, key) {
-                if (value.onRemove && toasty_utils_1.isFunction(value.onRemove)) {
-                    value.onRemove.call(_this, value);
-                }
-            });
-            this.toasts = [];
-        };
-        /**
-         * Custom setTimeout function for specific setTimeouts on individual toasts.
-         */
-        ToastyComponent.prototype._setTimeout = function (toast) {
-            var _this = this;
-            window.setTimeout(function () {
-                _this.clear(toast.id);
-            }, toast.timeout);
-        };
-        /**
-         * Set of constants defins position of Toasty on the page.
-         */
-        ToastyComponent.POSITIONS = ['bottom-right', 'bottom-left', 'top-right', 'top-left', 'top-center', 'bottom-center'];
-        __decorate([core_1.Input(), __metadata('design:type', String), __metadata('design:paramtypes', [String])], ToastyComponent.prototype, "position", null);
-        ToastyComponent = __decorate([core_1.Component({
-            selector: 'ng2-toasty',
-            template: "\n    <div id=\"toasty\" [ngClass]=\"[position]\">\n        <ng2-toast *ngFor=\"let toast of toasts\" [toast]=\"toast\" (closeToast)=\"closeToast(toast)\"></ng2-toast>\n    </div>"
-        }), __metadata('design:paramtypes', [toasty_service_1.ToastyConfig, toasty_service_1.ToastyService])], ToastyComponent);
-        return ToastyComponent;
-    }();
-    exports.ToastyComponent = ToastyComponent;
-    
-
-    return module.exports;
-});
-System.registerDynamic("src/toast.component", ["@angular/core"], true, function ($__require, exports, module) {
-    // Copyright (C) 2016 Sergey Akopkokhyants
-    // This project is licensed under the terms of the MIT license.
-    // https://github.com/akserg/ng2-toasty
-    "use strict";
-
-    var define,
-        global = this || self,
-        GLOBAL = global;
-    var __decorate = this && this.__decorate || function (decorators, target, key, desc) {
-        var c = arguments.length,
-            r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
-            d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
-    };
-    var __metadata = this && this.__metadata || function (k, v) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-    };
-    var core_1 = $__require("@angular/core");
-    /**
-     * A Toast component shows message with title and close button.
-     */
-    var ToastComponent = function () {
-        function ToastComponent() {
-            this.closeToastEvent = new core_1.EventEmitter();
-        }
-        /**
-         * Event handler invokes when user clicks on close button.
-         * This method emit new event into ToastyContainer to close it.
-         */
-        ToastComponent.prototype.close = function ($event) {
-            $event.preventDefault();
-            this.closeToastEvent.next(this.toast);
-        };
-        __decorate([core_1.Input(), __metadata('design:type', Object)], ToastComponent.prototype, "toast", void 0);
-        __decorate([core_1.Output('closeToast'), __metadata('design:type', Object)], ToastComponent.prototype, "closeToastEvent", void 0);
-        ToastComponent = __decorate([core_1.Component({
-            selector: 'ng2-toast',
-            template: "\n        <div class=\"toast\" [ngClass]=\"[toast.type, toast.theme]\">\n            <div *ngIf=\"toast.showClose\" class=\"close-button\" (click)=\"close($event)\"></div>\n            <div *ngIf=\"toast.title || toast.msg\" class=\"toast-text\">\n                <span *ngIf=\"toast.title\" class=\"toast-title\">{{toast.title}}</span>\n                <br *ngIf=\"toast.title && toast.msg\" />\n                <span *ngIf=\"toast.msg\" class=\"toast-msg\">{{toast.msg}}</span>\n            </div>\n        </div>"
-        }), __metadata('design:paramtypes', [])], ToastComponent);
-        return ToastComponent;
-    }();
-    exports.ToastComponent = ToastComponent;
-    
-
-    return module.exports;
-});
-System.registerDynamic("index", ["@angular/core", "@angular/common", "./src/toasty.service", "./src/toasty.component", "./src/toast.component"], true, function ($__require, exports, module) {
-    // Copyright (C) 2016 Sergey Akopkokhyants
-    // This project is licensed under the terms of the MIT license.
-    // https://github.com/akserg/ng2-toasty
-    'use strict';
-
-    var define,
-        global = this || self,
-        GLOBAL = global;
-    var __decorate = this && this.__decorate || function (decorators, target, key, desc) {
-        var c = arguments.length,
-            r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
-            d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
-    };
-    var __metadata = this && this.__metadata || function (k, v) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-    };
-    function __export(m) {
-        for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-    }
     var core_1 = $__require("@angular/core");
     var common_1 = $__require("@angular/common");
-    __export($__require("./src/toasty.service"));
-    __export($__require("./src/toasty.component"));
-    var toasty_component_2 = $__require("./src/toasty.component");
-    var toast_component_1 = $__require("./src/toast.component");
-    var toasty_service_2 = $__require("./src/toasty.service");
+    var toasty_component_1 = $__require("./toasty.component");
+    var toast_component_1 = $__require("./toast.component");
+    var toasty_service_1 = $__require("./toasty.service");
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = {
-        providers: [toasty_service_2.ToastyConfig, toasty_service_2.ToastyService],
-        directives: [toasty_component_2.ToastyComponent, toast_component_1.ToastComponent]
+        providers: [toasty_service_1.ToastyConfig, toasty_service_1.ToastyService],
+        directives: [toasty_component_1.ToastyComponent, toast_component_1.ToastComponent]
     };
     var ToastyModule = function () {
         function ToastyModule() {}
         ToastyModule = __decorate([core_1.NgModule({
             imports: [common_1.CommonModule],
-            declarations: [toast_component_1.ToastComponent, toasty_component_2.ToastyComponent],
-            providers: [toasty_service_2.ToastyConfig, toasty_service_2.ToastyService],
-            exports: [toasty_component_2.ToastyComponent]
+            declarations: [toast_component_1.ToastComponent, toasty_component_1.ToastyComponent],
+            providers: [toasty_service_1.ToastyConfig, toasty_service_1.ToastyService],
+            exports: [toasty_component_1.ToastyComponent]
         }), __metadata('design:paramtypes', [])], ToastyModule);
         return ToastyModule;
     }();
     exports.ToastyModule = ToastyModule;
+    
+
+    return module.exports;
+});
+System.registerDynamic('ng2-toasty', ['./src/toasty.service', './src/toasty.component', './src/toasty.module'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    function __export(m) {
+        for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+    }
+    __export($__require('./src/toasty.service'));
+    __export($__require('./src/toasty.component'));
+    __export($__require('./src/toasty.module'));
     
 
     return module.exports;

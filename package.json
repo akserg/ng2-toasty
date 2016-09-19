@@ -24,8 +24,8 @@
   "bugs": {
     "url": "https://github.com/akserg/ng2-toasty/issues"
   },
-  "main": "index.js",
-  "typings": "index",
+  "main": "ng2-toasty.js",
+  "typings": "ng2-toasty.d.ts",
   "homepage": "https://github.com/akserg/ng2-toasty",
   "dependencies": {
     "core-js": "^2.4.1",
