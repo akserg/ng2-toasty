@@ -11,7 +11,7 @@ import { ToastyService, ToastData, ToastyConfig } from './toasty.service';
  * Toasty is container for Toast components
  */
 @Component({
-  moduleId: module.id,
+  moduleId: module.id.toString(),
   selector: 'ng2-toasty',
   template: `
     <div id="toasty" [ngClass]="[position]">

@@ -20,18 +20,15 @@ export default {
 };
 
 @NgModule({
-  imports     : [CommonModule],
-  declarations: [
-    ToastComponent,
-    ToastyComponent
-  ],
-  providers   : [
-    ToastyConfig,
-    ToastyService
-  ],
-  exports     : [
-    ToastyComponent
-  ]
+  imports: [CommonModule],
+  declarations: [ToastComponent, ToastyComponent],
+  exports : [ToastComponent, ToastyComponent]
 })
 export class ToastyModule {
+  static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: ToastyModule,
+            providers: [ToastyConfig, ToastyService]
+        };
+    }
 }

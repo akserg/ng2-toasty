@@ -37,36 +37,55 @@ System.config({
 });
 ```
 
-Finally, you can use *ng2-toasty* in your Angular 2 project:
-- Import and Export `ToastyModule` from `ng2-toasty` in your main application module
+#### 1. Update the markup
+- Import style into your web page. Choose one of the following files;
+  - `style-default.css` - Contains DEFAULT theme
+  - `style-bootstrap.css` - Contains Bootstrap 3 theme
+  - `style-material.css` - Contains Material Design theme
+- Assign the selected theme name [`default`, `bootstrap`, `material`] to the `theme` property of the instance of ToastyConfig.
+- Add `<ng2-toasty></ng2-toasty>` tag in template of your application component.
 
-```js
+#### 2. Import the `ToastyModule`
+Import `ToastyModule.forRoot()` in the NgModule of your application. 
+The `forRoot` method is a convention for modules that provide a singleton service.
+
+```ts
+import {BrowserModule} from "@angular/platform-browser";
 import {NgModule} from '@angular/core';
-import {ToastyModule} from 'ng2-translate/ng2-translate';
+import {ToastyModule} from 'ng2-toasty';
 
 @NgModule({
     imports: [
-        ToastyModule
+        BrowserModule,
+        ToastyModule.forRoot()
     ],
-    bootstrap: [AppComponent],
-    export: [
-      ToastyModule
-    ]
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }
 ```
 
-- Add `<ng2-toasty></ng2-toasty>` tag in template of your application component.
-- Inject style into your web page. Choose one of the following files;
-  - `style-default.css` - Contains DEFAULT theme
-  - `style-bootstrap.css` - Contains Bootstrap 3 theme
-  - `style-material.css` - Contains Material Design theme
-- Assign the selected theme name to the `theme` property of the instance of ToastyConfig.
+If you have multiple NgModules and you use one as a shared NgModule (that you import in all of your other NgModules), 
+don't forget that you can use it to export the `ToastyModule` that you imported in order to avoid having to import it multiple times.
+
+```ts
+@NgModule({
+    imports: [
+        BrowserModule,
+        ToastyModule.forRoot()
+    ],
+    exports: [BrowserModule, ToastyModule],
+})
+export class SharedModule {
+}
+```
+
+#### 3. Use the `ToastyService` for your application
+- Import `ToastyService` from `ng2-toasty` in your application code:
 
 ```js
 import {Component} from '@angular/core';
-import {ToastyService, ToastyConfig, ToastyComponent, ToastOptions, ToastData} from 'ng2-toasty';
+import {ToastyService} from 'ng2-toasty';
 
 @Component({
     selector: 'app',
@@ -78,11 +97,11 @@ import {ToastyService, ToastyConfig, ToastyComponent, ToastOptions, ToastData} f
 })
 export class AppComponent {
     
-    constructor(private toastyService:ToastyService, private toastyConfig: ToastyConfig) {
+    constructor(private toastyService:ToastyService, private toastyConfig: ToastyConfig) { 
         // Assign the selected theme name to the `theme` property of the instance of ToastyConfig. 
         // Possible values: default, bootstrap, material
         this.toastyConfig.theme = 'material';
-     }
+    }
     
     addToast() {
         // Just add default Toast with title only
@@ -111,7 +130,7 @@ export class AppComponent {
 }
 ```
 
-## How dynamically update title and message of a toast
+#### 4. How dynamically update title and message of a toast
 Here is an example of how to dynamically update message and title of individual toast:
 
 ```js
@@ -182,7 +201,7 @@ export class AppComponent {
 }
 ```
 
-## How to close specific toast
+#### 5. How to close specific toast
 Here is an example of how to close an individual toast:
 
 ```js

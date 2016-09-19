@@ -19,6 +19,8 @@ typings.json
 karma*
 make.js
 tsconfig.json
+_test-output
+systemjs.config.js
 
 #################
 ## JetBrains
