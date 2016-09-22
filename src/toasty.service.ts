@@ -2,11 +2,10 @@
 // This project is licensed under the terms of the MIT license.
 // https://github.com/akserg/ng2-toasty
 
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { isString, isNumber, isFunction } from './toasty.utils';
 
 import { Observable } from 'rxjs/Observable';
-import { Subscriber } from 'rxjs/Subscriber';
 
 /**
  * Options to configure specific Toast
@@ -71,30 +70,22 @@ export class ToastyService {
   static THEMES: Array<string> = ['default', 'material', 'bootstrap'];
   // Init the counter
   uniqueCounter: number = 0;
-  private toastsObservable: Observable<ToastData>;
-  private toastsSubscriber: Subscriber<ToastData>;
+  // ToastData event emitter
+  private toastsEmitter: EventEmitter<ToastData> = new EventEmitter<ToastData>();
+  // Clear event emitter
+  private clearEmitter: EventEmitter<number> = new EventEmitter<number>();
 
-  private clearObservable: Observable<number>;
-  private clearSubscriber: Subscriber<number>;
-
-  constructor(private config: ToastyConfig) {
-    this.toastsObservable = new Observable<ToastData>((subscriber: Subscriber<ToastData>) => {
-      this.toastsSubscriber = subscriber;
-    });
-    this.clearObservable  = new Observable<number>((subscriber: Subscriber<number>) => {
-      this.clearSubscriber = subscriber;
-    });
-  }
+  constructor(private config: ToastyConfig) {}
 
   /**
    * Get list of toats
    */
   getToasts(): Observable<ToastData> {
-    return this.toastsObservable;
+    return this.toastsEmitter.asObservable();
   }
 
   getClear(): Observable<number> {
-    return this.clearObservable;
+    return this.clearEmitter.asObservable();
   }
 
   /**
@@ -192,28 +183,23 @@ export class ToastyService {
     // Allows a caller to pass null/0 and override the default. Can also set the default to null/0 to turn off.
     toast.timeout = toastyOptions.hasOwnProperty('timeout') ? toastyOptions.timeout : this.config.timeout;
 
-
     // Push up a new toast item
-    try {
-      this.toastsSubscriber.next(toast);
-      // If we have a onAdd function, call it here
-      if (toastyOptions.onAdd && isFunction(toastyOptions.onAdd)) {
-        toastyOptions.onAdd.call(this, toast);
-      }
-    } catch (e) {
-      console.log(e);
-      console.log('!!! Suggestion: Seems you forget add <ng2-toasty></ng2-toasty> into your html?');
+    // this.toastsSubscriber.next(toast);
+    this.toastsEmitter.next(toast);
+    // If we have a onAdd function, call it here
+    if (toastyOptions.onAdd && isFunction(toastyOptions.onAdd)) {
+      toastyOptions.onAdd.call(this, toast);
     }
   }
 
   // Clear all toasts
   clearAll() {
-    this.clearSubscriber.next(null);
+    this.clearEmitter.next(null);
   }
 
   // Clear the specific one
   clear(id: number) {
-    this.clearSubscriber.next(id);
+    this.clearEmitter.next(id);
   }
 
   // Checks whether the local option is set, if not,
