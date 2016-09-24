@@ -6,6 +6,7 @@ Angular2 Toasty component shows growl-style alerts and messages for your applica
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) 
 [![Dependency Status](https://david-dm.org/akserg/ng2-toasty.svg)](https://david-dm.org/akserg/ng2-toasty)
 [![devDependency Status](https://david-dm.org/akserg/ng2-toasty/dev-status.svg)](https://david-dm.org/akserg/ng2-toasty#info=devDependencies)
+[![Known Vulnerabilities](https://snyk.io/test/github/akserg/ng2-toasty/badge.svg)](https://snyk.io/test/github/akserg/ng2-toasty)
 
 Follow me [![twitter](https://img.shields.io/twitter/follow/akopkokhyants.svg?style=social&label=%20akopkokhyants)](https://twitter.com/akopkokhyants) to be notified about new releases.
 
