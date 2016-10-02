@@ -52,7 +52,7 @@ export class ToastyConfig {
   // bottom-right, bottom-left, top-right, top-left, top-center, bottom-center
   position: string = 'bottom-right';
 
-  // How long (in miliseconds) the toasty shows before it's removed. Set to false to disable.
+  // How long (in miliseconds) the toasty shows before it's removed. Set to null/0 to turn off.
   timeout: number = 5000;
 
   // What theme to use. Possible values:
