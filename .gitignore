@@ -10,7 +10,7 @@ npm-debug.log
 coverage
 dist
 typings
-bundles
+bundles/*.*
 src/*.js
 src/*.d.ts
 src/*.js.map

@@ -21,7 +21,7 @@ export class ToastyComponent implements OnInit {
   /**
    * Set of constants defins position of Toasty on the page.
    */
-  static POSITIONS: Array<String> = ['bottom-right', 'bottom-left', 'top-right', 'top-left', 'top-center', 'bottom-center'];
+  static POSITIONS: Array<String> = ['bottom-right', 'bottom-left', 'top-right', 'top-left', 'top-center', 'bottom-center', 'center-center'];
 
   private _position: string = '';
   // The window position where the toast pops up. Possible values:
@@ -31,6 +31,7 @@ export class ToastyComponent implements OnInit {
   // - top-left
   // - top-center
   // - bottom-center
+  // - center-center
   @Input() set position(value: string) {
     if (value) {
       let notFound = true;

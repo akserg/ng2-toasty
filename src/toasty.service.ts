@@ -49,7 +49,7 @@ export class ToastyConfig {
   showClose: boolean = true;
 
   // The window position where the toast pops up. Possible values
-  // bottom-right, bottom-left, top-right, top-left, top-center, bottom-center
+  // bottom-right, bottom-left, top-right, top-left, top-center, bottom-center, center-center
   position: string = 'bottom-right';
 
   // How long (in miliseconds) the toasty shows before it's removed. Set to null/0 to turn off.

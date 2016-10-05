@@ -322,6 +322,12 @@
   -webkit-transform: translate(-50%, 0%);
           transform: translate(-50%, 0%);
 }
+#toasty.toasty-position-center-center {
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, 0%);
+          transform: translate(-50%, 0%);
+}
 #toasty .toast {
   cursor: pointer;
   margin: 0 0 6px;
