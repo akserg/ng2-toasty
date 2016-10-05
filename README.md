@@ -279,8 +279,11 @@ export class AppComponent {
 You can use the following properties to customize the ng2-toasty component in your template:
 
 - `position` - The window position where the toast pops up. Default value is `bottom-right`. Possible values: `bottom-right`, `bottom-left`, `top-right`, `top-left`, `top-center`, `bottom-center`, `center-center`
-Example: <ng2-toasty [position]="'top-center'"></ng2-toasty>
+Example:
 
+```html
+<ng2-toasty [position]="'top-center'"></ng2-toasty>
+```
 
 # Credits 
 Inspired by [angular-toasty](https://github.com/teamfa/angular-toasty)
