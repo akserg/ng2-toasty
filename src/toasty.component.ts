@@ -87,11 +87,12 @@ export class ToastyComponent implements OnInit {
     });
     // We listen clear all comes from service here.
     this.toastyService.getClear().subscribe((id: number) => {
-      if (id) {
-        this.clear(id);
-      }
-      // Lets clear all toasts
-      this.clearAll();
+        if (id) {
+            this.clear(id);
+        } else {
+            // Lets clear all toasts
+            this.clearAll();
+        }
     });
   }
 
