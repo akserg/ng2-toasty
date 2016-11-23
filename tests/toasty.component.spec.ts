@@ -1,7 +1,7 @@
 import { TestBed, ComponentFixture }
     from '@angular/core/testing';
 
-import {ToastyService, ToastData, ToastOptions, ToastyConfig} from '../src/toasty.service';
+import {ToastyService, ToastData, ToastyConfig} from '../src/toasty.service';
 import {ToastyComponent} from '../src/toasty.component';
 import {ToastComponent} from '../src/toast.component';
 

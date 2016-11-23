@@ -1,4 +1,4 @@
-import { inject, fakeAsync, tick, TestBed }
+import { inject, TestBed }
     from '@angular/core/testing';
 
 import {Observable} from 'rxjs/Observable';
@@ -212,7 +212,7 @@ describe('ToastyService', () => {
                     title: 'Title',
                     msg: 'message',
                     theme: 'material'
-                }
+                };
                 // We listen our service to recieve new toasts from it
                 service.getToasts().subscribe((toast:ToastData) => {
                     expect(toast).not.toBeNull();
@@ -235,7 +235,7 @@ describe('ToastyService', () => {
                     title: 'Title',
                     msg: 'message',
                     theme: 'bootstrap'
-                }
+                };
                 // We listen our service to recieve new toasts from it
                 service.getToasts().subscribe((toast:ToastData) => {
                     expect(toast).not.toBeNull();
