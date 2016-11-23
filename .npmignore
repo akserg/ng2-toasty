@@ -7,20 +7,13 @@ manifest.mf
 build.xml
 node_modules/*
 npm-debug.log
-coverage
-typings
-typings.json
-**/*.ts
-**/*.js.map
+*.ts
 !*.d.ts
-!src/*.d.ts
-!tests/*.d.ts
-.travis.yml
-karma*
-make.js
-tsconfig.json
-_test-output
-systemjs.config.js
+tests
+.github
+coverage
+!*.metadata.json
+!bundles/*.js
 
 #################
 ## JetBrains
@@ -28,8 +21,6 @@ systemjs.config.js
 .idea
 .project
 .settings
-.idea/*
-*.iml
 
 ############
 ## Windows
