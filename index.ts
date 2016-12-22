@@ -10,9 +10,12 @@ export * from './src/toasty.component';
 
 import { ToastyComponent } from './src/toasty.component';
 import { ToastComponent } from './src/toast.component';
-import { ToastyService, toastyServiceFactory } from './src/toasty.service';
+import { ToastyService, ToastyConfig, toastyServiceFactory } from './src/toasty.service';
 
-export let providers = [{ provide: ToastyService, useFactory: toastyServiceFactory }];
+export let providers = [
+    ToastyConfig,
+    { provide: ToastyService, useFactory: toastyServiceFactory, deps: [ToastyConfig] }
+];
 
 @NgModule({
     imports: [CommonModule],

@@ -62,8 +62,8 @@ export class ToastyConfig {
   theme: string = 'default';
 }
 
-export function toastyServiceFactory(): ToastyService  {
-    return new ToastyService(new ToastyConfig());
+export function toastyServiceFactory(config: ToastyConfig): ToastyService  {
+    return new ToastyService(config);
 }
 
 /**

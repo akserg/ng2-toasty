@@ -30,10 +30,7 @@ If you use SystemJS to load your files, you might have to update your config:
 ```js
 System.config({
     map: {
-        'ng2-toasty': 'node_modules/ng2-toasty'
-    },
-    packages: {
-        'ng2-toasty':  { defaultExtension: 'js' },
+        'ng2-toasty': 'node_modules/ng2-toasty/bundles/index.umd.js'
     }
 });
 ```
