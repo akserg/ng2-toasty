@@ -3,6 +3,7 @@
 // https://github.com/akserg/ng2-toasty
 
 import { NgModule, ModuleWithProviders } from "@angular/core";
+import { CommonModule } from '@angular/common';
 
 export * from './src/toasty.service';
 export * from './src/toasty.component';
@@ -14,12 +15,13 @@ import { ToastyService, toastyServiceFactory } from './src/toasty.service';
 export let providers = [{ provide: ToastyService, useFactory: toastyServiceFactory }];
 
 @NgModule({
-  declarations: [ToastComponent, ToastyComponent],
-  exports : [ToastComponent, ToastyComponent],
-  providers: providers
+    imports: [CommonModule],
+    declarations: [ToastComponent, ToastyComponent],
+    exports: [ ToastComponent, ToastyComponent],
+    providers: providers
 })
 export class ToastyModule {
-  static forRoot(): ModuleWithProviders {
+    static forRoot(): ModuleWithProviders {
         return {
             ngModule: ToastyModule,
             providers: providers
