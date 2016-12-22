@@ -33,7 +33,7 @@ System.config({
         'ng2-toasty': 'node_modules/ng2-toasty'
     },
     packages: {
-        'ng2-toasty':  { main: 'index.js',  defaultExtension: 'js' },
+        'ng2-toasty':  { defaultExtension: 'js' },
     }
 });
 ```
