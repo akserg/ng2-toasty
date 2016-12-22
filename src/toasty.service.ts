@@ -10,7 +10,8 @@ import { Observable } from 'rxjs/Observable';
 /**
  * Options to configure specific Toast
  */
-export interface ToastOptions {
+@Injectable()
+export class ToastOptions {
   title: string;
   msg?: string;
   showClose?: boolean;
@@ -23,7 +24,8 @@ export interface ToastOptions {
 /**
  * Structrure of Toast
  */
-export interface ToastData {
+@Injectable()
+export class ToastData {
   id: number;
   title: string;
   msg: string;
@@ -60,6 +62,9 @@ export class ToastyConfig {
   theme: string = 'default';
 }
 
+export function toastyServiceFactory(): ToastyService  {
+    return new ToastyService(new ToastyConfig());
+}
 
 /**
  * Toasty service helps create different kinds of Toasts

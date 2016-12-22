@@ -9,17 +9,20 @@ export * from './src/toasty.component';
 
 import { ToastyComponent } from './src/toasty.component';
 import { ToastComponent } from './src/toast.component';
-import { ToastyConfig, ToastyService } from './src/toasty.service';
+import { ToastyService, toastyServiceFactory } from './src/toasty.service';
+
+export let providers = [{ provide: ToastyService, useFactory: toastyServiceFactory }];
 
 @NgModule({
   declarations: [ToastComponent, ToastyComponent],
-  exports : [ToastComponent, ToastyComponent]
+  exports : [ToastComponent, ToastyComponent],
+  providers: providers
 })
 export class ToastyModule {
   static forRoot(): ModuleWithProviders {
         return {
             ngModule: ToastyModule,
-            providers: [ToastyConfig, ToastyService]
+            providers: providers
         };
     }
 }
