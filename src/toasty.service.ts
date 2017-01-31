@@ -50,16 +50,14 @@ export class ToastyConfig {
   // Whether to show the 'X' icon to close the toast
   showClose: boolean = true;
 
-  // The window position where the toast pops up. Possible values
-  // bottom-right, bottom-left, top-right, top-left, top-center, bottom-center, center-center
-  position: string = 'bottom-right';
+  // The window position where the toast pops up
+  position: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left' | 'top-center' | 'bottom-center' | 'center-center' = 'bottom-right';
 
   // How long (in miliseconds) the toasty shows before it's removed. Set to null/0 to turn off.
   timeout: number = 5000;
 
-  // What theme to use. Possible values:
-  // default, material or bootstrap
-  theme: string = 'default';
+  // What theme to use
+  theme: 'default' | 'material' | 'bootstrap' = 'default';
 }
 
 export function toastyServiceFactory(config: ToastyConfig): ToastyService  {
