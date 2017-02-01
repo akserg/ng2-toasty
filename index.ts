@@ -10,6 +10,7 @@ export * from './src/toasty.component';
 
 import { ToastyComponent } from './src/toasty.component';
 import { ToastComponent } from './src/toast.component';
+import { ToastyTitleTemplate, ToastyMessageTemplate, ToastyTemplateWrapper } from './src/shared';
 import { ToastyService, ToastyConfig, toastyServiceFactory } from './src/toasty.service';
 
 export let providers = [
@@ -19,8 +20,8 @@ export let providers = [
 
 @NgModule({
     imports: [CommonModule],
-    declarations: [ToastComponent, ToastyComponent],
-    exports: [ ToastComponent, ToastyComponent],
+    declarations: [ToastComponent, ToastyComponent, ToastyTitleTemplate, ToastyMessageTemplate, ToastyTemplateWrapper],
+    exports: [ ToastComponent, ToastyComponent, ToastyTitleTemplate, ToastyMessageTemplate],
     providers: providers
 })
 export class ToastyModule {

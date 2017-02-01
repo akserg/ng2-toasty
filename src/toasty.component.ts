@@ -2,10 +2,13 @@
 // This project is licensed under the terms of the MIT license.
 // https://github.com/akserg/ng2-toasty
 
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component, Input, OnInit, ContentChild
+} from '@angular/core';
 
 import { isFunction } from './toasty.utils';
 import { ToastyService, ToastData, ToastyConfig } from './toasty.service';
+import { ToastyTitleTemplate, ToastyMessageTemplate } from './shared';
 
 /**
  * Toasty is container for Toast components
@@ -14,7 +17,8 @@ import { ToastyService, ToastData, ToastyConfig } from './toasty.service';
   selector: 'ng2-toasty',
   template: `
     <div id="toasty" [ngClass]="[position]">
-        <ng2-toast *ngFor="let toast of toasts" [toast]="toast" (closeToast)="closeToast(toast)"></ng2-toast>
+        <ng2-toast *ngFor="let toast of toasts" [toast]="toast" (closeToast)="closeToast(toast)"
+        [messageTemplate]="messageTemplate?.templateRef" [titleTemplate]="titleTemplate?.templateRef"></ng2-toast>
     </div>`
 })
 export class ToastyComponent implements OnInit {
@@ -22,6 +26,12 @@ export class ToastyComponent implements OnInit {
    * Set of constants defins position of Toasty on the page.
    */
   static POSITIONS: Array<String> = ['bottom-right', 'bottom-left', 'top-right', 'top-left', 'top-center', 'bottom-center', 'center-center'];
+
+  @ContentChild(ToastyTitleTemplate)
+  public titleTemplate: ToastyTitleTemplate;
+
+  @ContentChild(ToastyMessageTemplate)
+  public messageTemplate: ToastyTitleTemplate;
 
   private _position: string = '';
   // The window position where the toast pops up. Possible values:
