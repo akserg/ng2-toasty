@@ -3,6 +3,7 @@ import { TestBed, ComponentFixture }
 
 import {ToastData} from '../src/toasty.service';
 import {ToastComponent} from '../src/toast.component';
+import {ToastyTemplate, ToastyTemplateWrapper} from '../src/shared';
 
 describe('ToastComponent', () => {
 
@@ -23,7 +24,7 @@ describe('ToastComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [ToastComponent]
+            declarations: [ToastComponent, ToastyTemplate, ToastyTemplateWrapper]
         });
         TestBed.compileComponents();
     });
@@ -64,10 +65,10 @@ describe('ToastComponent', () => {
         componentFixture.detectChanges();
         expect(element.querySelector('.toast-text')).not.toBeNull();
 
-        expect(element.querySelector('.toast-title')).not.toBeNull();
-        expect(element.querySelector('.toast-title').innerHTML).toBe('title');
+        expect(element.querySelector('.toast-title span')).not.toBeNull();
+        expect(element.querySelector('.toast-title span').innerHTML).toBe('title');
 
-        expect(element.querySelector('.toast-msg')).toBeNull();
+        expect(element.querySelector('.toast-msg span')).toBeNull();
 
         componentFixture.componentInstance.toast.title = null;
         componentFixture.componentInstance.toast.msg = null;
@@ -81,10 +82,10 @@ describe('ToastComponent', () => {
         componentFixture.detectChanges();
         expect(element.querySelector('.toast-text')).not.toBeNull();
 
-        expect(element.querySelector('.toast-title')).toBeNull();
+        expect(element.querySelector('.toast-title span')).toBeNull();
 
-        expect(element.querySelector('.toast-msg')).not.toBeNull();
-        expect(element.querySelector('.toast-msg').innerHTML).toBe('msg');
+        expect(element.querySelector('.toast-msg span')).not.toBeNull();
+        expect(element.querySelector('.toast-msg span').innerHTML).toBe('msg');
 
         componentFixture.componentInstance.toast.title = null;
         componentFixture.componentInstance.toast.msg = null;
@@ -99,11 +100,11 @@ describe('ToastComponent', () => {
         componentFixture.detectChanges();
         expect(element.querySelector('.toast-text')).not.toBeNull();
 
-        expect(element.querySelector('.toast-title')).not.toBeNull();
-        expect(element.querySelector('.toast-title').innerHTML).toBe('title');
+        expect(element.querySelector('.toast-title span')).not.toBeNull();
+        expect(element.querySelector('.toast-title span').innerHTML).toBe('title');
 
-        expect(element.querySelector('.toast-msg')).not.toBeNull();
-        expect(element.querySelector('.toast-msg').innerHTML).toBe('msg');
+        expect(element.querySelector('.toast-msg span')).not.toBeNull();
+        expect(element.querySelector('.toast-msg span').innerHTML).toBe('msg');
 
         componentFixture.componentInstance.toast.title = null;
         componentFixture.componentInstance.toast.msg = null;

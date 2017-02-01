@@ -4,6 +4,7 @@ import { TestBed, ComponentFixture }
 import {ToastyService, ToastData, ToastyConfig} from '../src/toasty.service';
 import {ToastyComponent} from '../src/toasty.component';
 import {ToastComponent} from '../src/toast.component';
+import {ToastyTemplate, ToastyTemplateWrapper} from '../src/shared';
 
 describe('ToastyComponent', () => {
 
@@ -37,7 +38,7 @@ describe('ToastyComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [ToastComponent, ToastyComponent],
+            declarations: [ToastComponent, ToastyComponent, ToastyTemplate, ToastyTemplateWrapper],
             providers: [ToastyService, ToastyConfig]
         });
         TestBed.compileComponents();
