@@ -2,10 +2,11 @@
 // This project is licensed under the terms of the MIT license.
 // https://github.com/akserg/ng2-toasty
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, QueryList, ContentChildren, AfterContentInit } from '@angular/core';
 
 import { isFunction } from './toasty.utils';
 import { ToastyService, ToastData, ToastyConfig } from './toasty.service';
+import { ToastyTemplate } from './shared';
 
 /**
  * Toasty is container for Toast components
@@ -14,14 +15,20 @@ import { ToastyService, ToastData, ToastyConfig } from './toasty.service';
   selector: 'ng2-toasty',
   template: `
     <div id="toasty" [ngClass]="[position]">
-        <ng2-toast *ngFor="let toast of toasts" [toast]="toast" (closeToast)="closeToast(toast)"></ng2-toast>
+        <ng2-toast *ngFor="let toast of toasts" [toast]="toast" [messageTemplate]="messageTemplate" [titleTemplate]="titleTemplate" (closeToast)="closeToast(toast)"></ng2-toast>
     </div>`
 })
-export class ToastyComponent implements OnInit {
+export class ToastyComponent implements OnInit, AfterContentInit {
   /**
    * Set of constants defins position of Toasty on the page.
    */
   static POSITIONS: Array<String> = ['bottom-right', 'bottom-left', 'top-right', 'top-left', 'top-center', 'bottom-center', 'center-center'];
+
+  @ContentChildren(ToastyTemplate)
+  private toastyTemplates: QueryList<any>;
+
+  public titleTemplate: TemplateRef<any>;
+  public messageTemplate: TemplateRef<any>;
 
   private _position: string = '';
   // The window position where the toast pops up. Possible values:
@@ -93,6 +100,28 @@ export class ToastyComponent implements OnInit {
             // Lets clear all toasts
             this.clearAll();
         }
+    });
+  }
+
+  /**
+   * `ngAfterContentInit` is called after a component's content has been fully initialized.
+   * We initialize `title` or `message` templates for the toast
+   */
+  ngAfterContentInit(): void {
+    this.toastyTemplates.forEach((toastyTemplate) => {
+      switch(toastyTemplate.getType()) {
+        case 'title':
+          this.titleTemplate = toastyTemplate.templateRef;
+          break;
+
+        case 'message':
+          this.messageTemplate = toastyTemplate.templateRef;
+          break;
+
+        default:
+          this.messageTemplate = toastyTemplate.templateRef;
+          break;
+      }
     });
   }
 
