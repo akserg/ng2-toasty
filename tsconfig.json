@@ -16,6 +16,7 @@
   },
   "files": [
     "index.ts",
+    "./src/shared.ts",
     "./src/toast.component.ts",
     "./src/toasty.component.ts",
     "./src/toasty.service.ts",

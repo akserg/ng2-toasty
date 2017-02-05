@@ -15,9 +15,9 @@ import { ToastData } from './toasty.service';
         <div class="toast" [ngClass]="[toast.type, toast.theme]">
             <div *ngIf="toast.showClose" class="close-button" (click)="close($event)"></div>
             <div *ngIf="toast.title || toast.msg" class="toast-text">
-                <span *ngIf="toast.title" class="toast-title">{{toast.title}}</span>
+                <span *ngIf="toast.title" class="toast-title" [innerHTML]="toast.title | safeHtml"></span>
                 <br *ngIf="toast.title && toast.msg" />
-                <span *ngIf="toast.msg" class="toast-msg">{{toast.msg}}</span>
+                <span *ngIf="toast.msg" class="toast-msg" [innerHtml]="toast.msg | safeHtml"></span>
             </div>
         </div>`
 })
