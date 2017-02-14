@@ -3,7 +3,7 @@ import { inject, TestBed }
 
 import {Observable} from 'rxjs/Observable';
 
-import {ToastyService, ToastData, ToastOptions, ToastyConfig} from '../src/toasty.service';
+import {ToastyService, ToastData, ToastOptions, ToastyConfig, ToastyEvent} from '../src/toasty.service';
 
 describe('ToastyService', () => {
 
@@ -22,7 +22,7 @@ describe('ToastyService', () => {
 
     it('should return Observable from getToasts method',
         inject([ToastyService], (service:ToastyService) => {
-            expect(service.getToasts instanceof Observable);
+            expect(service.events instanceof Observable);
         })
     );
 
@@ -31,7 +31,8 @@ describe('ToastyService', () => {
         it('with string title',
             inject([ToastyService], (service:ToastyService) => {
                 // We listen our service to recieve new toasts from it
-                service.getToasts().subscribe((toast:ToastData) => {
+                service.events.subscribe((event: ToastyEvent) => {
+                    let toast:ToastData = event.value;
                     expect(toast).not.toBeNull();
                     expect(toast.id).not.toBeNull();
                     expect(toast.title).toBe('Hi');
@@ -49,7 +50,8 @@ describe('ToastyService', () => {
         it('with number title',
             inject([ToastyService], (service:ToastyService) => {
                 // We listen our service to recieve new toasts from it
-                service.getToasts().subscribe((toast:ToastData) => {
+                service.events.subscribe((event: ToastyEvent) => {
+                    let toast:ToastData = event.value;
                     expect(toast).not.toBeNull();
                     expect(toast.id).not.toBeNull();
                     expect(toast.title).toBe('1000');
@@ -72,7 +74,8 @@ describe('ToastyService', () => {
                     msg: 'message',
                 };
                 // We listen our service to recieve new toasts from it
-                service.getToasts().subscribe((toast:ToastData) => {
+                service.events.subscribe((event: ToastyEvent) => {
+                    let toast:ToastData = event.value;
                     expect(toast).not.toBeNull();
                     expect(toast.id).not.toBeNull();
                     expect(toast.title).toBe(options.title);
@@ -106,7 +109,7 @@ describe('ToastyService', () => {
                     }
                 };
                 // We listen our service to recieve new toasts from it
-                service.getToasts().subscribe((toast:ToastData) => {});
+                service.events.subscribe((event: ToastyEvent) => {});
                 service.default(options);
             })
         );
@@ -117,7 +120,8 @@ describe('ToastyService', () => {
         it('of info type',
             inject([ToastyService], (service:ToastyService) => {
                 // We listen our service to recieve new toasts from it
-                service.getToasts().subscribe((toast:ToastData) => {
+                service.events.subscribe((event: ToastyEvent) => {
+                    let toast:ToastData = event.value;
                     expect(toast).not.toBeNull();
                     expect(toast.id).not.toBeNull();
                     expect(toast.title).toBe('Hi');
@@ -135,7 +139,8 @@ describe('ToastyService', () => {
         it('of success type',
             inject([ToastyService], (service:ToastyService) => {
                 // We listen our service to recieve new toasts from it
-                service.getToasts().subscribe((toast:ToastData) => {
+                service.events.subscribe((event: ToastyEvent) => {
+                    let toast:ToastData = event.value;
                     expect(toast).not.toBeNull();
                     expect(toast.id).not.toBeNull();
                     expect(toast.title).toBe('Hi');
@@ -153,7 +158,8 @@ describe('ToastyService', () => {
         it('of wait type',
             inject([ToastyService], (service:ToastyService) => {
                 // We listen our service to recieve new toasts from it
-                service.getToasts().subscribe((toast:ToastData) => {
+                service.events.subscribe((event: ToastyEvent) => {
+                    let toast:ToastData = event.value;
                     expect(toast).not.toBeNull();
                     expect(toast.id).not.toBeNull();
                     expect(toast.title).toBe('Hi');
@@ -171,7 +177,8 @@ describe('ToastyService', () => {
         it('of error type',
             inject([ToastyService], (service:ToastyService) => {
                 // We listen our service to recieve new toasts from it
-                service.getToasts().subscribe((toast:ToastData) => {
+                service.events.subscribe((event: ToastyEvent) => {
+                    let toast:ToastData = event.value;
                     expect(toast).not.toBeNull();
                     expect(toast.id).not.toBeNull();
                     expect(toast.title).toBe('Hi');
@@ -189,7 +196,8 @@ describe('ToastyService', () => {
         it('of warning type',
             inject([ToastyService], (service:ToastyService) => {
                 // We listen our service to recieve new toasts from it
-                service.getToasts().subscribe((toast:ToastData) => {
+                service.events.subscribe((event: ToastyEvent) => {
+                    let toast:ToastData = event.value;
                     expect(toast).not.toBeNull();
                     expect(toast.id).not.toBeNull();
                     expect(toast.title).toBe('Hi');
@@ -214,7 +222,8 @@ describe('ToastyService', () => {
                     theme: 'material'
                 };
                 // We listen our service to recieve new toasts from it
-                service.getToasts().subscribe((toast:ToastData) => {
+                service.events.subscribe((event: ToastyEvent) => {
+                    let toast:ToastData = event.value;
                     expect(toast).not.toBeNull();
                     expect(toast.id).not.toBeNull();
                     expect(toast.title).toBe(options.title);
@@ -237,7 +246,8 @@ describe('ToastyService', () => {
                     theme: 'bootstrap'
                 };
                 // We listen our service to recieve new toasts from it
-                service.getToasts().subscribe((toast:ToastData) => {
+                service.events.subscribe((event: ToastyEvent) => {
+                    let toast:ToastData = event.value;
                     expect(toast).not.toBeNull();
                     expect(toast.id).not.toBeNull();
                     expect(toast.title).toBe(options.title);

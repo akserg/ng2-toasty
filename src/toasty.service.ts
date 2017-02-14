@@ -2,10 +2,11 @@
 // This project is licensed under the terms of the MIT license.
 // https://github.com/akserg/ng2-toasty
 
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { isString, isNumber, isFunction } from './toasty.utils';
 
-import { Observable } from 'rxjs/Observable';
+import {Subject} from 'rxjs/Subject';
+import {Observable} from 'rxjs/Observable';
 
 /**
  * Options to configure specific Toast
@@ -60,6 +61,16 @@ export class ToastyConfig {
   theme: 'default' | 'material' | 'bootstrap' = 'default';
 }
 
+export enum ToastyEventType {
+  ADD,
+  CLEAR,
+  CLEAR_ALL
+}
+
+export class ToastyEvent {
+    constructor(public type:ToastyEventType, public value?:any) {}
+}
+
 export function toastyServiceFactory(config: ToastyConfig): ToastyService  {
     return new ToastyService(config);
 }
@@ -74,22 +85,25 @@ export class ToastyService {
   // Init the counter
   uniqueCounter: number = 0;
   // ToastData event emitter
-  private toastsEmitter: EventEmitter<ToastData> = new EventEmitter<ToastData>();
+  // private toastsEmitter: EventEmitter<ToastData> = new EventEmitter<ToastData>();
   // Clear event emitter
-  private clearEmitter: EventEmitter<number> = new EventEmitter<number>();
+  // private clearEmitter: EventEmitter<number> = new EventEmitter<number>();
+
+  private eventSource: Subject<ToastyEvent> = new Subject<ToastyEvent>();
+  public events: Observable<ToastyEvent> = this.eventSource.asObservable();
 
   constructor(private config: ToastyConfig) {}
 
   /**
    * Get list of toats
    */
-  getToasts(): Observable<ToastData> {
-    return this.toastsEmitter.asObservable();
-  }
+  // getToasts(): Observable<ToastData> {
+  //   return this.toastsEmitter.asObservable();
+  // }
 
-  getClear(): Observable<number> {
-    return this.clearEmitter.asObservable();
-  }
+  // getClear(): Observable<number> {
+  //   return this.clearEmitter.asObservable();
+  // }
 
   /**
    * Create Toast of a default type
@@ -188,7 +202,8 @@ export class ToastyService {
 
     // Push up a new toast item
     // this.toastsSubscriber.next(toast);
-    this.toastsEmitter.next(toast);
+    // this.toastsEmitter.next(toast);
+    this.emitEvent(new ToastyEvent(ToastyEventType.ADD, toast));
     // If we have a onAdd function, call it here
     if (toastyOptions.onAdd && isFunction(toastyOptions.onAdd)) {
       toastyOptions.onAdd.call(this, toast);
@@ -197,12 +212,14 @@ export class ToastyService {
 
   // Clear all toasts
   clearAll() {
-    this.clearEmitter.next(null);
+    // this.clearEmitter.next(null);
+    this.emitEvent(new ToastyEvent(ToastyEventType.CLEAR_ALL));
   }
 
   // Clear the specific one
   clear(id: number) {
-    this.clearEmitter.next(id);
+    // this.clearEmitter.next(id);
+    this.emitEvent(new ToastyEvent(ToastyEventType.CLEAR, id));
   }
 
   // Checks whether the local option is set, if not,
@@ -216,4 +233,11 @@ export class ToastyService {
       return true;
     }
   }
+
+  private emitEvent(event: ToastyEvent) {
+        if (this.eventSource) {
+            // Push up a new event
+            this.eventSource.next(event);
+        }
+    }
 }

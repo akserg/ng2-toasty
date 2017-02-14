@@ -5,7 +5,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { isFunction } from './toasty.utils';
-import { ToastyService, ToastData, ToastyConfig } from './toasty.service';
+import { ToastyService, ToastData, ToastyConfig, ToastyEvent, ToastyEventType } from './toasty.service';
 
 /**
  * Toasty is container for Toast components
@@ -69,30 +69,20 @@ export class ToastyComponent implements OnInit {
    * directive is instantiated.
    */
   ngOnInit(): any {
-    // We listen our service to recieve new toasts from it
-    this.toastyService.getToasts().subscribe((toast: ToastData) => {
-      // If we've gone over our limit, remove the earliest
-      // one from the array
-      if (this.toasts.length >= this.config.limit) {
-        this.toasts.shift();
+    // We listen events from our service
+    this.toastyService.events.subscribe((event: ToastyEvent) => {
+      if (event.type === ToastyEventType.ADD) {
+        // Add the new one
+        let toast: ToastData = event.value;
+        this.add(toast);
+      } else if (event.type === ToastyEventType.CLEAR) {
+        // Clear the one by number
+        let id: number = event.value;
+        this.clear(id);
+      } else if (event.type === ToastyEventType.CLEAR_ALL) {
+        // Lets clear all toasts
+        this.clearAll();
       }
-      // Add toasty to array
-      this.toasts.push(toast);
-      //
-      // If there's a timeout individually or globally,
-      // set the toast to timeout
-      if (toast.timeout) {
-        this._setTimeout(toast);
-      }
-    });
-    // We listen clear all comes from service here.
-    this.toastyService.getClear().subscribe((id: number) => {
-        if (id) {
-            this.clear(id);
-        } else {
-            // Lets clear all toasts
-            this.clearAll();
-        }
     });
   }
 
@@ -102,6 +92,25 @@ export class ToastyComponent implements OnInit {
    */
   closeToast(toast: ToastData) {
     this.clear(toast.id);
+  }
+
+  /**
+   * Add new Toast
+   */
+  add(toast: ToastData) {
+    // If we've gone over our limit, remove the earliest
+    // one from the array
+    if (this.toasts.length >= this.config.limit) {
+      this.toasts.shift();
+    }
+    // Add toasty to array
+    this.toasts.push(toast);
+    //
+    // If there's a timeout individually or globally,
+    // set the toast to timeout
+    if (toast.timeout) {
+      this._setTimeout(toast);
+    }
   }
 
   /**
