@@ -3,6 +3,7 @@ import { TestBed, ComponentFixture }
 
 import {ToastData} from '../src/toasty.service';
 import {ToastComponent} from '../src/toast.component';
+import {SafeHtmlPipe} from '../src/shared';
 
 describe('ToastComponent', () => {
 
@@ -23,7 +24,7 @@ describe('ToastComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [ToastComponent]
+            declarations: [ToastComponent, SafeHtmlPipe]
         });
         TestBed.compileComponents();
     });
