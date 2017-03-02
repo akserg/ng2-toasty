@@ -109,4 +109,38 @@ describe('ToastComponent', () => {
         componentFixture.componentInstance.toast.title = null;
         componentFixture.componentInstance.toast.msg = null;
     });
+
+    it('should render HTML in message', () => {
+        const element = componentFixture.nativeElement;
+        expect(element.querySelector('.toast-text')).toBeNull();
+
+        componentFixture.componentInstance.toast.msg = '<strong style="color: #ABCDEF">msg</strong>';
+        componentFixture.detectChanges();
+
+        expect(element.querySelector('.toast-text')).not.toBeNull();
+        expect(element.querySelector('.toast-msg')).not.toBeNull();
+        expect(element.querySelector('.toast-msg').textContent).toBe('msg');
+        expect(element.querySelector('.toast-msg strong')).not.toBeNull();
+        expect(element.querySelector('.toast-msg strong').style.color).toBeTruthy();
+
+        componentFixture.componentInstance.toast.title = null;
+        componentFixture.componentInstance.toast.msg = null;
+    });
+
+    it('should render HTML in title', () => {
+        const element = componentFixture.nativeElement;
+        expect(element.querySelector('.toast-text')).toBeNull();
+
+        componentFixture.componentInstance.toast.title = '<strong style="color: #ABCDEF">title</strong>';
+        componentFixture.detectChanges();
+
+        expect(element.querySelector('.toast-text')).not.toBeNull();
+        expect(element.querySelector('.toast-title')).not.toBeNull();
+        expect(element.querySelector('.toast-title').textContent).toBe('title');
+        expect(element.querySelector('.toast-title strong')).not.toBeNull();
+        expect(element.querySelector('.toast-title strong').style.color).toBeTruthy();
+
+        componentFixture.componentInstance.toast.title = null;
+        componentFixture.componentInstance.toast.msg = null;
+    });
 });
