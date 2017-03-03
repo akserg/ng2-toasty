@@ -124,7 +124,18 @@ export class ToastyComponent implements OnInit {
           if (value.onRemove && isFunction(value.onRemove)) {
             value.onRemove.call(this, value);
           }
-          this.toasts.splice(key, 1);
+          if (value.animate === 'none') {
+            this.toasts.splice(key, 1);
+          } else {
+            value.animate += 'Out';
+            setTimeout(() => {
+                // Finding index again because of async operation
+                let index = this.toasts.findIndex((toast) => toast.id === value.id);
+                if (index > -1) {
+                  this.toasts.splice(index, 1);
+                }
+            }, 400);
+          }
         }
       });
     } else {
@@ -136,12 +147,23 @@ export class ToastyComponent implements OnInit {
    * Clear all toasts
    */
   clearAll() {
+    let isContainAnimate = false;
     this.toasts.forEach((value: any, key: number) => {
       if (value.onRemove && isFunction(value.onRemove)) {
         value.onRemove.call(this, value);
       }
+      if (value.animate !== 'none') {
+        isContainAnimate = true;
+        value.animate += 'Out';
+      }
     });
-    this.toasts = [];
+    if (!isContainAnimate) {
+      this.toasts = [];
+    } else {
+      setTimeout(() => {
+          this.toasts = [];
+      }, 400);
+    }
   }
 
   /**

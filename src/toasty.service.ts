@@ -18,6 +18,7 @@ export class ToastOptions {
   showClose?: boolean;
   theme?: string;
   timeout?: number;
+  animate?: string;
   onAdd?: Function;
   onRemove?: Function;
 }
@@ -34,6 +35,7 @@ export class ToastData {
   type: string;
   theme: string;
   timeout: number;
+  animate: string;
   onAdd: Function;
   onRemove: Function;
   onClick: Function;
@@ -56,6 +58,9 @@ export class ToastyConfig {
 
   // How long (in miliseconds) the toasty shows before it's removed. Set to null/0 to turn off.
   timeout: number = 5000;
+
+  // Enter and leave animate of each toast
+  animate: 'fromRight' | 'fromLeft' | 'scale' | 'rotate' | 'none' = 'fromRight';
 
   // What theme to use
   theme: 'default' | 'material' | 'bootstrap' = 'default';
@@ -82,6 +87,8 @@ export function toastyServiceFactory(config: ToastyConfig): ToastyService  {
 export class ToastyService {
   // Allowed THEMES
   static THEMES: Array<string> = ['default', 'material', 'bootstrap'];
+  // Allowed ANIMATES
+  static ANIMATES: Array<string> = ['fromRight', 'fromLeft', 'scale', 'rotate', 'none'];
   // Init the counter
   uniqueCounter: number = 0;
   // ToastData event emitter
@@ -185,6 +192,14 @@ export class ToastyService {
       theme = this.config.theme;
     }
 
+    // If we have a animate set, make sure it's a valid one
+    let animate: string;
+    if (toastyOptions.animate) {
+      animate = ToastyService.ANIMATES.indexOf(toastyOptions.animate) > -1 ? toastyOptions.animate : this.config.animate;
+    } else {
+      animate = this.config.animate;
+    }
+
     let toast: ToastData = <ToastData>{
       id       : this.uniqueCounter,
       title    : toastyOptions.title,
@@ -192,6 +207,7 @@ export class ToastyService {
       showClose: showClose,
       type     : 'toasty-type-' + type,
       theme    : 'toasty-theme-' + theme,
+      animate  : animate,
       onAdd    : toastyOptions.onAdd && isFunction(toastyOptions.onAdd) ? toastyOptions.onAdd : null,
       onRemove : toastyOptions.onRemove && isFunction(toastyOptions.onRemove) ? toastyOptions.onRemove : null
     };

@@ -17,6 +17,7 @@ describe('ToastComponent', () => {
         type: 'toasty-type-default',
         theme:'toasty-theme-default',
         timeout: null,
+        animate: 'none',
         onAdd: null,
         onRemove:null,
         onClick:null
