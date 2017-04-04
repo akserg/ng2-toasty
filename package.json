@@ -30,7 +30,7 @@
   "typings": "index.d.ts",
   "homepage": "https://github.com/akserg/ng2-toasty",
   "peerDependencies": {
-    "@angular/core": "^2.4.7"
+    "@angular/core": "^2.4.7 || ^4.0.0"
   },
   "devDependencies": {
     "@angular/common": "^2.4.7",
