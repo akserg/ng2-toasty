@@ -7,6 +7,8 @@ import { CommonModule } from '@angular/common';
 
 export * from './src/toasty.service';
 export * from './src/toasty.component';
+export * from './src/toast.component';
+export * from './src/shared';
 
 import { ToastyComponent } from './src/toasty.component';
 import { ToastComponent } from './src/toast.component';
