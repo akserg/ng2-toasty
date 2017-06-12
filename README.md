@@ -24,6 +24,8 @@ Simple examples using ng2-dnd:
 
 Online demo available [here](http://akserg.github.io/ng2-webpack-demo)
 
+Plunker demo available [here](http://plnkr.co/edit/M2rQVb)
+
 ## Usage
 If you use SystemJS to load your files, you might have to update your config:
 
