@@ -6,9 +6,10 @@
     "test": "karma start",
     "test-watch": "tsc && karma start --no-single-run --auto-watch",
     "commit": "npm run prepublish && npm test && git-cz",
-    "prepublish": "ngc && npm run build",
-    "build": "webpack && cp *.css bundles && cp -rf img bundles/img",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "prepublish": "npm run build",
+    "build": "ngc --noUnusedParameters --noUnusedLocals && webpack && npm run minify && cp *.css bundles && rm -rf bundles/img && mkdir bundles/img && cp -rf img/*.* bundles/img",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "minify": "./node_modules/uglify-js/bin/uglifyjs bundles/index.umd.js --screw-ie8 --compress --mangle --comments --output bundles/index.umd.min.js"
   },
   "repository": {
     "type": "git",
@@ -68,6 +69,7 @@
     "tslint": "^5.4.3",
     "tslint-loader": "^3.5.3",
     "typescript": "^2.3.4",
+    "uglify-js": "^3.0.15",
     "webpack": "^2.6.1",
     "zone.js": "^0.8.12"
   },

@@ -15,15 +15,7 @@
     "lib": ["es2015", "dom"]
   },
   "files": [
-    "index.ts",
-    "./src/shared.ts",
-    "./src/toast.component.ts",
-    "./src/toasty.component.ts",
-    "./src/toasty.service.ts",
-    "./src/toasty.utils.ts",
-    "tests/toast.component.spec.ts",
-    "tests/toasty.component.spec.ts",
-    "tests/toasty.service.spec.ts"
+    "index.ts"
   ],
   "exclude": [
     "node_modules",

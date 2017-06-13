@@ -31,8 +31,6 @@
     "no-shadowed-variable": true,
     "no-string-literal": false,
     "no-unused-expression": true,
-    "no-unused-variable": true,
-    "no-use-before-declare": true,
     "object-literal-sort-keys": false,
     "one-line": [
       true,
