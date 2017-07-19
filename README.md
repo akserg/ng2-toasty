@@ -281,7 +281,7 @@ You can use the following properties to customize the ng2-toasty component in yo
 Example:
 
 ```html
-<ng2-toasty [position]="'top-center'"></ng2-toasty>
+<ng2-toasty position="top-center"></ng2-toasty>
 ```
 
 # Credits 
