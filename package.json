@@ -7,7 +7,7 @@
     "test-watch": "tsc && karma start --no-single-run --auto-watch",
     "commit": "npm run prepublish && npm test && git-cz",
     "prepublish": "npm run build",
-    "build": "ngc --noUnusedParameters --noUnusedLocals && webpack ",
+    "build": "ngc --noUnusedParameters --noUnusedLocals && webpack && npm run minify && cp *.css bundles && rm -rf bundles/img && mkdir bundles/img && cp -rf img/*.* bundles/img",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "minify": "./node_modules/uglify-js/bin/uglifyjs bundles/index.umd.js --screw-ie8 --compress --mangle --comments --output bundles/index.umd.min.js"
   },
