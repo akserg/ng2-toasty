@@ -407,7 +407,7 @@
     }
 }
 
-@-webkit-keyframes toasty-shake {
+@-webkit-keyframes anim-time-bar {
     0% {
         width: 0;
     }
