@@ -169,3 +169,8 @@
   background-color: #f0ad4e;
   border-color: #eea236;
 }
+
+
+#toasty .toast.toasty-theme-bootstrap.toasty-type-default .time-bar {
+    background-color: #000;
+}
