@@ -389,3 +389,30 @@
 #toasty .toast .toast-text label:hover {
   text-decoration: none;
 }
+
+#toasty .toast .time-bar {
+    position: absolute;
+    height: 3px;
+    background-color: #fff;
+    bottom: 0;
+    opacity: 0.5;
+}
+
+@keyframes anim-time-bar {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+@-webkit-keyframes anim-time-bar {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
