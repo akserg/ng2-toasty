@@ -3,9 +3,9 @@
 // https://github.com/akserg/ng2-toasty
 
 import { Component, Input, OnInit } from '@angular/core';
-
+import { ToastData, ToastyConfig, ToastyEvent, ToastyEventType, ToastyService } from './toasty.service';
 import { isFunction } from './toasty.utils';
-import { ToastyService, ToastData, ToastyConfig, ToastyEvent, ToastyEventType } from './toasty.service';
+
 
 /**
  * Toasty is container for Toast components
@@ -136,7 +136,7 @@ export class ToastyComponent implements OnInit {
    * Clear all toasts
    */
   clearAll() {
-    this.toasts.forEach((value: any, key: number) => {
+    this.toasts.forEach((value: any) => {
       if (value.onRemove && isFunction(value.onRemove)) {
         value.onRemove.call(this, value);
       }
