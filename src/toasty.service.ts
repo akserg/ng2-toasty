@@ -3,10 +3,9 @@
 // https://github.com/akserg/ng2-toasty
 
 import { Injectable } from '@angular/core';
-import { isString, isNumber, isFunction } from './toasty.utils';
+import { Observable, Subject } from 'rxjs';
+import { isFunction, isNumber, isString } from './toasty.utils';
 
-import {Subject} from 'rxjs/Subject';
-import {Observable} from 'rxjs/Observable';
 
 /**
  * Options to configure specific Toast
