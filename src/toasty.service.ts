@@ -5,8 +5,7 @@
 import { Injectable } from '@angular/core';
 import { isString, isNumber, isFunction } from './toasty.utils';
 
-import {Subject} from 'rxjs/Subject';
-import {Observable} from 'rxjs/Observable';
+import {Subject, Observable} from 'rxjs';
 
 /**
  * Options to configure specific Toast
